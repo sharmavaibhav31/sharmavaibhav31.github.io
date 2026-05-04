@@ -12,7 +12,7 @@ export const AboutSection: React.FC = () => (
         {/* SECTION HEADER BAR */}
         <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
             style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
-            <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em]" style={{ color: 'var(--text-muted)' }}>
+            <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                 OPERATIVE PROFILE
             </div>
             <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.12em] font-bold"

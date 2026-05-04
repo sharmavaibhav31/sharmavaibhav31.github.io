@@ -41,9 +41,9 @@
   --border-subtle:        rgba(0, 0, 0, 0.05);
 
   /* Text — dark ink, not pure black */
-  --text-primary:         rgba(18, 16, 12, 0.90);
-  --text-secondary:       rgba(18, 16, 12, 0.58);
-  --text-muted:           rgba(18, 16, 12, 0.38);
+  --text-primary:         #111111;
+  --text-secondary:       #404040;
+  --text-muted:           #666666;
 
   /* Accents — same hues, darkened for light bg */
   --accent-red:           rgba(180, 40, 40, 0.90);

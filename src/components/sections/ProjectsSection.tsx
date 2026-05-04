@@ -34,7 +34,7 @@ const ProjectRow: React.FC<{ project: Project; index: number }> = ({ project, in
                 className="grid grid-cols-2 sm:grid-cols-[60px_1fr_90px_70px] md:grid-cols-[60px_1fr_220px_90px_70px] gap-x-4 gap-y-3 px-[2rem] py-[14px] border-b-[0.5px] cursor-pointer transition-colors duration-150 items-center"
                 style={{ borderColor: 'var(--border-subtle)' }}
                 onClick={() => setIsOpen(!isOpen)}
-                onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-surface)')}
+                onMouseEnter={e => (e.currentTarget.style.background = '#1a1a1a')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
             >
                 {/* PID */}
@@ -77,7 +77,7 @@ const ProjectRow: React.FC<{ project: Project; index: number }> = ({ project, in
                 <div className="flex items-center justify-end">
                     {project.github && (
                         <button 
-                            className="font-mono text-[10px] px-[10px] py-[4px] border-[0.5px] transition-colors"
+                            className="font-mono text-[10px] px-[10px] py-[4px] border-[0.5px] transition-colors hover:bg-[rgba(255,65,65,0.18)]"
                             style={{ background: 'var(--accent-red-bg)', color: 'var(--accent-red)', borderColor: 'var(--accent-red-border)' }}
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -168,7 +168,7 @@ export const ProjectsSection: React.FC = () => {
             {/* SECTION HEADER BAR */}
             <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
-                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em]" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                     PROCESS TABLE — SELECTED WORK
                 </div>
                 <div className="font-mono text-[9px] sm:text-[10px]" style={{ color: 'var(--text-muted)' }}>

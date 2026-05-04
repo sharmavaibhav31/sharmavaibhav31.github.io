@@ -33,7 +33,7 @@ export const CapabilitiesSection: React.FC = () => {
             {/* SECTION HEADER BAR */}
             <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
-                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em]" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                     CAPABILITIES MANIFEST
                 </div>
                 <div className="font-mono text-[9px] sm:text-[10px]" style={{ color: 'var(--text-muted)' }}>
@@ -62,13 +62,19 @@ export const CapabilitiesSection: React.FC = () => {
                                 {cap.items.map((item, index) => (
                                     <div 
                                         key={index}
-                                        className="group flex items-center justify-between py-[6px] border-b-[0.5px] transition-colors duration-150 cursor-default"
+                                        className="group flex items-center justify-between py-[6px] border-b-[0.5px] transition-all duration-150 ease-in-out cursor-default"
                                         style={{ borderColor: 'var(--border-subtle)' }}
                                         title={item.tooltip}
-                                        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-surface)')}
-                                        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                                        onMouseEnter={e => {
+                                            e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                                            (e.currentTarget.firstChild as HTMLElement).style.color = '#f5f5f5';
+                                        }}
+                                        onMouseLeave={e => {
+                                            e.currentTarget.style.background = 'transparent';
+                                            (e.currentTarget.firstChild as HTMLElement).style.color = 'var(--text-secondary)';
+                                        }}
                                     >
-                                        <span className="font-mono text-[12px] transition-colors duration-150"
+                                        <span className="font-mono text-[12px] transition-all duration-150 ease-in-out"
                                             style={{ color: 'var(--text-secondary)' }}>
                                             {item.name}
                                         </span>

@@ -19,7 +19,7 @@ export const CertificationsSection: React.FC = () => {
             {/* SECTION HEADER BAR */}
             <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
-                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em]" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                     CREDENTIALS VERIFIED
                 </div>
                 <div className="font-mono text-[9px] sm:text-[10px]" style={{ color: 'var(--text-muted)' }}>
@@ -37,7 +37,7 @@ export const CertificationsSection: React.FC = () => {
                         rel="noopener noreferrer"
                         className="w-full p-[12px_2rem] border-b-[0.5px] transition-colors duration-150 grid grid-cols-1 sm:grid-cols-[1fr_180px_100px] items-center gap-2 sm:gap-0"
                         style={{ borderColor: 'var(--border-subtle)' }}
-                        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-surface)')}
+                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
                         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
                         {/* Left: Name & Issuer */}
