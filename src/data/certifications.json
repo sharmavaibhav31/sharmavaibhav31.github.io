@@ -1,0 +1,54 @@
+[
+    {
+        "category": "Professional Certifications",
+        "items": [
+            {
+                "title": "OCI-2025 Certified DevOps Professional",
+                "issuer": "Oracle MyLearn / Oracle University",
+                "date": "Nov 2025",
+                "link": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=541B01AF3F548930B7D16EBA092D8997ECE7085852CD6EBCB89684E15C7050A9"
+            },
+            {
+                "title": "OCI-2025 Certified Data Science Professional",
+                "issuer": "Oracle MyLearn / Oracle University",
+                "date": "Oct 2025",
+                "link": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=541B01AF3F548930B7D16EBA092D89973B58BD9D463A1BE7B1F14990E23E971E"
+            },
+            {
+                "title": "OCI-2025 Certified Generative AI Professional",
+                "issuer": "Oracle MyLearn / Oracle University",
+                "date": "Oct 2025",
+                "link": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D1B7EDA36CDC27B157D9BB922410DD95FC9000C5638F748233247A4A9CE3573C"
+            },
+            {
+                "title": "OCI-2025 Certified Generative AI Foundations Associate",
+                "issuer": "Oracle MyLearn / Oracle University",
+                "date": "Sep 2025",
+                "link": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=72AD226F536D643284995396B4EF0F279B55556BC801156310B003A09008F24A"
+            }
+        ]
+    },
+    {
+        "category": "Specializations & Courses",
+        "items": [
+            {
+                "title": "Security in Google Cloud Specialization",
+                "issuer": "Coursera / Google Cloud",
+                "date": "Sep 2024",
+                "link": "https://coursera.org/share/614b472a4ce70c1a99358760096354f6"
+            },
+            {
+                "title": "Cloud Security Engineer Specialization",
+                "issuer": "Coursera / Google Cloud",
+                "date": "Jul 2024",
+                "link": "https://coursera.org/share/9ba37c2d8e55b836b2a6280891d8777e"
+            },
+            {
+                "title": "Google Cybersecurity Specialization",
+                "issuer": "Coursera / Google",
+                "date": "Dec 2023",
+                "link": "https://coursera.org/share/a3fc7145cb4f27885d33f182d086c3e8"
+            }
+        ]
+    }
+]

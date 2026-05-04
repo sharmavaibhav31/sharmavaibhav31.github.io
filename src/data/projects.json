@@ -1,0 +1,117 @@
+[
+    {
+        "id": "timetable-scheduler",
+        "title": "Academic Timetable Scheduling Engine",
+        "category": "Automation",
+        "problem": "University timetables were created manually — managing 40+ sections, hundreds of course assignments, room constraints, and faculty load limits with no automatic conflict detection.",
+        "solution": "Built a constraint-based scheduling engine that automatically assigns courses to time slots and rooms while enforcing faculty load limits, room capacity rules, section conflicts, and institutional break windows.",
+        "architecture": "React Admin Dashboard → Spring Boot REST API → Constraint Scheduling Engine → PostgreSQL (Flyway migrations)",
+        "impact": "Automates timetable generation in under 2 minutes with guaranteed conflict-free schedules and Excel export for departments.",
+        "stack": [
+            "Java 17",
+            "Spring Boot 3",
+            "PostgreSQL",
+            "Flyway",
+            "Apache POI",
+            "Spring Security",
+            "Docker",
+            "React"
+        ],
+        "role": "Designed the domain model, implemented the scheduling algorithm, built the REST API, and developed the admin dashboard.",
+        "github": "https://github.com/sharmavaibhav31/timetable_management"
+    },
+    {
+        "id": "offline-ai-shell",
+        "title": "Offline AI Assistant Shell",
+        "category": "Security",
+        "problem": "Developers rely on online AI assistants, but integrating AI directly into system environments introduces major security risks such as privilege escalation, unsafe system calls, and data exposure.",
+        "solution": "Built a custom C-based shell with an embedded offline LLM assistant using llama.cpp, designed with a security-first architecture including syscall filtering, namespace isolation, and resource limits.",
+        "architecture": "Custom C Shell → Sandboxed AI Worker → llama.cpp Inference Engine → TinyLlama Local Model",
+        "impact": "Enables private, offline AI assistance directly inside the terminal while enforcing strict syscall filtering and process isolation.",
+        "stack": [
+            "C",
+            "llama.cpp",
+            "TinyLlama",
+            "Seccomp",
+            "Linux Namespaces",
+            "CMake"
+        ],
+        "role": "Designed the shell architecture, implemented sandboxed AI worker execution, integrated local LLM inference, and engineered syscall filtering with Seccomp.",
+        "github": "https://github.com/sharmavaibhav31/offline-shell-assistant"
+    },
+    {
+        "id": "air-notepad",
+        "title": "Air Notepad — Gesture-Based Drawing Interface",
+        "category": "HCI",
+        "problem": "Traditional input devices limit natural human-computer interaction. This project explores how computer vision can convert hand movements into structured drawing commands in real time.",
+        "solution": "Built a gesture-controlled drawing interface using MediaPipe hand landmark detection. Raw hand keypoints are processed with custom gesture recognition and smoothing algorithms to convert finger motion into stable drawing strokes.",
+        "architecture": "Webcam → MediaPipe Hand Landmarks → Gesture Recognition → Coordinate Smoothing → OpenCV Canvas Rendering",
+        "impact": "Demonstrates real-time ML inference, landmark processing, gesture classification, and signal smoothing for interactive computer vision systems.",
+        "stack": [
+            "Python",
+            "OpenCV",
+            "MediaPipe",
+            "NumPy"
+        ],
+        "role": "Designed gesture recognition logic, implemented smoothing algorithms to stabilize drawing strokes, and built the real-time computer vision processing pipeline.",
+        "github": "https://github.com/sharmavaibhav31/air-notepad"
+    },
+    {
+        "id": "moodharmonics",
+        "title": "MoodHarmonics — Multi-Model AI Music Generation System",
+        "category": "ML Orchestration",
+        "problem": "AI media generation often requires multiple specialized models for text, audio, and classification. Coordinating these models while managing heavy inference workloads and reliability is a systems challenge.",
+        "solution": "Built an end-to-end ML system that converts text prompts into generated music and lyrics while automatically classifying genre using audio embeddings.",
+        "architecture": "React UI → Flask API → Model Orchestration Layer → (MusicGen | GPT-based Lyrics | YAMNet Classification) → MongoDB + Local Storage",
+        "impact": "Demonstrates multi-model ML orchestration, inference optimization via model preloading, and fault-tolerant API design with fallback inference paths.",
+        "stack": [
+            "Python",
+            "Flask",
+            "React",
+            "Meta MusicGen",
+            "YAMNet",
+            "PyTorch",
+            "TensorFlow",
+            "MongoDB"
+        ],
+        "role": "Designed the ML orchestration pipeline, implemented model preloading to reduce inference latency, and built API layers to expose AI capabilities to the frontend.",
+        "github": "https://github.com/sharmavaibhav31/MoodHarmonics"
+    },
+    {
+        "id": "system-design-url-shortener",
+        "title": "Distributed URL Shortener (System Design Study)",
+        "category": "Scalability",
+        "problem": "URL shortening services must handle massive traffic while generating collision-free short codes, preventing abuse, and scaling across multiple backend instances.",
+        "solution": "Built a full-stack URL shortener implementing Base62 encoding for compact ID generation, sliding-window rate limiting to prevent abuse, and a round-robin load balancing simulation for multi-instance deployments.",
+        "architecture": "React SPA → Spring Boot API → Rate Limiter Interceptor → URL Service → SQLite (JPA) with Base62 encoding",
+        "impact": "Demonstrates core distributed systems patterns including ID encoding, request throttling, and horizontal scaling strategies. Designed with a roadmap for Redis caching, distributed ID generation, and horizontal scaling.",
+        "stack": [
+            "Java 17",
+            "Spring Boot",
+            "React",
+            "SQLite",
+            "JPA/Hibernate",
+            "Tailwind CSS"
+        ],
+        "role": "Designed the URL encoding system, implemented sliding-window rate limiting, and simulated multi-instance load balancing.",
+        "github": "https://github.com/sharmavaibhav31/urlshortner"
+    },
+    {
+        "id": "soothefoot-smart-insole",
+        "title": "SootheFoot — Smart Insole Companion Application",
+        "category": "IoT Systems",
+        "problem": "Wearable health devices generate sensor data that must be translated into meaningful user feedback and control interfaces.",
+        "solution": "Developed a Flutter-based companion application to visualize foot pressure data and manage adaptive massage control for a prototype smart insole system.",
+        "architecture": "Flutter Mobile App → Sensor Data Simulation API → User Profile Manager → SAP HANA Cloud (planned)",
+        "impact": "Demonstrates IoT companion app design, sensor data visualization, and multi-user wearable device interaction.",
+        "stack": [
+            "Flutter",
+            "Dart",
+            "SAP HANA Cloud",
+            "Provider",
+            "fl_chart"
+        ],
+        "role": "Designed and implemented the mobile application interface, including sensor data visualization, multi-user profile management, and adaptive massage control logic.",
+        "github": "https://github.com/sharmavaibhav31/soothefoot"
+    }
+]

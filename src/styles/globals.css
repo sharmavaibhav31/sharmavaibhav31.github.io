@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary:          #0c0c0c;
+  --bg-surface:          #111111;
+  --bg-raised:           #161616;
+  --border-default:      rgba(255, 255, 255, 0.06);
+  --border-subtle:       rgba(255, 255, 255, 0.03);
+  --text-primary:        rgba(255, 255, 255, 0.88);
+  --text-secondary:      rgba(255, 255, 255, 0.42);
+  --text-muted:          rgba(255, 255, 255, 0.18);
+  --accent-red:          rgba(255, 80, 80, 0.85);
+  --accent-red-bg:       rgba(255, 80, 80, 0.08);
+  --accent-red-border:   rgba(255, 80, 80, 0.28);
+  --accent-green:        #4ade80;
+  --accent-green-bg:     rgba(74, 222, 128, 0.06);
+  --accent-green-border: rgba(74, 222, 128, 0.18);
+  --accent-orange:       #e05c2a;
+  --accent-orange-bg:    rgba(224, 92, 42, 0.08);
+  --accent-orange-border:rgba(224, 92, 42, 0.22);
+  --accent-amber:        rgba(251, 191, 36, 0.85);
+  --accent-amber-bg:     rgba(251, 191, 36, 0.06);
+  --accent-amber-border: rgba(251, 191, 36, 0.22);
+  --accent-purple:       rgba(167, 139, 250, 0.85);
+  --accent-purple-bg:    rgba(167, 139, 250, 0.08);
+  --accent-purple-border:rgba(167, 139, 250, 0.25);
+  --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="light"], .light {
+  /* Backgrounds — warm off-white, not pure white */
+  --bg-primary:           #f0ede6;
+  --bg-surface:           #e8e4dc;
+  --bg-raised:            #dedad1;
+
+  /* Borders — visible but not harsh */
+  --border-default:       rgba(0, 0, 0, 0.10);
+  --border-subtle:        rgba(0, 0, 0, 0.05);
+
+  /* Text — dark ink, not pure black */
+  --text-primary:         rgba(18, 16, 12, 0.90);
+  --text-secondary:       rgba(18, 16, 12, 0.58);
+  --text-muted:           rgba(18, 16, 12, 0.38);
+
+  /* Accents — same hues, darkened for light bg */
+  --accent-red:           rgba(180, 40, 40, 0.90);
+  --accent-red-bg:        rgba(180, 40, 40, 0.07);
+  --accent-red-border:    rgba(180, 40, 40, 0.25);
+
+  --accent-green:         #1a7a3c;
+  --accent-green-bg:      rgba(26, 122, 60, 0.07);
+  --accent-green-border:  rgba(26, 122, 60, 0.22);
+
+  --accent-orange:        #b34a1a;
+  --accent-orange-bg:     rgba(179, 74, 26, 0.07);
+  --accent-orange-border: rgba(179, 74, 26, 0.22);
+
+  --accent-amber:         rgba(160, 110, 10, 0.90);
+  --accent-amber-bg:      rgba(160, 110, 10, 0.07);
+  --accent-amber-border:  rgba(160, 110, 10, 0.25);
+
+  --accent-purple:        rgba(90, 60, 180, 0.90);
+  --accent-purple-bg:     rgba(90, 60, 180, 0.07);
+  --accent-purple-border: rgba(90, 60, 180, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html, body, #root {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  margin: 0;
+  padding: 0;
+}
+
+/* Base utility fixes */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-muted) var(--bg-primary);
+  }
+}

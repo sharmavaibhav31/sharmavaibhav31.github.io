@@ -1,0 +1,96 @@
+[
+    {
+        "id": "center",
+        "title": "VAIBHAV SHARMA",
+        "attributes": [
+            "- role: \"Backend / Systems Engineer\"",
+            "- focus: \"APIs • Distributed Systems • ML Integration\""
+        ],
+        "methods": [],
+        "color": "#94A3B8",
+        "cx": 600,
+        "cy": 450,
+        "width": 320,
+        "height": 140,
+        "description": "System Root: Orchestrating backend architecture, API design, and production-grade software deployments."
+    },
+    {
+        "id": "projects",
+        "title": "PROJECTS",
+        "attributes": [
+            "* systemsBuilt: 6",
+            "* domains: Backend • ML • Systems",
+            "* repos: github.com/sharmavaibhav31"
+        ],
+        "methods": [],
+        "color": "#3B82F6",
+        "cx": 600,
+        "cy": 150,
+        "width": 280,
+        "height": 145,
+        "description": "Repository of robust systems, APIs, and scalable infrastructure deployments."
+    },
+    {
+        "id": "experience",
+        "title": "EXPERIENCE",
+        "attributes": [
+            "* roles: 2",
+            "* productionAppUsers: 8000+",
+            "* internships: ClubChat • Infosys Springboard"
+        ],
+        "methods": [],
+        "color": "#8B5CF6",
+        "cx": 200,
+        "cy": 300,
+        "width": 300,
+        "height": 143,
+        "description": "Professional timeline recounting engineering roles and critical system ownership."
+    },
+    {
+        "id": "skills",
+        "title": "SKILLS",
+        "attributes": [
+            "* languages: Java • Python • Dart",
+            "* backend: Spring Boot • PostgreSQL",
+            "* systems: Linux • Seccomp • Docker"
+        ],
+        "methods": [],
+        "color": "#10B981",
+        "cx": 1000,
+        "cy": 300,
+        "width": 320,
+        "height": 140,
+        "description": "Inventory of languages, frameworks, databases, and operational tooling."
+    },
+    {
+        "id": "about",
+        "title": "ABOUT",
+        "attributes": [
+            "* focus: Backend Infrastructure",
+            "* interests: System Design • Automation"
+        ],
+        "methods": [],
+        "color": "#F59E0B",
+        "cx": 350,
+        "cy": 750,
+        "width": 300,
+        "height": 140,
+        "description": "Personal background, engineering philosophy, and analytical approach to problem-solving."
+    },
+    {
+        "id": "contact",
+        "title": "CONTACT",
+        "attributes": [
+            "* email: sharma31stmay@gmail.com",
+            "* github: github.com/sharmavaibhav31",
+            "* linkedin: sharmavaibhav31"
+        ],
+        "methods": [],
+        "color": "#F97316",
+        "cx": 850,
+        "cy": 750,
+        "width": 300,
+        "height": 160,
+        "description": "Communication channels for technical discussions, roles, and consulting inquiries."
+    }
+]

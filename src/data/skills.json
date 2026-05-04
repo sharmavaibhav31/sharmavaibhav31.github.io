@@ -1,0 +1,123 @@
+{
+    "capabilities": [
+        {
+            "category": "Backend Engineering",
+            "items": [
+                {
+                    "name": "Java",
+                    "tooltip": "Core backend language for scalable enterprise systems"
+                },
+                {
+                    "name": "Spring Boot",
+                    "tooltip": "REST APIs, Security, Data JPA, Validation"
+                },
+                {
+                    "name": "REST API Design",
+                    "tooltip": "Clean resource modeling and stateless interface design"
+                },
+                {
+                    "name": "PostgreSQL",
+                    "tooltip": "Relational schema design, constraints, and JSONB"
+                },
+                {
+                    "name": "Data Modeling",
+                    "tooltip": "Entity relationships and domain-driven design"
+                },
+                {
+                    "name": "Transactional Consistency",
+                    "tooltip": "Ensuring ACID properties using Spring @Transactional across boundaries"
+                },
+                {
+                    "name": "Constraint Scheduling Engine",
+                    "projectRef": "timetable-scheduler",
+                    "tooltip": "Rule-based engine for resolving multi-variable scheduling conflicts"
+                }
+            ]
+        },
+        {
+            "category": "Distributed Systems",
+            "items": [
+                {
+                    "name": "Distributed Systems",
+                    "tooltip": "Architecture for high availability and fault tolerance"
+                },
+                {
+                    "name": "Horizontal Scaling",
+                    "tooltip": "Load balancing and stateless API design"
+                },
+                {
+                    "name": "Sliding Window Rate Limiting",
+                    "projectRef": "system-design-url-shortener",
+                    "tooltip": "Preventing abuse while allowing short traffic bursts"
+                },
+                {
+                    "name": "Distributed ID Generation",
+                    "projectRef": "system-design-url-shortener",
+                    "tooltip": "Base62 encoding strategies for short unique identifiers"
+                },
+                {
+                    "name": "Failure Fallbacks",
+                    "projectRef": "moodharmonics",
+                    "tooltip": "Graceful degradation patterns in multi-service inference architectures"
+                }
+            ]
+        },
+        {
+            "category": "Infrastructure & DevOps",
+            "items": [
+                {
+                    "name": "Docker",
+                    "projectRef": "timetable-scheduler",
+                    "tooltip": "Containerizing backend services for reproducible deployments"
+                },
+                {
+                    "name": "CI/CD Pipelines",
+                    "tooltip": "Automated build workflows and testing orchestration"
+                },
+                {
+                    "name": "Flyway Database Migrations",
+                    "projectRef": "timetable-scheduler",
+                    "tooltip": "Version-controlled SQL schema evolutions"
+                },
+                {
+                    "name": "GitHub Actions",
+                    "tooltip": "Automated linting, testing, and continuous deployment"
+                },
+                {
+                    "name": "Deployment Automation",
+                    "tooltip": "Scripting infrastructure provisioning and application delivery"
+                }
+            ]
+        },
+        {
+            "category": "Applied ML Systems",
+            "items": [
+                {
+                    "name": "PyTorch",
+                    "projectRef": "moodharmonics",
+                    "tooltip": "Inference pipelines for deep learning models"
+                },
+                {
+                    "name": "TensorFlow",
+                    "projectRef": "moodharmonics",
+                    "tooltip": "Deploying and serving trained machine learning models"
+                },
+                {
+                    "name": "Local LLM Inference (llama.cpp)",
+                    "projectRef": "offline-ai-shell",
+                    "tooltip": "Running high-performance sandboxed LLMs locally in C/C++"
+                },
+                {
+                    "name": "Computer Vision (MediaPipe / OpenCV)",
+                    "projectRef": "air-notepad",
+                    "tooltip": "Real-time keypoint extraction and gesture algorithms"
+                },
+                {
+                    "name": "Audio Processing (Librosa)",
+                    "projectRef": "moodharmonics",
+                    "tooltip": "Extracting spectrograms and MFCC embeddings"
+                }
+            ]
+        }
+    ]
+}

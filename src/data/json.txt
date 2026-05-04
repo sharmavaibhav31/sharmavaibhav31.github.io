@@ -1,0 +1,140 @@
+{
+        "id": "student-permissions",
+        "title": "Automated Student Permission System",
+        "problem": "University admin processed 1,200+ permission requests/month manually. Average approval took 3–5 days.",
+        "solution": "Built a rule-based approval engine with role-specific workflows, SMS notifications, and status tracking.",
+        "architecture": "Client → API Gateway → Permission Service (rules engine) → MySQL + Twilio SMS",
+        "impact": "80% faster processing. 60% reduction in errors. 10+ admin hours saved per week.",
+        "stack": [
+            "Java",
+            "Spring Boot",
+            "MySQL",
+            "Twilio API",
+            "REST"
+        ],
+        "role": "Owned backend architecture, automation logic, and SMS integration.",
+        "github": "https://github.com/sharmavaibhav31/student-permission-system"
+    },
+    {
+        "id": "hpms-migration",
+        "title": "Hostel Permission Management — PostgreSQL Migration",
+        "problem": "Firebase/Firestore backend lacked relational integrity and made complex permission queries unreliable.",
+        "solution": "Re-implemented the entire backend on PostgreSQL with Spring Boot, enforcing strict relational constraints and a clean API layer.",
+        "architecture": "Spring Boot → Spring Security (JWT) → PostgreSQL → Structured REST API",
+        "impact": "Full functional parity with legacy system. Query reliability improved from ~85% to 100% on complex permission checks.",
+        "stack": [
+            "Java",
+            "Spring Boot",
+            "PostgreSQL",
+            "Spring Security",
+            "JWT"
+        ],
+        "role": "Sole engineer — designed schema, implemented all controllers, services, and repositories.",
+        "github": "https://github.com/sharmavaibhav31/hostel-permission-management"
+    },
+    {
+        "id": "code-quality",
+        "title": "Structural Code Quality Analyzer",
+        "problem": "Engineering teams lacked quantitative insight into which modules posed the highest change-impact risk in large codebases.",
+        "solution": "Built a static analysis pipeline: AST parsing → dependency graph construction → fragility scoring engine → structured report.",
+        "architecture": "Source Code → AST Parser → NetworkX Graph Builder → Fragility Scorer → JSON/HTML Report",
+        "impact": "Identified 30% of high-risk modules in benchmark repository with zero runtime instrumentation.",
+        "stack": [
+            "Python",
+            "NetworkX",
+            "AST",
+            "Graph Analysis"
+        ],
+        "role": "Designed scoring model, dependency resolution algorithm, and report format.",
+        "github": "https://github.com/sharmavaibhav31/structural-code-quality-analyzer"
+    },
+    {
+        "id": "Faculty-Appraisal-system",
+        "title": "Faculty Appraisal System",
+        "problem": "University scheduling was done manually — 40+ sections, 200+ course-faculty assignments, zero conflict detection.",
+        "solution": "Designed a constraint-based scheduling engine with automated conflict resolution, room allocation, and Excel export.",
+        "architecture": "Spring Boot → Scheduling Engine → PostgreSQL (Flyway migrations) → Apache POI Excel reporter",
+        "impact": "Reduced schedule generation time from 3 days to under 2 minutes. Zero data-entry conflicts post-launch.",
+        "stack": [
+            "Java",
+            "Spring Boot 3",
+            "PostgreSQL",
+            "Flyway",
+            "Apache POI",
+            "Spring Security"
+        ],
+        "role": "Sole architect — owned schema design, constraint logic, and all API layers.",
+        "github": "https://github.com/sharmavaibhav31/timetable-scheduler"
+    },
+
+
+
+
+
+
+
+    Experience
+    
+{
+            "company": "University Systems",
+            "role": "Backend Engineer",
+            "period": "2022 – 2024",
+            "bullets": [
+                "Built a timetable scheduling engine supporting 40+ sections and 200+ course–faculty assignments.",
+                "Migrated a legacy Firestore-based system to PostgreSQL with Spring Security and JWT-based authentication.",
+                "Implemented rule-based student permission workflows reducing manual approval processing time by 80%."
+            ]
+        },
+        ,
+        {
+            "company": "Open Source / Tooling",
+            "role": "Tool Developer",
+            "period": "2021 – 2022",
+            "bullets": [
+                "Developed static code analysis tool for dependency graph modeling and fragility scoring.",
+                "Built AST-driven pipeline identifying high-change-risk modules in large codebases."
+            ]
+        }
+
+
+
+        Certifications
+        {
+        "category": "Ongoing",
+        "items": [
+            {
+                "title": "MERN Stack Development (Ongoing)",
+                "issuer": "Independent",
+                "date": "Present",
+                "link": "#"
+            }
+        ]
+    }
+
+
+
+      {
+        "id": "Faculty-Appraisal-system",
+        "title": "Faculty Appraisal System",
+        "category": "Backend System",
+        "problem": "University scheduling was done manually — 40+ sections, 200+ course-faculty assignments, zero conflict detection.",
+        "solution": "Designed a constraint-based scheduling engine with automated conflict resolution, room allocation, and Excel export.",
+        "architecture": "Spring Boot → Scheduling Engine → PostgreSQL (Flyway migrations) → Apache POI Excel reporter",
+        "impact": "Reduced schedule generation time from 3 days to under 2 minutes. Zero data-entry conflicts post-launch.",
+        "stack": [
+            "Java",
+            "Spring Boot 3",
+            "PostgreSQL",
+            "Flyway",
+            "Apache POI",
+            "Spring Security"
+        ],
+        "role": "Sole architect — owned schema design, constraint logic, and all API layers.",
+        "github": "https://github.com/sharmavaibhav31/timetable-scheduler"
+    },
+
+
+    {
+                    "name": "Intelligent Systems",
+                    "tooltip": "Bridging deterministic backends with probabilistic ML models"
+                },
