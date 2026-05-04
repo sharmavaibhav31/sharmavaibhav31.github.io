@@ -26,7 +26,7 @@ dist-ssr
 .cursor/
 .cursorrules
 *.claude/
-.github/
+
 .vibecheck/
 .islstudio/
 .claudecode/
@@ -43,6 +43,6 @@ dist-ssr
 .claude/
 .claude.rules/
 .claude.rules.v2/
-.github\ copy
+
 .vscode/
 .agent/
