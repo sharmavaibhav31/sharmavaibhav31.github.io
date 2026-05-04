@@ -9,11 +9,11 @@ import { ExperienceSection } from '../components/sections/ExperienceSection';
 import { AboutSection } from '../components/sections/AboutSection';
 import { CertificationsSection } from '../components/sections/CertificationsSection';
 import { useIntersectionObserver } from '../hooks/useScrollReveal';
-import { useTheme } from '../context/ThemeContext';
+
 
 const PortfolioContent: React.FC = () => {
     useIntersectionObserver();
-    const { isDark } = useTheme();
+
 
     return (
         <div className="min-h-screen">

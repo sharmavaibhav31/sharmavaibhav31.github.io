@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import resumeData from '../../data/resume.json';
+
 
 export const Navbar: React.FC = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
