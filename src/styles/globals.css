@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary:          #0c0c0c;
-  --bg-surface:          #111111;
-  --bg-raised:           #161616;
-  --border-default:      rgba(255, 255, 255, 0.06);
-  --border-subtle:       rgba(255, 255, 255, 0.03);
-  --text-primary:        rgba(255, 255, 255, 0.88);
-  --text-secondary:      rgba(255, 255, 255, 0.42);
-  --text-muted:          rgba(255, 255, 255, 0.18);
+  --bg-primary:          #0d0d0d;
+  --bg-surface:          #141414;
+  --bg-raised:           #1a1a1a;
+  --border-default:      rgba(255, 255, 255, 0.10);
+  --border-subtle:       rgba(255, 255, 255, 0.06);
+  --text-primary:        #f5f5f5;
+  --text-secondary:      #c8c8c8;
+  --text-muted:          #8e8e8e;
   --accent-red:          rgba(255, 80, 80, 0.85);
   --accent-red-bg:       rgba(255, 80, 80, 0.08);
   --accent-red-border:   rgba(255, 80, 80, 0.28);
