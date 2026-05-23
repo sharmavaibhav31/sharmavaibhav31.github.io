@@ -1,5 +1,31 @@
 [
     {
+        "id": "jobhunter",
+        "title": "Arachnode — Automated Job Discovery & Outreach System",
+        "category": "Automation",
+        "problem": "Engineering placement season means manually checking Wellfound, Naukri, LinkedIn, and a dozen other platforms every day, copy-pasting cold emails, and losing track of every company you've reached out to — with no structure and no automation.",
+        "solution": "Built a self-hosted microservice system that crawls startup job boards, scrapes structured platforms, discovers hiring manager contacts via OSINT, and drafts personalized cold emails using a locally running LLM — all automated on a schedule with a dashboard to track every application.",
+        "architecture": "Scheduler → Crawler Service (Scrapy + Playwright) + Platform Scraper (Playwright + httpx) → Redis Streams → Aggregator (FastAPI + PostgreSQL) → Contact Discovery Service → Cold Email Generator (Jinja2 + Ollama) → API Gateway → Vanilla JS Dashboard",
+        "impact": "Eliminates manual job hunting across 6+ platforms, auto-discovers hiring manager contacts using public OSINT data, and generates personalized cold emails with zero API cost — running entirely on a local machine with one docker-compose up.",
+        "stack": [
+            "Python 3.11",
+            "Scrapy",
+            "Playwright",
+            "FastAPI",
+            "PostgreSQL",
+            "Redis Streams",
+            "asyncpg",
+            "APScheduler",
+            "Jinja2",
+            "Ollama",
+            "httpx",
+            "BeautifulSoup4",
+            "Docker"
+        ],
+        "role": "Designed the full microservice architecture, implemented the crawler and ATS detection pipeline, built the Redis Streams event backbone, developed the contact discovery OSINT pipeline, integrated Ollama for local LLM email generation, and authored the contributor infrastructure including agent instruction files for Claude Code, Cursor, Blackbox, and AntiGravity.",
+        "github": "https://github.com/sharmavaibhav31/arachnode"
+    },
+    {
         "id": "timetable-scheduler",
         "title": "Academic Timetable Scheduling Engine",
         "category": "Automation",
