@@ -26,6 +26,31 @@
         "github": "https://github.com/sharmavaibhav31/arachnode"
     },
     {
+        "id": "fams",
+        "title": "FAMS — Faculty Appraisal Management System",
+        "category": "Enterprise Workflow System",
+        "problem": "Faculty appraisal workflows in colleges are typically handled through fragmented spreadsheets, PDFs, manual verification chains, and email-based approvals, making the process error-prone, non-auditable, and difficult to scale across departments and review hierarchies.",
+        "solution": "Built a full-stack appraisal workflow platform that digitizes the faculty evaluation lifecycle with role-based workflows for faculty, HODs, principals, and administrators. The system supports structured multi-section appraisal submissions, approval pipelines, review scoring, academic cycle management, and centralized administrative controls with secure JWT authentication.",
+        "architecture": "React + TypeScript Frontend → Adapter / Anti-Corruption Layer → Axios API Gateway → Spring Boot Modular Monolith → Service Layer + Validation Layer → Hibernate ORM → PostgreSQL → JWT Security + Role-Based Access Control",
+        "impact": "Replaced manual appraisal handling with a structured workflow-driven platform capable of managing multi-role academic evaluations, approval transitions, and appraisal lifecycle tracking through a centralized web interface with production-grade authentication and scalable backend architecture.",
+        "stack": [
+            "Java 21",
+            "Spring Boot",
+            "Spring Security",
+            "Hibernate",
+            "PostgreSQL",
+            "JWT Authentication",
+            "React",
+            "TypeScript",
+            "Axios",
+            "Vite",
+            "Docker",
+            "REST APIs"
+        ],
+        "role": "Designed and implemented the backend architecture, database schema, authentication system, workflow APIs, and role-based authorization logic. Built and integrated the frontend-backend adapter layer to decouple UI models from backend DTO contracts, implemented appraisal workflow transitions, secured protected APIs with JWT, normalized entity relationships using Hibernate, and coordinated frontend integration for dynamic multi-section appraisal forms.",
+        "github": "https://github.com/sharmavaibhav31/Appraisal-Management-System.git"
+    },
+    {
         "id": "timetable-scheduler",
         "title": "Academic Timetable Scheduling Engine",
         "category": "Automation",
