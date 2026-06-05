@@ -48,3 +48,8 @@ dist-ssr
 .agent/
 .env
 .env/
+.agents/
+graphofy-out/
+graphify-out/
+run_graph.sh
+run_graphify.sh
