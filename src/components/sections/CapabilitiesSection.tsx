@@ -49,10 +49,10 @@ export const CapabilitiesSection: React.FC = () => {
                             style={{ borderColor: 'var(--border-default)' }}>
                             {/* Category Header */}
                             <div className="flex items-center gap-[10px] pt-[1rem] pb-[0.6rem]">
-                                <span className="font-mono text-[12px]" style={{ color: 'var(--text-muted)' }}>
+                                <span className="font-mono text-[12px]" style={{ color: '#6a6a6a' }}>
                                     {getCategoryGlyph(cap.category)}
                                 </span>
-                                <span className="font-sans text-[13px] font-bold" style={{ color: 'var(--text-primary)' }}>
+                                <span className="font-sans text-[13px] font-[600]" style={{ color: '#f5f5f5' }}>
                                     {cap.category}
                                 </span>
                             </div>
@@ -62,30 +62,21 @@ export const CapabilitiesSection: React.FC = () => {
                                 {cap.items.map((item, index) => (
                                     <div 
                                         key={index}
-                                        className="group flex items-center justify-between py-[6px] border-b-[0.5px] transition-all duration-150 ease-in-out cursor-default"
-                                        style={{ borderColor: 'var(--border-subtle)' }}
+                                        className="group flex items-center justify-between cursor-default transition-all duration-150 ease hover:bg-[rgba(255,255,255,0.03)]"
+                                        style={{ 
+                                            padding: '7px 0',
+                                            borderBottom: '0.5px solid rgba(255,255,255,0.05)'
+                                        }}
                                         title={item.tooltip}
-                                        onMouseEnter={e => {
-                                            e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-                                            (e.currentTarget.firstChild as HTMLElement).style.color = '#f5f5f5';
-                                        }}
-                                        onMouseLeave={e => {
-                                            e.currentTarget.style.background = 'transparent';
-                                            (e.currentTarget.firstChild as HTMLElement).style.color = 'var(--text-secondary)';
-                                        }}
                                     >
-                                        <span className="font-mono text-[12px] transition-all duration-150 ease-in-out"
-                                            style={{ color: 'var(--text-secondary)' }}>
+                                        <span className="font-mono text-[11.5px] text-[#c8c8c8] group-hover:text-[#f5f5f5] transition-colors duration-150 ease">
                                             {item.name}
                                         </span>
                                         {item.projectRef && (
                                             <a 
                                                 href="#work"
-                                                className="font-mono px-2 cursor-pointer transition-colors duration-150"
-                                                style={{ color: 'var(--text-muted)' }}
+                                                className="font-mono px-2 cursor-pointer text-[rgba(255,255,255,0.25)] group-hover:text-[#4ade80] transition-colors duration-150 ease"
                                                 title="View related project"
-                                                onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent-green)')}
-                                                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                                             >
                                                 →
                                             </a>
