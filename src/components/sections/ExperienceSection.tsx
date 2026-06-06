@@ -5,7 +5,7 @@ import React from 'react';
 import resumeData from '../../data/resume.json';
 
 export const ExperienceSection: React.FC = () => (
-    <section id="experience" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+    <section id="experience" aria-label="Experience" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
         {/* SECTION HEADER BAR */}
         <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
             style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
@@ -20,7 +20,7 @@ export const ExperienceSection: React.FC = () => (
         {/* CONTENT */}
         <div className="w-full px-[16px] sm:px-8 py-0 sm:py-[2rem]">
             {resumeData.experience.map((exp, i) => (
-                <div 
+                <article 
                     key={i}
                     className={`py-[16px] sm:py-0 ${i !== resumeData.experience.length - 1 ? 'border-b-[0.5px] border-[rgba(255,255,255,0.05)] sm:border-none' : ''}`}
                 >
@@ -35,9 +35,9 @@ export const ExperienceSection: React.FC = () => (
                             <h3 className="font-sans text-[14px] sm:text-[15px] font-[700] mb-[2px] text-[#f5f5f5] sm:text-[var(--text-primary)]">
                                 {exp.role}
                             </h3>
-                            <div className="font-mono text-[10px] sm:text-[11px] mb-[8px] sm:mb-[10px]" style={{ color: '#8e8e8e' }}>
+                            <h4 className="font-mono text-[10px] sm:text-[11px] mb-[8px] sm:mb-[10px]" style={{ color: '#8e8e8e' }}>
                                 {exp.company}
-                            </div>
+                            </h4>
                             
                             <div className="flex flex-col">
                                 {exp.bullets.map((bullet, j) => (
@@ -59,7 +59,7 @@ export const ExperienceSection: React.FC = () => (
                         <div className="hidden sm:block w-full h-px border-b-[0.5px] mt-[1rem] mb-[2rem]"
                             style={{ borderColor: 'var(--border-subtle)' }} />
                     )}
-                </div>
+                </article>
             ))}
         </div>
     </section>

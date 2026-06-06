@@ -29,7 +29,7 @@ export const CapabilitiesSection: React.FC = () => {
     const totalSkills = typedSkillsData.capabilities.reduce((acc, cat) => acc + cat.items.length, 0);
 
     return (
-        <section id="capabilities" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+        <section id="skills" aria-label="Skills" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
             {/* SECTION HEADER BAR */}
             <div className="w-full h-[36px] border-y-[0.5px] px-[16px] sm:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
@@ -45,7 +45,7 @@ export const CapabilitiesSection: React.FC = () => {
             <div className="w-full px-[16px] sm:px-8 py-[2rem]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[3rem] lg:gap-x-[4rem] gap-y-[2.5rem]">
                     {typedSkillsData.capabilities.map((cap) => (
-                        <div key={cap.category} className="border-t-[0.5px] flex flex-col"
+                        <div key={cap.category} role="group" aria-label={cap.category} className="border-t-[0.5px] flex flex-col"
                             style={{ borderColor: 'var(--border-default)' }}>
                             {/* Category Header */}
                             <div className="flex items-center gap-[10px] pt-[1rem] pb-[0.6rem]">

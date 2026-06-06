@@ -8,7 +8,7 @@ const paragraphs = (resumeData as any).about?.paragraphs || [resumeData.philosop
 const hobbies = (resumeData as any).hobbies || ["Systems Architecture", "Low-level Programming", "Open Source Contribution", "Cybersecurity Research"];
 
 export const AboutSection: React.FC = () => (
-    <section id="about" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+    <section id="about" aria-label="About" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
         {/* SECTION HEADER BAR */}
         <div className="w-full h-[36px] border-y-[0.5px] px-[16px] sm:px-8 flex justify-between items-center shrink-0"
             style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>

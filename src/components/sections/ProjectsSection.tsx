@@ -43,7 +43,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
     const badgeStyle = getBadgeStyle(project.category);
 
     return (
-        <div 
+        <article 
             className="flex flex-col p-[16px] sm:p-[14px] lg:p-6 border-b-[0.5px] border-[rgba(255,255,255,0.06)] sm:border-b-0" 
             style={{ background: '#0d0d0d' }}
         >
@@ -161,7 +161,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                     )}
                 </div>
             </div>
-        </div>
+        </article>
     );
 };
 
@@ -186,7 +186,7 @@ export const ProjectsSection: React.FC = () => {
     );
 
     return (
-        <section id="work" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+        <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
             <style dangerouslySetInnerHTML={{__html: `
                 .project-desc-clamp {
                     display: -webkit-box;

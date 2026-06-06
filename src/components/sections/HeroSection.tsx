@@ -44,9 +44,9 @@ export const HeroSection: React.FC = () => {
                         <h1 className="font-sans text-[36px] sm:text-[56px] lg:text-[73px] font-black leading-[0.92] sm:leading-[0.88] tracking-[-1px] sm:tracking-[-2px] uppercase mb-[6px] sm:mb-2 break-keep whitespace-normal" style={{ color: 'var(--text-primary)' }}>
                             {resumeData.name.split(' ').map((n, i, arr) => <React.Fragment key={i}>{n}{i !== arr.length - 1 && <br />}</React.Fragment>)}
                         </h1>
-                        <div className="font-mono text-[10.5px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase" style={{ color: 'var(--text-muted)' }}>
+                        <h2 role="doc-subtitle" className="font-mono text-[10.5px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase" style={{ color: 'var(--text-muted)' }}>
                             {resumeData.title}
-                        </div>
+                        </h2>
                     </div>
 
                     {/* MOBILE PHOTO BLOCK */}
