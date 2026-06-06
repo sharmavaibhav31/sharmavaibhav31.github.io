@@ -8,17 +8,17 @@ export const Footer: React.FC = () => {
     const year = new Date().getFullYear();
     
     return (
-        <footer className="w-full h-[48px] border-t-[0.5px] px-4 md:px-8 flex items-center justify-between mt-auto"
+        <footer className="w-full min-h-[48px] py-4 sm:py-0 sm:h-[48px] border-t-[0.5px] px-[16px] sm:px-8 flex flex-col sm:flex-row items-center justify-between mt-auto gap-3 sm:gap-0"
             style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
             
             {/* Left: System log end */}
-            <div className="font-mono text-[10px] tracking-[0.12em] uppercase"
+            <div className="font-mono text-[10px] tracking-[0.12em] uppercase text-center sm:text-left"
                 style={{ color: 'var(--text-muted)' }}>
                 © {year} VAIBHAV SHARMA. SYSTEM_LOG_END.
             </div>
 
             {/* Right: Social Links */}
-            <div className="flex items-center gap-[1rem]">
+            <div className="flex items-center justify-center gap-[1rem] flex-wrap">
                 {[
                     { label: '[GITHUB]', href: resumeData.socials.github, external: true },
                     { label: '[LINKEDIN]', href: resumeData.socials.linkedin, external: true },
@@ -29,10 +29,7 @@ export const Footer: React.FC = () => {
                         href={link.href}
                         target={link.external ? '_blank' : undefined}
                         rel={link.external ? 'noopener noreferrer' : undefined}
-                        className="font-mono text-[10px] tracking-[0.12em] transition-colors duration-150"
-                        style={{ color: 'var(--text-muted)' }}
-                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                        className="font-mono text-[10px] tracking-[0.12em] transition-colors duration-150 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
                     >
                         {link.label}
                     </a>

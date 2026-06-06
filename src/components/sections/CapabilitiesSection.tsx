@@ -31,7 +31,7 @@ export const CapabilitiesSection: React.FC = () => {
     return (
         <section id="capabilities" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
             {/* SECTION HEADER BAR */}
-            <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
+            <div className="w-full h-[36px] border-y-[0.5px] px-[16px] sm:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
                 <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                     CAPABILITIES MANIFEST
@@ -42,8 +42,8 @@ export const CapabilitiesSection: React.FC = () => {
             </div>
 
             {/* CONTENT */}
-            <div className="w-full px-4 md:px-8 py-[2rem]">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[4rem] gap-y-[2.5rem]">
+            <div className="w-full px-[16px] sm:px-8 py-[2rem]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[3rem] lg:gap-x-[4rem] gap-y-[2.5rem]">
                     {typedSkillsData.capabilities.map((cap) => (
                         <div key={cap.category} className="border-t-[0.5px] flex flex-col"
                             style={{ borderColor: 'var(--border-default)' }}>

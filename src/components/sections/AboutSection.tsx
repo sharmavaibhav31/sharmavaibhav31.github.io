@@ -10,7 +10,7 @@ const hobbies = (resumeData as any).hobbies || ["Systems Architecture", "Low-lev
 export const AboutSection: React.FC = () => (
     <section id="about" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
         {/* SECTION HEADER BAR */}
-        <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
+        <div className="w-full h-[36px] border-y-[0.5px] px-[16px] sm:px-8 flex justify-between items-center shrink-0"
             style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
             <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                 OPERATIVE PROFILE
@@ -22,8 +22,8 @@ export const AboutSection: React.FC = () => (
         </div>
 
         {/* CONTENT */}
-        <div className="w-full px-4 md:px-8 py-[3rem]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[4rem]">
+        <div className="w-full px-[16px] sm:px-8 py-[2rem] sm:py-[3rem]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[2.5rem] sm:gap-[4rem]">
                 
                 {/* Left Column - Philosophy/Paragraphs */}
                 <div className="flex flex-col gap-[1.5rem]">
@@ -71,10 +71,7 @@ export const AboutSection: React.FC = () => (
                                 href={link.href}
                                 target={link.external ? '_blank' : undefined}
                                 rel={link.external ? 'noopener noreferrer' : undefined}
-                                className="font-mono text-[11px] transition-colors"
-                                style={{ color: 'var(--text-muted)' }}
-                                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-                                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                                className="font-mono text-[11px] transition-colors duration-150 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
                             >
                                 {link.label}
                             </a>

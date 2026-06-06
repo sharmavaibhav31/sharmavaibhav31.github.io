@@ -17,7 +17,7 @@ export const CertificationsSection: React.FC = () => {
     return (
         <section id="certifications" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
             {/* SECTION HEADER BAR */}
-            <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
+            <div className="w-full h-[36px] border-y-[0.5px] px-[16px] sm:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
                 <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
                     CREDENTIALS VERIFIED
@@ -35,10 +35,8 @@ export const CertificationsSection: React.FC = () => {
                         href={cert.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full p-[12px_2rem] border-b-[0.5px] transition-colors duration-150 grid grid-cols-1 sm:grid-cols-[1fr_180px_100px] items-center gap-2 sm:gap-0"
+                        className="w-full p-[12px_16px] sm:p-[12px_2rem] border-b-[0.5px] transition-colors duration-150 grid grid-cols-1 sm:grid-cols-[1fr_180px_100px] items-center gap-2 sm:gap-0 hover:bg-[rgba(255,255,255,0.02)]"
                         style={{ borderColor: 'var(--border-subtle)' }}
-                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
-                        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
                         {/* Left: Name & Issuer */}
                         <div className="flex flex-col">
