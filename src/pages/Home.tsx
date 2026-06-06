@@ -9,14 +9,14 @@ import { ExperienceSection } from '../components/sections/ExperienceSection';
 import { AboutSection } from '../components/sections/AboutSection';
 import { CertificationsSection } from '../components/sections/CertificationsSection';
 import { useIntersectionObserver } from '../hooks/useScrollReveal';
-
+import { BottomNav } from '../components/layout/BottomNav';
 
 const PortfolioContent: React.FC = () => {
     useIntersectionObserver();
 
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen pb-[52px] sm:pb-0">
             <Header />
             <main id="main-content">
                 <HeroSection />
@@ -27,6 +27,7 @@ const PortfolioContent: React.FC = () => {
                 <AboutSection />
             </main>
             <Footer />
+            <BottomNav />
         </div>
     );
 };
