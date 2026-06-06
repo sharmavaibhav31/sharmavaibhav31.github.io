@@ -43,7 +43,10 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
     const badgeStyle = getBadgeStyle(project.category);
 
     return (
-        <div className="flex flex-col p-6" style={{ background: '#0d0d0d' }}>
+        <div 
+            className="flex flex-col p-[16px] sm:p-[14px] lg:p-6 border-b-[0.5px] border-[rgba(255,255,255,0.06)] sm:border-b-0" 
+            style={{ background: '#0d0d0d' }}
+        >
             {/* Top row */}
             <div className="flex justify-between items-center mb-4">
                 <span className="font-mono text-[10px] text-[#6a6a6a]">{formattedIndex}</span>
@@ -68,13 +71,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
 
             {/* Description */}
             <div 
-                className="font-sans text-[12px] text-[#c8c8c8] leading-[1.6] mb-[10px]"
-                style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                }}
+                className="project-desc-clamp font-sans text-[12px] text-[#c8c8c8] leading-[1.6] mb-[10px]"
             >
                 {project.solution}
             </div>
@@ -134,24 +131,24 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
 
             {/* Footer */}
             <div 
-                className="flex justify-between items-center mt-auto pt-[10px]"
+                className="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-auto pt-[10px] gap-3 sm:gap-0"
                 style={{ borderTop: '0.5px solid rgba(255,255,255,0.06)' }}
             >
-                <div className="font-mono text-[9px] text-[#6a6a6a] italic max-w-[55%] whitespace-nowrap overflow-hidden text-ellipsis">
+                <div className="font-mono text-[9px] text-[#6a6a6a] italic whitespace-nowrap overflow-hidden text-ellipsis sm:max-w-[55%]">
                     {project.role}
                 </div>
                 
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full sm:w-auto">
                     <button 
                         onClick={() => setIsOpen(!isOpen)}
-                        className="font-mono text-[9px] px-[10px] py-[3px] bg-transparent transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer"
+                        className="flex-1 sm:flex-none flex items-center justify-center font-mono text-[10px] sm:text-[9px] px-[10px] h-[36px] sm:h-auto sm:py-[3px] bg-transparent transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer"
                         style={{ color: '#8e8e8e', border: '0.5px solid rgba(255,255,255,0.12)' }}
                     >
                         Architecture {isOpen ? '▴' : '▾'}
                     </button>
                     {project.github && (
                         <button 
-                            className="font-mono text-[9px] px-[10px] py-[3px] transition-colors hover:bg-[rgba(255,65,65,0.15)] cursor-pointer"
+                            className="shrink-0 flex items-center justify-center font-mono text-[10px] sm:text-[9px] px-[20px] sm:px-[10px] h-[36px] sm:h-auto sm:py-[3px] transition-colors hover:bg-[rgba(255,65,65,0.15)] cursor-pointer"
                             style={{ 
                                 color: 'rgba(255,80,80,0.8)', 
                                 background: 'rgba(255,65,65,0.08)',
@@ -190,6 +187,23 @@ export const ProjectsSection: React.FC = () => {
 
     return (
         <section id="work" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+            <style dangerouslySetInnerHTML={{__html: `
+                .project-desc-clamp {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -webkit-line-clamp: 4;
+                }
+                @media (min-width: 640px) {
+                    .project-desc-clamp {
+                        -webkit-line-clamp: 3;
+                    }
+                }
+                .filter-scrollbar-hide::-webkit-scrollbar {
+                    display: none;
+                }
+            `}} />
+
             {/* SECTION HEADER BAR */}
             <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
                 style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
@@ -202,8 +216,12 @@ export const ProjectsSection: React.FC = () => {
             </div>
 
             {/* FILTER ROW */}
-            <div className="w-full px-4 md:px-8 py-[1rem] flex flex-wrap gap-0 border-b-[0.5px]"
-                style={{ borderColor: 'var(--border-default)' }}>
+            <div className="filter-scrollbar-hide w-full px-4 md:px-8 py-[1rem] flex flex-row sm:flex-wrap gap-0 border-b-[0.5px] overflow-x-auto overflow-y-hidden"
+                style={{ 
+                    borderColor: 'var(--border-default)',
+                    scrollbarWidth: 'none',
+                    WebkitOverflowScrolling: 'touch'
+                }}>
                 {filters.map(filter => {
                     const isActive = activeFilter === filter;
                     const displayLabel = filter === 'ALL' ? 'ALL' : getDisplayLabel(filter);
@@ -211,7 +229,7 @@ export const ProjectsSection: React.FC = () => {
                         <button
                             key={filter}
                             onClick={() => setActiveFilter(filter)}
-                            className="font-mono text-[10px] tracking-[0.12em] px-[16px] py-[6px] bg-transparent cursor-pointer transition-all duration-150 border-b-[2px]"
+                            className="font-mono text-[10px] tracking-[0.12em] px-[14px] sm:px-[16px] py-[6px] bg-transparent cursor-pointer transition-all duration-150 border-b-[2px] whitespace-nowrap shrink-0"
                             style={{
                                 color: isActive ? '#4ade80' : '#6a6a6a',
                                 borderBottomColor: isActive ? '#4ade80' : 'transparent',
@@ -225,8 +243,7 @@ export const ProjectsSection: React.FC = () => {
 
             {/* PROJECT GRID */}
             <div 
-                className="w-full grid grid-cols-1 sm:grid-cols-2 gap-[1px]"
-                style={{ background: '#1a1a1a' }}
+                className="w-full grid grid-cols-1 sm:grid-cols-2 sm:gap-[1px] bg-transparent sm:bg-[#1a1a1a]"
             >
                 {filteredProjects.map((project, index) => (
                     <ProjectCard key={project.id} project={project as Project} index={index} />
