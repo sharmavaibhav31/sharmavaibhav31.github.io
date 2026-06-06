@@ -41,8 +41,8 @@ export const HeroSection: React.FC = () => {
                         <div className="font-mono text-[10px] tracking-[0.2em] mb-[0.5rem]" style={{ color: '#6a6a6a' }}>
                             // PERSONNEL FILE
                         </div>
-                        <h1 className="font-sans text-[48px] sm:text-[56px] lg:text-[73px] font-black leading-[0.88] tracking-[-1.5px] sm:tracking-[-2px] uppercase mb-[6px] sm:mb-2" style={{ color: 'var(--text-primary)' }}>
-                            {resumeData.name.split(' ').map((n, i) => <React.Fragment key={i}>{n}<br className="hidden sm:block" /></React.Fragment>)}
+                        <h1 className="font-sans text-[36px] sm:text-[56px] lg:text-[73px] font-black leading-[0.92] sm:leading-[0.88] tracking-[-1px] sm:tracking-[-2px] uppercase mb-[6px] sm:mb-2 break-keep whitespace-normal" style={{ color: 'var(--text-primary)' }}>
+                            {resumeData.name.split(' ').map((n, i, arr) => <React.Fragment key={i}>{n}{i !== arr.length - 1 && <br />}</React.Fragment>)}
                         </h1>
                         <div className="font-mono text-[10.5px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase" style={{ color: 'var(--text-muted)' }}>
                             {resumeData.title}
@@ -51,19 +51,19 @@ export const HeroSection: React.FC = () => {
 
                     {/* MOBILE PHOTO BLOCK */}
                     <div 
-                        className="sm:hidden w-full aspect-[4/3] relative overflow-hidden my-[16px] cursor-pointer"
+                        className="sm:hidden w-full aspect-[3/4] relative overflow-hidden my-[16px] cursor-pointer"
                         style={{ background: '#1a1a1a', border: '0.5px solid rgba(255,255,255,0.08)' }}
                         onClick={() => setIsPhotoRevealed(!isPhotoRevealed)}
                     >
                         {/* Tapped State: Image */}
                         <div 
-                            className="absolute inset-0 flex flex-col items-center justify-center z-20 transition-opacity duration-[350ms] ease-in-out"
+                            className="absolute inset-0 z-20 transition-opacity duration-[350ms] ease-in-out"
                             style={{ opacity: isPhotoRevealed ? 1 : 0, pointerEvents: isPhotoRevealed ? 'auto' : 'none' }}
                         >
                             <img 
                                 src={`${import.meta.env.BASE_URL}vaibhav_sharma.png`} 
                                 alt="Vaibhav Sharma" 
-                                className="w-full h-full object-cover object-top block"
+                                className="absolute inset-0 w-full h-full object-cover object-top block"
                             />
                             <div 
                                 className="absolute bottom-[10px] left-[10px] text-[9px] font-mono tracking-[0.14em]"
