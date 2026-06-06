@@ -30,10 +30,10 @@ export const ExperienceSection: React.FC = () => (
 
                         {/* Right Column - Details */}
                         <div className="flex flex-col flex-1">
-                            <h3 className="font-sans text-[15px] font-bold mb-[2px]" style={{ color: 'var(--text-primary)' }}>
+                            <h3 className="font-sans text-[15px] font-[700] mb-[2px]" style={{ color: 'var(--text-primary)' }}>
                                 {exp.role}
                             </h3>
-                            <div className="font-mono text-[11px] mb-[10px]" style={{ color: 'var(--text-muted)' }}>
+                            <div className="font-mono text-[11px] mb-[10px]" style={{ color: '#8e8e8e' }}>
                                 {exp.company}
                             </div>
                             
@@ -41,9 +41,9 @@ export const ExperienceSection: React.FC = () => (
                                 {exp.bullets.map((bullet, j) => (
                                     <div key={j} className="flex gap-[10px] items-start mb-[4px]">
                                         <span className="w-[3px] h-[3px] rounded-full shrink-0 mt-[7px]"
-                                            style={{ background: 'var(--accent-green)' }}></span>
+                                            style={{ background: '#4ade80' }}></span>
                                         <span className="font-mono text-[12px] leading-[1.7]"
-                                            style={{ color: 'var(--text-secondary)' }}>
+                                            style={{ color: '#c8c8c8' }}>
                                             {bullet}
                                         </span>
                                     </div>
@@ -54,7 +54,7 @@ export const ExperienceSection: React.FC = () => (
 
                     {/* Entry separator */}
                     {i !== resumeData.experience.length - 1 && (
-                        <div className="w-full h-px border-b-[0.5px] my-[1.5rem]"
+                        <div className="w-full h-px border-b-[0.5px] mt-[1rem] mb-[2rem]"
                             style={{ borderColor: 'var(--border-subtle)' }} />
                     )}
                 </div>
