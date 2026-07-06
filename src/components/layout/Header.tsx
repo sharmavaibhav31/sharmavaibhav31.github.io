@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import resumeData from '../../data/resume.json';
 import { ThemeToggle } from '../ui/theme-toggle';
 
 const NAV_LINKS = [
-    { label: 'WORK', href: '#work' },
-    { label: 'EXPERIENCE', href: '#experience' },
-    { label: 'SKILLS', href: '#capabilities' },
-    { label: 'ABOUT', href: '#about' },
+    { label: 'WORK', href: '#work', isRoute: false },
+    { label: 'EXPERIENCE', href: '#experience', isRoute: false },
+    { label: 'SKILLS', href: '#capabilities', isRoute: false },
+    { label: 'ABOUT', href: '#about', isRoute: false },
+    { label: 'CV', href: '/cv', isRoute: true },
 ];
 
 const SOCIAL_LINKS = [
@@ -50,16 +52,29 @@ export const Header: React.FC = () => {
                 {/* Center: Nav links (Hidden on mobile/tablet) */}
                 <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
                     {NAV_LINKS.map((link) => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            className="font-mono text-[13px] tracking-[0.16em] uppercase transition-colors duration-150"
-                            style={{ color: 'var(--text-muted)' }}
-                            onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-primary)')}
-                            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-                        >
-                            {link.label}
-                        </a>
+                        link.isRoute ? (
+                            <Link
+                                key={link.label}
+                                to={link.href}
+                                className="font-mono text-[13px] tracking-[0.16em] uppercase transition-colors duration-150"
+                                style={{ color: 'var(--text-muted)' }}
+                                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-primary)')}
+                                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                            >
+                                {link.label}
+                            </Link>
+                        ) : (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                className="font-mono text-[13px] tracking-[0.16em] uppercase transition-colors duration-150"
+                                style={{ color: 'var(--text-muted)' }}
+                                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-primary)')}
+                                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                            >
+                                {link.label}
+                            </a>
+                        )
                     ))}
                 </nav>
 
@@ -148,20 +163,38 @@ export const Header: React.FC = () => {
                     {/* Nav Links */}
                     <div className="flex flex-col w-[80%] max-w-[300px] text-center">
                         {NAV_LINKS.map((link) => (
-                            <a
-                                key={link.label}
-                                onClick={() => handleLinkClick(link.href)}
-                                className="font-sans font-[700] block cursor-pointer transition-opacity active:opacity-70"
-                                style={{ 
-                                    fontSize: '28px', 
-                                    color: 'rgba(255,255,255,0.85)',
-                                    letterSpacing: '-0.5px',
-                                    padding: '16px 0',
-                                    borderBottom: '0.5px solid rgba(255,255,255,0.06)'
-                                }}
-                            >
-                                {link.label}
-                            </a>
+                            link.isRoute ? (
+                                <Link
+                                    key={link.label}
+                                    to={link.href}
+                                    onClick={() => setIsDrawerOpen(false)}
+                                    className="font-sans font-[700] block cursor-pointer transition-opacity active:opacity-70"
+                                    style={{ 
+                                        fontSize: '28px', 
+                                        color: 'rgba(255,255,255,0.85)',
+                                        letterSpacing: '-0.5px',
+                                        padding: '16px 0',
+                                        borderBottom: '0.5px solid rgba(255,255,255,0.06)'
+                                    }}
+                                >
+                                    {link.label}
+                                </Link>
+                            ) : (
+                                <a
+                                    key={link.label}
+                                    onClick={() => handleLinkClick(link.href)}
+                                    className="font-sans font-[700] block cursor-pointer transition-opacity active:opacity-70"
+                                    style={{ 
+                                        fontSize: '28px', 
+                                        color: 'rgba(255,255,255,0.85)',
+                                        letterSpacing: '-0.5px',
+                                        padding: '16px 0',
+                                        borderBottom: '0.5px solid rgba(255,255,255,0.06)'
+                                    }}
+                                >
+                                    {link.label}
+                                </a>
+                            )
                         ))}
                     </div>
 

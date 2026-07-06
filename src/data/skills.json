@@ -8,57 +8,61 @@
                     "tooltip": "Core backend language for scalable enterprise systems"
                 },
                 {
+                    "name": "Python",
+                    "tooltip": "Language for microservices, scrapers, and ML pipelines"
+                },
+                {
+                    "name": "C",
+                    "tooltip": "Systems-level programming, security, and sandboxing"
+                },
+                {
                     "name": "Spring Boot",
                     "tooltip": "REST APIs, Security, Data JPA, Validation"
                 },
                 {
-                    "name": "REST API Design",
+                    "name": "FastAPI",
+                    "tooltip": "Asynchronous python web APIs"
+                },
+                {
+                    "name": "Flask",
+                    "tooltip": "Lightweight python web services and ML interfaces"
+                },
+                {
+                    "name": "Express.js",
+                    "tooltip": "Node.js web frameworks"
+                },
+                {
+                    "name": "REST APIs",
                     "tooltip": "Clean resource modeling and stateless interface design"
                 },
+                {
+                    "name": "JWT & RBAC",
+                    "tooltip": "JSON Web Tokens and Role-Based Access Control"
+                }
+            ]
+        },
+        {
+            "category": "Data & Databases",
+            "items": [
                 {
                     "name": "PostgreSQL",
                     "tooltip": "Relational schema design, constraints, and JSONB"
                 },
                 {
-                    "name": "Data Modeling",
-                    "tooltip": "Entity relationships and domain-driven design"
+                    "name": "Redis Streams",
+                    "tooltip": "Event backbone and messaging consumer groups"
                 },
                 {
-                    "name": "Transactional Consistency",
-                    "tooltip": "Ensuring ACID properties using Spring @Transactional across boundaries"
+                    "name": "MongoDB",
+                    "tooltip": "Document storage for metadata and user states"
                 },
                 {
-                    "name": "Constraint Scheduling Engine",
-                    "projectRef": "timetable-scheduler",
-                    "tooltip": "Rule-based engine for resolving multi-variable scheduling conflicts"
-                }
-            ]
-        },
-        {
-            "category": "Distributed Systems",
-            "items": [
-                {
-                    "name": "Distributed Systems",
-                    "tooltip": "Architecture for high availability and fault tolerance"
+                    "name": "Flyway",
+                    "tooltip": "Version-controlled SQL schema database migrations"
                 },
                 {
-                    "name": "Horizontal Scaling",
-                    "tooltip": "Load balancing and stateless API design"
-                },
-                {
-                    "name": "Sliding Window Rate Limiting",
-                    "projectRef": "system-design-url-shortener",
-                    "tooltip": "Preventing abuse while allowing short traffic bursts"
-                },
-                {
-                    "name": "Distributed ID Generation",
-                    "projectRef": "system-design-url-shortener",
-                    "tooltip": "Base62 encoding strategies for short unique identifiers"
-                },
-                {
-                    "name": "Failure Fallbacks",
-                    "projectRef": "moodharmonics",
-                    "tooltip": "Graceful degradation patterns in multi-service inference architectures"
+                    "name": "Prisma",
+                    "tooltip": "Type-safe database client and ORM"
                 }
             ]
         },
@@ -67,55 +71,53 @@
             "items": [
                 {
                     "name": "Docker",
-                    "projectRef": "timetable-scheduler",
                     "tooltip": "Containerizing backend services for reproducible deployments"
                 },
                 {
-                    "name": "CI/CD Pipelines",
-                    "tooltip": "Automated build workflows and testing orchestration"
-                },
-                {
-                    "name": "Flyway Database Migrations",
-                    "projectRef": "timetable-scheduler",
-                    "tooltip": "Version-controlled SQL schema evolutions"
+                    "name": "Nginx",
+                    "tooltip": "Reverse proxy, SSL termination, and static site serving"
                 },
                 {
                     "name": "GitHub Actions",
                     "tooltip": "Automated linting, testing, and continuous deployment"
                 },
                 {
-                    "name": "Deployment Automation",
-                    "tooltip": "Scripting infrastructure provisioning and application delivery"
+                    "name": "Linux",
+                    "tooltip": "Operating system configuration, shell scripting, and administration"
                 }
             ]
         },
         {
-            "category": "Applied ML Systems",
+            "category": "Testing & Integration",
             "items": [
                 {
-                    "name": "PyTorch",
-                    "projectRef": "moodharmonics",
-                    "tooltip": "Inference pipelines for deep learning models"
+                    "name": "pytest",
+                    "tooltip": "Testing framework for python unit and integration tests"
                 },
                 {
-                    "name": "TensorFlow",
-                    "projectRef": "moodharmonics",
-                    "tooltip": "Deploying and serving trained machine learning models"
+                    "name": "testcontainers",
+                    "tooltip": "Ephemeral Docker containers for database integration testing"
                 },
                 {
-                    "name": "Local LLM Inference (llama.cpp)",
-                    "projectRef": "offline-ai-shell",
+                    "name": "H2 Integration",
+                    "tooltip": "In-memory database testing for Java applications"
+                }
+            ]
+        },
+        {
+            "category": "Systems Engineering",
+            "items": [
+                {
+                    "name": "Seccomp",
+                    "tooltip": "Linux syscall filtering for process sandboxing"
+                },
+                {
+                    "name": "Linux Namespaces",
+                    "tooltip": "Process, PID, and mount isolation for secure execution environments"
+                },
+                {
+                    "name": "llama.cpp",
                     "tooltip": "Running high-performance sandboxed LLMs locally in C/C++"
-                },
-                {
-                    "name": "Computer Vision (MediaPipe / OpenCV)",
-                    "projectRef": "air-notepad",
-                    "tooltip": "Real-time keypoint extraction and gesture algorithms"
-                },
-                {
-                    "name": "Audio Processing (Librosa)",
-                    "projectRef": "moodharmonics",
-                    "tooltip": "Extracting spectrograms and MFCC embeddings"
                 }
             ]
         }

@@ -1,28 +1,46 @@
 {
     "name": "Vaibhav Sharma",
-    "title": "Backend / Systems Engineering Student",
+    "title": "Backend Engineering Intern @ LazyStudents.in",
     "tagline": "I build backend systems, developer tools, and systems-level projects focused on reliability and security.",
-    "summary": "Systems-oriented engineering student focused on backend infrastructure and production-grade systems. My work spans API services, database-driven applications, and systems-level tooling — from Spring Boot scheduling engines to Linux sandboxing using seccomp and namespaces.",
-    "philosophy": "Good systems are predictable, maintainable, and resilient under real-world constraints. I focus on building backend services that handle edge cases gracefully, minimize operational complexity, and remain understandable for the engineers who maintain them.",
+    "summary": "Backend and systems engineering student specializing in event-driven microservices, enterprise workflow backends, and secure Linux-level programming. I build things that require real engineering decisions — tradeoffs, constraints, failure modes, state.",
+    "philosophy": "Open-sourced Arachnode (26 ★, 47 forks) and serve as Project Admin mentoring GSSoC contributors. Graduating 2027. Open to SDE-1 and Junior Backend Engineer roles.",
+    "about": {
+        "paragraphs": [
+            "Backend and systems engineering student specializing in event-driven microservices, enterprise workflow backends, and secure Linux-level programming. I build things that require real engineering decisions — tradeoffs, constraints, failure modes, state.",
+            "Open-sourced Arachnode (26 ★, 47 forks) and serve as Project Admin mentoring GSSoC contributors. Graduating 2027. Open to SDE-1 and Junior Backend Engineer roles."
+        ]
+    },
     "experience": [
         {
-            "company": "Infosys Springboard",
-            "role": "AI / ML Intern (Virtual)",
-            "period": "Sep 2025 – Nov 2025",
+            "company": "LazyStudents.in",
+            "role": "Backend Engineering Intern",
+            "period": "Jun 2026 — Present",
+            "location": "Remote",
             "bullets": [
-                "Built an end-to-end AI music generation system integrating multiple ML models for audio generation, lyric synthesis, and genre classification.",
-                "Developed a Flask-based backend API orchestrating MusicGen, GPT-based lyric models, and YAMNet embeddings.",
-                "Implemented model preloading and fallback inference paths to reduce initialization latency and improve inference reliability."
+                "Primary backend engineer on a plagiarism detection and reduction service — designing the text-comparison pipeline, API, and suggestion engine from scratch",
+                "Own end-to-end quality of 40+ platform tools: structured test plans, integration failure identification, reproducible bug reports used by the backend team",
+                "Leading the interns team in an Agile environment"
             ]
         },
         {
-            "company": "ClubChat (Startup)",
-            "role": "Flutter Developer Intern",
-            "period": "Jul 2025 – Sep 2025",
+            "company": "Infosys Springboard",
+            "role": "AI/ML Backend Intern",
+            "period": "Sep 2025 — Nov 2025",
+            "location": "Virtual",
             "bullets": [
-                "Built Flutter UI modules for a production mobile application serving 8,000+ users.",
-                "Implemented event feed and real-time chat interface features using Flutter and Dart.",
-                "Diagnosed and resolved 18+ stability issues across two production releases in collaboration with backend and design teams."
+                "Orchestrated 3 heterogeneous ML models (MusicGen, fine-tuned GPT, YAMNet) behind a Flask API layer for MoodHarmonics",
+                "Implemented model preloading cutting initialization latency by 45% (2.2s → 1.2s), measured over 500+ requests",
+                "Error-handling middleware for inference continuity; metadata in MongoDB"
+            ]
+        },
+        {
+            "company": "ClubChat",
+            "role": "Flutter Developer Intern",
+            "period": "Jul 2025 — Sep 2025",
+            "location": "Remote",
+            "bullets": [
+                "Shipped event-feed and real-time chat to a production app with 8,000+ users",
+                "Resolved 18 production stability issues across two releases including 3 critical crash-on-launch regressions"
             ]
         }
     ],

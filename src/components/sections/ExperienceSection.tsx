@@ -36,7 +36,7 @@ export const ExperienceSection: React.FC = () => (
                                 {exp.role}
                             </h3>
                             <h4 className="font-mono text-[10px] sm:text-[11px] mb-[8px] sm:mb-[10px]" style={{ color: '#8e8e8e' }}>
-                                {exp.company}
+                                {exp.company}{exp.location ? ` · ${exp.location}` : ''}
                             </h4>
                             
                             <div className="flex flex-col">

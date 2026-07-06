@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --bg:        #0c0c0c;
+    --surface:   #141414;
+    --surface2:  #1a1a1a;
+    --border:    #333333;
+    --green:     #00e676;
+    --green-dim: rgba(0,230,118,0.12);
+    --red:       #ff5555;
+    --red-dim:   rgba(255,85,85,0.10);
+    --muted:     #888888;
+    --body:      #e8e8e8;
+    --label:     #aaaaaa;
+    --white:     #f8f8f8;
+    --mono:      'Courier New', 'Lucida Console', monospace;
+    --sans:      Arial, 'Helvetica Neue', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body { background: var(--bg); }
+  .cv-wrap { max-width: 100%; padding: 40px 44px 64px; }
+  a { color: var(--green); text-decoration: none; }
+
+  /* ── HEADER ── */
+  .cv-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 26px; border-bottom: 1px solid var(--border); margin-bottom: 34px; gap: 32px; }
+  .status-bar { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 12px; }
+  .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 8px; vertical-align: middle; }
+  .cv-name { font-family: var(--mono); font-size: 32px; font-weight: bold; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; }
+  .cv-name span { color: var(--green); }
+  .cv-title { font-family: var(--mono); font-size: 11px; color: var(--label); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 8px; }
+  .cv-contacts { display: flex; flex-wrap: wrap; gap: 5px 18px; font-family: var(--mono); font-size: 11px; color: var(--label); margin-top: 12px; }
+  .cv-contacts .ci::before { content: '> '; color: var(--green); }
+  .photo-box { width: 96px; height: 96px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .photo-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; line-height: 1.5; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 32px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .section-label { font-family: var(--mono); font-size: 10px; font-weight: bold; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); white-space: nowrap; }
+  .section-label::before { content: '[ '; }
+  .section-label::after  { content: ' ]'; }
+  .section-rule { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── IDENTITY GRID ── */
+  .identity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .identity-cell { background: var(--surface); padding: 12px 14px; }
+  .identity-key { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .identity-val { font-family: var(--mono); font-size: 12px; color: var(--white); line-height: 1.4; }
+  .identity-val.green { color: var(--green); }
+  .identity-val.red   { color: var(--red); font-size: 11px; }
+  .span2 { grid-column: span 2; }
+
+  /* ── NARRATIVE ── */
+  .narrative { font-family: var(--sans); font-size: 13.5px; color: var(--body); line-height: 1.8; background: var(--surface); border-left: 3px solid #00e67650; padding: 16px 20px; }
+  .narrative p + p { margin-top: 11px; }
+
+  /* ── EXPERIENCE ── */
+  .exp-entry { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .exp-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
+  .exp-role { font-family: var(--mono); font-size: 14px; font-weight: bold; color: var(--white); }
+  .exp-period { font-family: var(--mono); font-size: 10px; color: var(--label); padding: 3px 8px; background: var(--surface2); border: 1px solid var(--border); white-space: nowrap; }
+  .exp-company { font-family: var(--mono); font-size: 11px; color: var(--green); margin-bottom: 11px; }
+  .exp-company .loc { color: var(--muted); }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .exp-bullets li { font-size: 13.5px; color: var(--body); line-height: 1.65; padding-left: 18px; position: relative; }
+  .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--red); font-family: var(--mono); font-size: 11px; top: 2px; }
+  strong, b { color: var(--white); font-weight: bold; }
+
+  /* ── PROJECT CARD ── */
+  .project-card { background: var(--surface); border: 1px solid var(--border); margin-bottom: 18px; }
+  .project-card-header { padding: 14px 18px 11px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .project-name { font-family: var(--mono); font-size: 14px; font-weight: bold; color: var(--white); }
+  .project-year { font-family: var(--mono); font-size: 10px; color: var(--label); padding: 2px 8px; border: 1px solid var(--border); background: var(--surface2); white-space: nowrap; }
+  .project-stack { padding: 8px 18px; display: flex; flex-wrap: wrap; gap: 5px; border-bottom: 1px solid var(--border); }
+  .tag { font-family: var(--mono); font-size: 10px; color: var(--green); background: var(--green-dim); padding: 2px 8px; }
+  .tag.rt { color: var(--red); background: var(--red-dim); }
+  .project-body { padding: 13px 18px 15px; }
+  .project-story { font-size: 13px; color: var(--label); font-style: italic; margin-bottom: 11px; line-height: 1.65; }
+  .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .project-bullets li { font-size: 13px; color: var(--body); line-height: 1.65; padding-left: 18px; position: relative; }
+  .project-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-family: var(--mono); font-size: 10px; top: 3px; }
+  .project-stats { display: flex; gap: 16px; padding: 8px 18px; border-top: 1px solid var(--border); background: var(--surface2); }
+  .stat-item { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .stat-item span { color: var(--green); font-weight: bold; }
+
+  /* ── SKILLS ── */
+  .skills-table { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .skill-row { display: grid; grid-template-columns: 160px 1fr; background: var(--surface); gap: 1px; }
+  .skill-key { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 9px 13px; background: var(--surface2); display: flex; align-items: center; }
+  .skill-val { font-family: var(--mono); font-size: 12px; color: var(--body); padding: 9px 13px; display: flex; align-items: center; }
+
+  /* ── CERTS ── */
+  .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .cert-item { background: var(--surface); border: 1px solid var(--border); padding: 11px 14px; }
+  .cert-issuer { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+  .cert-name { font-size: 12.5px; color: var(--white); line-height: 1.4; }
+  .cert-date { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  /* ── LEADERSHIP ── */
+  .leadership-entry { display: grid; grid-template-columns: 36px 1fr; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+  .leadership-entry:last-child { border-bottom: none; }
+  .leadership-icon { width: 36px; height: 36px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 15px; color: var(--green); }
+  .leadership-role { font-family: var(--mono); font-size: 13px; font-weight: bold; color: var(--white); margin-bottom: 3px; }
+  .leadership-org { font-family: var(--mono); font-size: 10px; color: var(--green); margin-bottom: 7px; }
+  .leadership-desc { font-size: 13px; color: var(--body); line-height: 1.65; }
+
+  /* ── DIRECTIVES ── */
+  .directive-block { background: var(--surface); border: 1px solid var(--border); padding: 18px 22px; }
+  .directive-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
+  .directive-text { font-size: 13.5px; line-height: 1.85; color: var(--body); }
+  .directive-text + .directive-text { margin-top: 12px; }
+
+  /* ── FOOTER ── */
+  .cv-footer { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .cv-footer div { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="cv-wrap">
+
+  <!-- HEADER -->
+  <header class="cv-header">
+    <div style="flex:1">
+      <div class="status-bar"><span class="status-dot"></span>PROCESS ACTIVE &nbsp;·&nbsp; CLASSIFICATION: OPEN &nbsp;·&nbsp; LAST UPDATED: 2026</div>
+      <div class="cv-name">Vaibhav<span>.</span>Sharma</div>
+      <div class="cv-title">Backend &amp; Systems Engineer &nbsp;//&nbsp; B.E. CSE · MITE · 2027</div>
+      <div class="cv-contacts">
+        <span class="ci">sharma31stmay@gmail.com</span>
+        <span class="ci">+91 70107 63467</span>
+        <span class="ci">vaibhavsharmaa.me</span>
+        <span class="ci">github.com/sharmavaibhav31</span>
+        <span class="ci">linkedin.com/in/sharmavaibhav31</span>
+        <span class="ci">Bangalore, India</span>
+      </div>
+    </div>
+    <div class="photo-box">
+      <div class="photo-label">PHOTO<br>HERE</div>
+    </div>
+  </header>
+
+  <!-- IDENTITY -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Identity</span><div class="section-rule"></div></div>
+    <div class="identity-grid">
+      <div class="identity-cell"><div class="identity-key">Current Status</div><div class="identity-val green">Backend Engineering Intern · LazyStudents.in</div></div>
+      <div class="identity-cell"><div class="identity-key">Degree</div><div class="identity-val">B.E. Computer Science · CGPA 9.43 · Graduating 2027</div></div>
+      <div class="identity-cell"><div class="identity-key">Core Discipline</div><div class="identity-val">Backend Systems · Event-Driven Architecture · Secure Engineering</div></div>
+      <div class="identity-cell"><div class="identity-key">Open Source</div><div class="identity-val green">Arachnode · 26 ★ · 47 forks · Project Admin (GSSoC)</div></div>
+      <div class="identity-cell span2"><div class="identity-key">Looking For</div><div class="identity-val red">SDE-1 / Junior Backend Engineer · Product Companies · Startups · Full-time · Open to Relocation</div></div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Story</span><div class="section-rule"></div></div>
+    <div class="narrative">
+      <p>I didn't start as a backend engineer. Like most first-year CSE students, I had no clear direction — just curiosity and a vague sense that I should be doing <em>something</em>. My first pull was toward cybersecurity: I got hands-on with Kali, explored ethical hacking, started a few courses. It was interesting, but I was consuming more than I was building.</p>
+      <p>Then I got pulled by the crowd toward mobile development. Did an internship, shipped code to a real app. But I noticed something uncomfortable: I was only productive when someone told me exactly what to do. I couldn't design a system from scratch. I was a passenger, not a driver. That bothered me enough to change direction.</p>
+      <p>Around the start of my third year, I started asking a different question — not "what should I build?" but "how do these things actually work?" Backend engineering and systems design clicked. Not because it was fashionable, but because it required <em>real</em> thinking: tradeoffs, constraints, failure modes, state. I also had a practical read on where AI was going — the hard parts of backend weren't being automated. So I doubled down on the hard parts.</p>
+      <p>I built projects from genuine need or curiosity, not to pad a portfolio. One turned into an open-source project with real contributors. The security interest never went away — my C shell with Seccomp sandboxing was me answering a question I had about running AI locally without exposing my system. Someday, maybe an MS in security. But right now, I want to build backend systems that don't fall over.</p>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Experience</span><div class="section-rule"></div></div>
+
+    <div class="exp-entry">
+      <div class="exp-header"><div class="exp-role">Backend Engineering Intern</div><div class="exp-period">Jun 2026 — Present</div></div>
+      <div class="exp-company">LazyStudents.in <span class="loc">· Remote</span></div>
+      <ul class="exp-bullets">
+        <li>Primary backend engineer on a plagiarism detection and reduction service — designing the text-comparison pipeline, backend API, and suggestion engine from scratch.</li>
+        <li>Own end-to-end quality of <strong>40+ platform tools</strong>: writing structured test plans, identifying integration failures, and filing reproducible bug reports consumed directly by the backend team.</li>
+        <li>Leading the interns team, coordinating task allocation and review cycles in an Agile environment.</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-header"><div class="exp-role">AI/ML Backend Intern</div><div class="exp-period">Sep 2025 — Nov 2025</div></div>
+      <div class="exp-company">Infosys Springboard <span class="loc">· Virtual</span></div>
+      <ul class="exp-bullets">
+        <li>Orchestrated 3 heterogeneous ML inference models (MusicGen, fine-tuned GPT lyric model, YAMNet genre classifier) behind a Flask API layer — MoodHarmonics: an end-to-end AI music generation system.</li>
+        <li>Implemented model preloading and graceful fallback routing, cutting average initialization latency from ~2.2s to ~1.2s (<strong>45% reduction</strong>), measured over 500+ sequential requests.</li>
+        <li>Designed error-handling middleware ensuring inference continuity under model failures; persisted semi-structured metadata and hashed user credentials in MongoDB.</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-header"><div class="exp-role">Flutter Developer Intern</div><div class="exp-period">Jul 2025 — Sep 2025</div></div>
+      <div class="exp-company">ClubChat <span class="loc">· Remote · IIIT Delhi Startup</span></div>
+      <ul class="exp-bullets">
+        <li>Shipped event-feed and real-time chat to a production app with <strong>8,000+ users</strong>.</li>
+        <li>Resolved <strong>18 production stability issues</strong> across two releases — including 3 critical crash-on-launch regressions — through log analysis and device-level reproduction.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SYSTEMS BUILT -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Systems Built</span><div class="section-rule"></div></div>
+
+    <!-- Arachnode -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">Arachnode — Automated Job Discovery &amp; Outreach Platform</div>
+        <div class="project-year">2026</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Redis Streams</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">Scrapy</span><span class="tag">Playwright</span><span class="tag">pytest</span><span class="tag">testcontainers</span><span class="tag rt">Open Source</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">Built because I genuinely needed it — manually tracking job postings and cold-emailing recruiters was unscalable. This system handles the discovery-to-draft pipeline automatically.</p>
+        <ul class="project-bullets">
+          <li>Architected across <strong>7 independent microservices</strong> communicating via Redis Streams consumer groups — chose Redis Streams over Kafka for at-least-once delivery with lower operational overhead for a self-hosted deployment.</li>
+          <li><strong>4-tier test suite</strong>: unit, integration (testcontainers with ephemeral Postgres + Redis), contract (schema consistency across services), and e2e (full dashboard flows).</li>
+          <li>OSINT recruiter enrichment (GitHub API + SMTP verification) and Ollama-powered cold-email drafting via Jinja2; full pipeline automated via APScheduler.</li>
+          <li>Serves as Project Admin: reviewing PRs, enforcing API contracts, managing CI/GitHub Actions, mentoring GSSoC / ELUSOC contributors.</li>
+        </ul>
+      </div>
+      <div class="project-stats">
+        <span class="stat-item">Stars <span>26</span></span>
+        <span class="stat-item">Forks <span>47</span></span>
+        <span class="stat-item">Commits <span>143</span></span>
+        <span class="stat-item">Issues <span>32</span></span>
+        <span class="stat-item">PRs Reviewed <span>25+</span></span>
+      </div>
+    </div>
+
+    <!-- HPMS -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">HPMS — Hostel Permission Management System</div>
+        <div class="project-year">2024–2025</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span><span class="tag">Prisma</span><span class="tag">React</span><span class="tag">JWT</span><span class="tag">Docker</span><span class="tag">Nginx</span><span class="tag">node-cron</span><span class="tag">QR Codes</span><span class="tag rt">Institution Project</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">Hostel students had to hand-write permission letters on A4 sheets — wardens were often unavailable, the process was slow and had no audit trail. I designed a full digital replacement.</p>
+        <ul class="project-bullets">
+          <li>5-role permission workflow (Student / Warden / Chief Warden / Admin / Security) with JWT-signed QR certificates generated on approval — valid for exactly 2 scans (exit + entry), auto-invalidated after both.</li>
+          <li>Modular monolith backend (Node.js + Express + Prisma) across 7 feature modules: auth, users, master, requests, certificates, gate, admin — served behind Nginx reverse proxy with SSL termination for HTTPS-required camera access at the gate.</li>
+          <li>Gate scanner web app using html5-qrcode; node-cron job detecting overdue returns and triggering warden alerts; SMTP notifications to parents on approval, exit, and return.</li>
+          <li>Attempted Tatvik TMF20 biometric integration: built a .NET 4.8 bridge exposing the SDK over HTTP and a .NET 8 FingerprintService calling it — hit a firmware wall (SDK couldn't talk to third parties); pivoted to the QR-based flow as the production solution.</li>
+          <li>Full SRS with 40+ FRs, ERD, and 4 system process flow diagrams; proposed to college administration for deployment.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Appraisal -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">Appraisal Management System</div>
+        <div class="project-year">2026</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">Java 21</span><span class="tag">Spring Boot 4</span><span class="tag">Spring Security</span><span class="tag">PostgreSQL</span><span class="tag">Flyway</span><span class="tag">JWT</span><span class="tag">Docker</span><span class="tag">OpenAPI</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">The college's faculty appraisal process was entirely paper-based — no audit trail, no consistency. I built the backend to replace it.</p>
+        <ul class="project-bullets">
+          <li>State-machine workflow: <strong>DRAFT → SUBMITTED → HOD_REVIEWED → FINALIZED → LOCKED</strong>, with legal revert paths and immutability post-finalization.</li>
+          <li>Full audit trail on every transition (userId, timestamp, old/new value); JWT auth with RBAC across Faculty / HOD / Principal / Admin roles.</li>
+          <li>Configurable scoring weights validated to sum to 100%; 13 Flyway migrations; @Valid on all endpoints; env-injected credentials via Docker Compose.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Timetable -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">Academic Timetable Scheduling Engine</div>
+        <div class="project-year">2026</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">Java 17</span><span class="tag">Spring Boot 3</span><span class="tag">PostgreSQL</span><span class="tag">Flyway</span><span class="tag">H2 Testing</span><span class="tag">Apache POI</span><span class="tag">Docker</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">Departments spend days generating timetables manually each semester. The constraint-satisfaction problem hooked me.</p>
+        <ul class="project-bullets">
+          <li>Greedy constraint-propagation engine enforcing <strong>8 hard constraints</strong>: no double-booking across faculty/room/section, 55-min consecutive-class gap, designation load caps, room-type matching, break isolation.</li>
+          <li>Section-first generation strategy prevents slot starvation; fallback faculty via priority-ranked FacultyPreference entries before failing.</li>
+          <li>Generates conflict-free timetables in <strong>under 2 minutes</strong> vs. days manually; H2 integration tests, Flyway V1–V10, Excel/PDF export, two-stage Docker build.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Offline Shell -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">Offline AI Assistant Shell</div>
+        <div class="project-year">2025</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">C</span><span class="tag">llama.cpp</span><span class="tag">TinyLlama-1.1B</span><span class="tag">Seccomp</span><span class="tag">Linux Namespaces</span><span class="tag">rlimits</span><span class="tag">CMake</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">I wanted AI assistance in my terminal, locally, with no internet. Making it safe on a live system turned it into a real security engineering problem.</p>
+        <ul class="project-bullets">
+          <li>Sandboxed C shell integrating TinyLlama-1.1B via llama.cpp — fully offline, air-gapped execution post-setup.</li>
+          <li>Four-layer security: Seccomp syscall whitelist, PID/mount namespace isolation, capability dropping, rlimit caps — prevents privilege escalation and system exposure.</li>
+          <li>First-query latency ~2–3s (model load); subsequent ~1–2s; 10–20 tok/s CPU at ~1–1.5GB memory. Includes functional test suite, MD5 integrity check, and strace syscall audit workflow.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MoodHarmonics -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">MoodHarmonics — End-to-End AI Music Generation System</div>
+        <div class="project-year">2025</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">MusicGen</span><span class="tag">YAMNet</span><span class="tag">GPT (fine-tuned)</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">MongoDB</span><span class="tag">React</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">The goal wasn't to build another AI music app — it was to answer: can multiple ML models with different runtimes and constraints be orchestrated into a reliable, end-to-end system?</p>
+        <ul class="project-bullets">
+          <li>Orchestrated 3 heterogeneous ML models: MusicGen (text-to-audio), a fine-tuned GPT lyric model (enforcing verse/chorus structure vs. base GPT descriptive output), and YAMNet + GTZAN classifier (genre + confidence score) — all behind a single Flask API layer.</li>
+          <li>Model preloading at server startup + graceful fallback paths (local inference preferred, Hugging Face fallback) to manage heavy initialization and failure modes under real performance constraints.</li>
+          <li>Stored semi-structured song metadata and hashed user credentials in MongoDB; served generated audio from local file storage; coordinated frontend-backend interactions under CORS and latency constraints.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Air Notepad -->
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-name">Air Notepad — Gesture-Based Drawing System</div>
+        <div class="project-year">2024</div>
+      </div>
+      <div class="project-stack">
+        <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">MediaPipe</span><span class="tag">NumPy</span><span class="tag">Jupyter</span>
+      </div>
+      <div class="project-body">
+        <p class="project-story">Built for fun — wanted my own air-drawing app. Ended up at 176,000 LinkedIn impressions and 84 comments. Not every project needs to be enterprise-grade to matter.</p>
+        <ul class="project-bullets">
+          <li>Tracked 21 hand landmarks per hand via MediaPipe Hand Landmarker, mapping raw landmark coordinates to drawing strokes via weighted moving-average smoothing (configurable factor) to reduce jitter.</li>
+          <li>Dual-hand control: left hand for tool/color selection via pinch gesture (Euclidean distance threshold); right hand for drawing via index-finger extension detection using relative Y-coordinates.</li>
+          <li>HD canvas (1280×720), 3 tools (Pen/Brush/Eraser), 8-color palette; confidence thresholds at 0.8 for both detection and tracking; frame-by-frame NumPy array operations for minimal latency.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL SKILLS -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Technical Skills</span><div class="section-rule"></div></div>
+    <div class="skills-table">
+      <div class="skill-row"><div class="skill-key">Languages</div><div class="skill-val">Java · Python · SQL · C · JavaScript (Node.js)</div></div>
+      <div class="skill-row"><div class="skill-key">Backend</div><div class="skill-val">Spring Boot · Spring Security · Spring Data JPA · FastAPI · Flask · Express.js · REST API Design · JWT · RBAC</div></div>
+      <div class="skill-row"><div class="skill-key">Databases</div><div class="skill-val">PostgreSQL · Redis Streams · MySQL · MongoDB · Firestore · Flyway · Prisma ORM</div></div>
+      <div class="skill-row"><div class="skill-key">DevOps &amp; Tooling</div><div class="skill-val">Docker · Docker Compose · Nginx · GitHub Actions · Linux · Bash · Git · Maven</div></div>
+      <div class="skill-row"><div class="skill-key">Testing</div><div class="skill-val">pytest · testcontainers · H2 (integration) · Unit / Contract / e2e</div></div>
+      <div class="skill-row"><div class="skill-key">Architecture</div><div class="skill-val">Event-Driven Microservices · Consumer Groups · Modular Monolith · API Gateway · State Machines · Audit Trails · Constraint Scheduling</div></div>
+      <div class="skill-row"><div class="skill-key">Systems</div><div class="skill-val">Linux Namespaces · Seccomp · rlimits · llama.cpp · Syscall Analysis · .NET (bridge layer)</div></div>
+      <div class="skill-row"><div class="skill-key">ML / CV</div><div class="skill-val">PyTorch · TensorFlow · MusicGen · YAMNet · MediaPipe · OpenCV · Ollama · Model Serving · Inference Optimization</div></div>
+      <div class="skill-row"><div class="skill-key">Frontend</div><div class="skill-val">React · Vite · Flutter · Dart (mobile)</div></div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Certifications</span><div class="section-rule"></div></div>
+    <div class="cert-grid">
+      <div class="cert-item"><div class="cert-issuer">Oracle</div><div class="cert-name">OCI 2025 DevOps Professional</div><div class="cert-date">Nov 2025 · Verified</div></div>
+      <div class="cert-item"><div class="cert-issuer">Oracle</div><div class="cert-name">OCI 2025 Data Science Professional</div><div class="cert-date">Oct 2025 · Verified</div></div>
+      <div class="cert-item"><div class="cert-issuer">Oracle</div><div class="cert-name">OCI 2025 Generative AI Professional</div><div class="cert-date">Oct 2025 · Verified</div></div>
+      <div class="cert-item"><div class="cert-issuer">Oracle</div><div class="cert-name">OCI 2025 Generative AI Foundations Associate</div><div class="cert-date">Sep 2025 · Verified</div></div>
+      <div class="cert-item"><div class="cert-issuer">Google Cloud · Coursera</div><div class="cert-name">Cloud Security Engineer Specialization</div><div class="cert-date">Jul 2024 · Verified</div></div>
+      <div class="cert-item"><div class="cert-issuer">Google Cloud · Coursera</div><div class="cert-name">Security in Google Cloud Specialization</div><div class="cert-date">Sep 2024 · Verified</div></div>
+      <div class="cert-item" style="grid-column:span 2"><div class="cert-issuer">Google · Coursera</div><div class="cert-name">Google Cybersecurity Professional Certificate</div><div class="cert-date">Verified</div></div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Education</span><div class="section-rule"></div></div>
+    <div class="exp-entry" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+      <div class="exp-header"><div class="exp-role">B.E. Computer Science and Engineering</div><div class="exp-period">Sep 2023 — Jun 2027</div></div>
+      <div class="exp-company">Mangalore Institute of Technology and Engineering <span class="loc">· Karnataka, India</span></div>
+      <ul class="exp-bullets" style="margin-top:10px">
+        <li>CGPA: <strong>9.43 / 10</strong></li>
+        <li>President, Coders Club — organized Hack n' Seek (700+ online · 180 on-site participants)</li>
+        <li>Mentored 60+ students through 6 technical workshops (Git, DSA, backend architecture)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Leadership &amp; Community</span><div class="section-rule"></div></div>
+    <div class="leadership-entry">
+      <div class="leadership-icon">↗</div>
+      <div>
+        <div class="leadership-role">Project Admin — Arachnode</div>
+        <div class="leadership-org">GSSoC · ELUSOC · Aperture 3.0 · Feb 2026 — Present</div>
+        <div class="leadership-desc">Reviewing and merging contributor PRs, enforcing API contract standards, maintaining CI/GitHub Actions, coordinating releases for a project with 26 stars and 47 forks. Mentoring first-time open-source contributors. Merged 2 PRs into GitCanvas (Aperture 3.0) after maintainer review.</div>
+      </div>
+    </div>
+    <div class="leadership-entry">
+      <div class="leadership-icon">◈</div>
+      <div>
+        <div class="leadership-role">President, Coders Club — MITE</div>
+        <div class="leadership-org">Oct 2025 — Present</div>
+        <div class="leadership-desc">Organized Hack n' Seek with <strong>700+ online and 180 on-site participants</strong> across multiple colleges. Delivered 6 technical workshops on Git, Data Structures, and backend architecture to 60+ students.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE I'M GOING -->
+  <section class="section">
+    <div class="section-header"><span class="section-label">Where I'm Going</span><div class="section-rule"></div></div>
+    <div class="directive-block">
+      <div class="directive-label">PERSONAL_DIRECTIVE.log</div>
+      <p class="directive-text">I'm not entirely sure what the destination looks like yet, and I think that's honest. What I do know is the kind of engineer I want to be: someone who understands systems deeply enough to make real tradeoffs, not just implement tickets. I want to work on backend infrastructure where reliability is the product — distributed systems, data pipelines, secure architectures.</p>
+      <p class="directive-text" style="margin-top:12px">In 3–4 years: either a Senior Solutions Architect or a Senior Backend Engineer at a high-growth product company — or the person who helped a good startup go from 10 to 10 million requests a day. The cybersecurity interest is still live. An MS in Security is on the table.</p>
+      <p class="directive-text" style="margin-top:12px">The one thing I'm certain about: I want to build things that require real thinking. Things that break in interesting ways. Things where the decision I make about a message queue or a transaction boundary actually matters.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="cv-footer">
+    <div>VAIBHAV_SHARMA.cv · v2026.06 · PROCESS END</div>
+    <div>vaibhavsharmaa.me · github.com/sharmavaibhav31</div>
+  </footer>
+
+</div>
+</body>
+</html>
