@@ -3,19 +3,11 @@
 
 import React, { useState } from 'react';
 import resumeData from '../../data/resume.json';
-import skillsData from '../../data/skills.json';
-import projectsData from '../../data/projects.json';
 
 export const HeroSection: React.FC = () => {
     const [isPhotoRevealed, setIsPhotoRevealed] = useState(false);
     const [isLocationRevealed, setIsLocationRevealed] = useState(false);
     const [isContactRevealed, setIsContactRevealed] = useState(false);
-
-    const specialization = resumeData.tagline;
-    
-    const primaryStack = skillsData.capabilities
-        .find(c => c.category === 'Backend Engineering')
-        ?.items.slice(0, 5).map(i => i.name).join(' · ') || 'Java · Spring Boot · PostgreSQL · Docker';
 
     return (
         <section id="hero" className="w-full min-h-screen flex flex-col" style={{ background: 'var(--bg-primary)' }}>
@@ -44,8 +36,8 @@ export const HeroSection: React.FC = () => {
                         <h1 className="font-sans text-[36px] sm:text-[56px] lg:text-[73px] font-black leading-[0.92] sm:leading-[0.88] tracking-[-1px] sm:tracking-[-2px] uppercase mb-[6px] sm:mb-2 break-keep whitespace-normal" style={{ color: 'var(--text-primary)' }}>
                             {resumeData.name.split(' ').map((n, i, arr) => <React.Fragment key={i}>{n}{i !== arr.length - 1 && <br />}</React.Fragment>)}
                         </h1>
-                        <h2 role="doc-subtitle" className="font-mono text-[10.5px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase" style={{ color: 'var(--text-muted)' }}>
-                            {resumeData.title}
+                        <h2 role="doc-subtitle" className="font-mono text-[10.5px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
+                            BACKEND ENGINEER · LAZYSTUDENTS.IN
                         </h2>
                     </div>
 
@@ -101,11 +93,11 @@ export const HeroSection: React.FC = () => {
                     {/* Middle section — FIELD ROWS */}
                     <div className="flex flex-col">
                         {[
-                            { key: 'SPECIALIZATION', val: specialization },
-                            { key: 'PRIMARY STACK',  val: primaryStack },
-                            { key: 'CLEARANCE',      val: 'Java · C · Python · seccomp · llama.cpp' },
-                            { key: 'SYSTEMS BUILT',  val: `${projectsData.length} active` },
-                            { key: 'USERS SERVED',   val: '8,000+' },
+                            { key: 'SPECIALIZATION', val: 'Backend systems, enterprise workflows, and Linux-level security engineering.' },
+                            { key: 'PRIMARY STACK',  val: 'Java · Python · Node.js · Spring Boot · FastAPI' },
+                            { key: 'CLEARANCE',      val: 'Java · C · Python · seccomp · Redis · Docker' },
+                            { key: 'SYSTEMS BUILT',  val: '7 built · 1 open-source' },
+                            { key: 'USERS SERVED',   val: '8,000+ (ClubChat production)' },
                         ].map(row => (
                             <div key={row.key} className="flex flex-row items-baseline py-[8px] sm:py-[9px] border-b-[0.5px] gap-[1.5rem]"
                                 style={{ borderColor: 'var(--border-default)' }}>
@@ -123,10 +115,10 @@ export const HeroSection: React.FC = () => {
                                 style={{ color: 'var(--text-muted)' }}>LOCATION</span>
                             <div className="flex flex-col">
                                 <span
-                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-[1px] min-w-[140px] inline-block transition-all duration-250"
+                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-[1px] min-w-[140px] inline-block transition-all duration-200 hover:!bg-transparent hover:!text-[#c8c8c8]"
                                     style={{ 
-                                        background: isLocationRevealed ? 'transparent' : 'var(--border-default)', 
-                                        color: isLocationRevealed ? 'var(--text-secondary)' : 'transparent' 
+                                        background: isLocationRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)', 
+                                        color: isLocationRevealed ? '#c8c8c8' : 'transparent' 
                                     }}
                                     onClick={() => setIsLocationRevealed(!isLocationRevealed)}
                                 >Bengaluru, India</span>
@@ -141,13 +133,13 @@ export const HeroSection: React.FC = () => {
                                 style={{ color: 'var(--text-muted)' }}>CONTACT</span>
                             <div className="flex flex-col">
                                 <span
-                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-[1px] min-w-[140px] inline-block transition-all duration-250"
+                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-[1px] min-w-[140px] inline-block transition-all duration-200 hover:!bg-transparent hover:!text-[#c8c8c8]"
                                     style={{ 
-                                        background: isContactRevealed ? 'transparent' : 'var(--border-default)', 
-                                        color: isContactRevealed ? 'var(--text-secondary)' : 'transparent' 
+                                        background: isContactRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)', 
+                                        color: isContactRevealed ? '#c8c8c8' : 'transparent' 
                                     }}
                                     onClick={() => setIsContactRevealed(!isContactRevealed)}
-                                >{resumeData.socials.email.replace('mailto:', '')}</span>
+                                >sharma31stmay@gmail.com</span>
                                 <span className="sm:hidden font-mono text-[8px] italic mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>tap to reveal</span>
                             </div>
                         </div>
