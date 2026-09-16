@@ -19,10 +19,10 @@ const typedSkillsData = skillsData as { capabilities: CapabilityCategory[] };
 
 const getCategoryGlyph = (category: string) => {
     if (category.includes('Backend')) return '{ }';
-    if (category.includes('Distributed')) return '>_';
-    if (category.includes('Infrastructure') || category.includes('DevOps')) return '[·]';
-    if (category.includes('ML')) return '~>';
-    return '[]';
+    if (category.includes('Data') || category.includes('Databases')) return '>_';
+    if (category.includes('Infrastructure') || category.includes('DevOps') || category.includes('Systems')) return '[-·]';
+    if (category.includes('Testing') || category.includes('Integration')) return '[]';
+    return '[-·]';
 };
 
 export const CapabilitiesSection: React.FC = () => {

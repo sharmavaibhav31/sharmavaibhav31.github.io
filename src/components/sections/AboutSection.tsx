@@ -4,8 +4,9 @@
 import React from 'react';
 import resumeData from '../../data/resume.json';
 
-const paragraphs = (resumeData as any).about?.paragraphs || [resumeData.philosophy, resumeData.summary].filter(Boolean);
-const hobbies = (resumeData as any).hobbies || ["Systems Architecture", "Low-level Programming", "Open Source Contribution", "Cybersecurity Research"];
+const infoText = "Backend and systems engineering student specializing in event-driven microservices, enterprise workflow backends, and secure Linux-level programming. Founding Backend Intern at LazyStudents.in, building Lazy Command — an AI orchestration layer routing natural language to 100+ platform tools. Open-sourced Arachnode (26 ★, 47 forks), a distributed job-discovery platform, and served as Project Admin mentoring GSSoC 2026 contributors. Graduating 2027. Open to SDE-1 and Junior Backend Engineer roles.";
+
+const philosophyText = resumeData.philosophy;
 
 export const AboutSection: React.FC = () => (
     <section id="about" aria-label="About" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
@@ -23,59 +24,27 @@ export const AboutSection: React.FC = () => (
 
         {/* CONTENT */}
         <div className="w-full px-[16px] sm:px-8 py-[2rem] sm:py-[3rem]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[2.5rem] sm:gap-[4rem]">
+            <div className="max-w-[720px] mx-auto flex flex-col gap-[1.8rem]">
                 
-                {/* Left Column - Philosophy/Paragraphs */}
-                <div className="flex flex-col gap-[1.5rem]">
+                {/* [INFO] Block */}
+                <div className="flex flex-col gap-[0.5rem]">
                     <div className="font-mono text-[9px] tracking-[0.14em] mb-[4px]" style={{ color: 'var(--text-muted)' }}>
                         STATEMENT_OF_INTENT
                     </div>
-                    {paragraphs.map((para: string, i: number) => (
-                        <div key={i} className="font-mono text-[14px] leading-[1.8]"
-                            style={{ color: 'var(--text-secondary)' }}>
-                            {i === 0 && (
-                                <span className="mr-2" style={{ color: 'var(--accent-green)' }}>{'>'}</span>
-                            )}
-                            {para}
-                        </div>
-                    ))}
+                    <div className="font-mono text-[13.5px] sm:text-[14px] leading-[1.8]" style={{ color: 'var(--text-secondary)' }}>
+                        <span className="mr-2" style={{ color: 'var(--accent-green)' }}>{'>'}</span>
+                        {infoText}
+                    </div>
                 </div>
 
-                {/* Right Column - Off-duty / Hobbies */}
-                <div className="flex flex-col">
-                    <div className="font-mono text-[9px] tracking-[0.14em] mb-[1.5rem]" style={{ color: 'var(--text-muted)' }}>
-                        OFF_DUTY_LOGS
+                {/* [PHILOSOPHY] Block */}
+                <div className="flex flex-col gap-[0.5rem]">
+                    <div className="font-mono text-[9px] tracking-[0.14em] mb-[4px]" style={{ color: 'var(--text-muted)' }}>
+                        PHILOSOPHY
                     </div>
-                    <div className="flex flex-col">
-                        {hobbies.map((hobby: string, i: number) => (
-                            <div key={i} className="flex items-center gap-[10px] mb-[12px]">
-                                <span className="w-[3px] h-[3px] rounded-full shrink-0"
-                                    style={{ background: 'var(--accent-red)' }}></span>
-                                <span className="font-mono text-[12px]" style={{ color: 'var(--text-secondary)' }}>
-                                    {hobby}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Socials */}
-                    <div className="mt-[2rem] pt-[1.5rem] border-t-[0.5px] flex flex-wrap gap-[1rem]"
-                        style={{ borderColor: 'var(--border-default)' }}>
-                        {[
-                            { label: '[EMAIL]', href: resumeData.socials.email },
-                            { label: '[GITHUB]', href: resumeData.socials.github, external: true },
-                            { label: '[LINKEDIN]', href: resumeData.socials.linkedin, external: true },
-                        ].map(link => (
-                            <a 
-                                key={link.label}
-                                href={link.href}
-                                target={link.external ? '_blank' : undefined}
-                                rel={link.external ? 'noopener noreferrer' : undefined}
-                                className="font-mono text-[11px] transition-colors duration-150 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                    <div className="font-mono text-[13.5px] sm:text-[14px] leading-[1.8]" style={{ color: 'var(--text-secondary)' }}>
+                        <span className="mr-2" style={{ color: 'var(--accent-green)' }}>{'>'}</span>
+                        {philosophyText}
                     </div>
                 </div>
 
