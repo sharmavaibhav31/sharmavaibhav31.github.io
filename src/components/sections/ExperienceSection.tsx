@@ -80,7 +80,8 @@ const experienceEntries: ExperienceEntry[] = [
 const ExperienceItem: React.FC<{ exp: ExperienceEntry; isLast: boolean }> = ({ exp, isLast }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const hasMore = exp.bullets.length > 3;
-    const visibleBullets = isExpanded ? exp.bullets : exp.bullets.slice(0, 3);
+    const initialBullets = exp.bullets.slice(0, 3);
+    const extraBullets = exp.bullets.slice(3);
 
     return (
         <article className="mb-[2rem]">
@@ -100,7 +101,7 @@ const ExperienceItem: React.FC<{ exp: ExperienceEntry; isLast: boolean }> = ({ e
                     </h4>
                     
                     <div className="flex flex-col">
-                        {visibleBullets.map((bullet, j) => (
+                        {initialBullets.map((bullet, j) => (
                             <div key={j} className="flex gap-[8px] sm:gap-[10px] items-start mb-[4px]">
                                 <span className="w-[4px] sm:w-[3px] h-[4px] sm:h-[3px] rounded-full shrink-0 mt-[6px] sm:mt-[7px]"
                                     style={{ background: '#4ade80' }}></span>
@@ -110,14 +111,38 @@ const ExperienceItem: React.FC<{ exp: ExperienceEntry; isLast: boolean }> = ({ e
                                 </span>
                             </div>
                         ))}
+
+                        {hasMore && (
+                            <div 
+                                className="overflow-hidden transition-all duration-300 ease-in-out"
+                                style={{ 
+                                    maxHeight: isExpanded ? '500px' : '0px',
+                                    opacity: isExpanded ? 1 : 0
+                                }}
+                            >
+                                {extraBullets.map((bullet, j) => (
+                                    <div key={j + 3} className="flex gap-[8px] sm:gap-[10px] items-start mb-[4px]">
+                                        <span className="w-[4px] sm:w-[3px] h-[4px] sm:h-[3px] rounded-full shrink-0 mt-[6px] sm:mt-[7px]"
+                                            style={{ background: '#4ade80' }}></span>
+                                        <span className="font-sans sm:font-mono text-[11px] sm:text-[12px] leading-[1.6] sm:leading-[1.7]"
+                                            style={{ color: '#c8c8c8' }}>
+                                            {bullet}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {hasMore && (
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
-                            className="font-mono text-[10px] text-[#8e8e8e] hover:text-[#4ade80] mt-[4px] self-start inline-flex items-center gap-1 cursor-pointer bg-transparent border-none p-0 transition-colors"
+                            className="inline-flex items-center gap-[4px] mt-[6px] font-mono text-[10px] tracking-[0.06em] bg-transparent border-none p-0 cursor-pointer transition-colors duration-150 self-start"
+                            style={{ color: 'rgba(255,255,255,0.3)' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
                         >
-                            {isExpanded ? 'view less ▴' : `view more (+${exp.bullets.length - 3} more) ▾`}
+                            {isExpanded ? 'view less ▴' : `view more (+${extraBullets.length} more) ▾`}
                         </button>
                     )}
                 </div>
