@@ -6,6 +6,19 @@ import projectsData from '../../data/projects.json';
 
 type Project = typeof projectsData[0];
 
+function getBadgeLabel(category: string): string {
+    const map: Record<string, string> = {
+        'Enterprise Workflow System': 'WORKFLOW',
+        'IoT Systems': 'IOT',
+        'ML Orchestration': 'ML',
+        'Automation': 'AUTOMATION',
+        'Security': 'SECURITY',
+        'Scalability': 'SCALABILITY',
+        'HCI': 'HCI',
+    };
+    return map[category] ?? category.toUpperCase();
+}
+
 const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
     const [isOpen, setIsOpen] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -41,15 +54,30 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
     };
 
     const badgeStyle = getBadgeStyle(project.category);
+    const isPrivateProject = project.isPrivate === true || project.github === null;
 
     return (
         <article 
-            className="flex flex-col p-[16px] sm:p-[14px] lg:p-6 border-b-[0.5px] border-[rgba(255,255,255,0.06)] sm:border-b-0" 
+            className="flex flex-col h-full p-[16px] sm:p-[14px] lg:p-6 border-b-[0.5px] border-[rgba(255,255,255,0.06)] sm:border-b-0" 
             style={{ background: '#0d0d0d' }}
         >
             {/* Top row */}
             <div className="flex justify-between items-center mb-4">
-                <span className="font-mono text-[10px] text-[#6a6a6a]">{formattedIndex}</span>
+                <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] text-[#6a6a6a]">{formattedIndex}</span>
+                    {project.id === 'arachnode' && (
+                        <span 
+                            className="font-mono text-[8px] tracking-[0.1em] px-[7px] py-[2px]"
+                            style={{
+                                color: '#4ade80',
+                                border: '0.5px solid rgba(74,222,128,0.3)',
+                                background: 'rgba(74,222,128,0.06)'
+                            }}
+                        >
+                            OPEN SOURCE
+                        </span>
+                    )}
+                </div>
                 {project.category && (
                     <span 
                         className="font-mono text-[9px] tracking-[0.1em] px-[8px] py-[2px]"
@@ -59,7 +87,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                             border: `0.5px solid ${badgeStyle.borderColor}`
                         }}
                     >
-                        {project.category.toUpperCase()}
+                        {getBadgeLabel(project.category)}
                     </span>
                 )}
             </div>
@@ -71,7 +99,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
 
             {/* Description */}
             <div 
-                className="project-desc-clamp font-sans text-[12px] text-[#c8c8c8] leading-[1.6] mb-[10px]"
+                className="project-desc-clamp font-sans text-[12px] text-[#c8c8c8] leading-[1.6] mb-[10px] flex-1"
             >
                 {project.solution}
             </div>
@@ -92,6 +120,16 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                     </span>
                 ))}
             </div>
+
+            {/* Arachnode metrics row */}
+            {project.id === 'arachnode' && (
+                <div 
+                    className="font-mono text-[10px] mb-[8px]"
+                    style={{ color: 'rgba(255,255,255,0.3)' }}
+                >
+                    26 ★  47 forks
+                </div>
+            )}
 
             {/* Architecture Drawer */}
             <div 
@@ -138,7 +176,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                     {project.role}
                 </div>
                 
-                <div className="flex gap-2 w-full sm:w-auto">
+                <div className="flex gap-2 w-full sm:w-auto items-center">
                     <button 
                         onClick={() => setIsOpen(!isOpen)}
                         className="flex-1 sm:flex-none flex items-center justify-center font-mono text-[10px] sm:text-[9px] px-[10px] h-[36px] sm:h-auto sm:py-[3px] bg-transparent transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer"
@@ -146,7 +184,17 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                     >
                         Architecture {isOpen ? '▴' : '▾'}
                     </button>
-                    {project.github && (
+                    {isPrivateProject ? (
+                        <span 
+                            className="font-mono text-[9px] tracking-[0.1em] px-[8px] py-[3px] shrink-0 flex items-center justify-center select-none"
+                            style={{ 
+                                color: 'rgba(255,255,255,0.2)', 
+                                border: '0.5px solid rgba(255,255,255,0.08)' 
+                            }}
+                        >
+                            PRIVATE
+                        </span>
+                    ) : (
                         <button 
                             className="shrink-0 flex items-center justify-center font-mono text-[10px] sm:text-[9px] px-[20px] sm:px-[10px] h-[36px] sm:h-auto sm:py-[3px] transition-colors hover:bg-[rgba(255,65,65,0.15)] cursor-pointer"
                             style={{ 
@@ -154,9 +202,9 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                                 background: 'rgba(255,65,65,0.08)',
                                 border: '0.5px solid rgba(255,80,80,0.3)'
                             }}
-                            onClick={() => window.open(project.github, '_blank')}
+                            onClick={() => window.open(project.github!, '_blank')}
                         >
-                            SRC
+                            {project.id === 'arachnode' ? 'GITHUB' : 'SRC'}
                         </button>
                     )}
                 </div>
@@ -172,16 +220,13 @@ export const ProjectsSection: React.FC = () => {
         projectsData.map(p => p.category).filter(Boolean)
     )) as string[];
 
-    const getDisplayLabel = (cat: string) => {
-        if (cat === 'Enterprise Workflow System') return 'WORKFLOW';
-        if (cat === 'ML Orchestration') return 'ML';
-        if (cat === 'IoT Systems') return 'IOT';
-        return cat.toUpperCase();
-    };
-
     const filters = ['ALL', ...categories];
 
-    const filteredProjects = projectsData.filter(p => 
+    const sortedProjects = [...projectsData].sort((a, b) => 
+        ((a as any).display_order ?? 0) - ((b as any).display_order ?? 0)
+    );
+
+    const filteredProjects = sortedProjects.filter(p => 
         activeFilter === 'ALL' || p.category === activeFilter
     );
 
@@ -193,11 +238,6 @@ export const ProjectsSection: React.FC = () => {
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     -webkit-line-clamp: 4;
-                }
-                @media (min-width: 640px) {
-                    .project-desc-clamp {
-                        -webkit-line-clamp: 3;
-                    }
                 }
                 .filter-scrollbar-hide::-webkit-scrollbar {
                     display: none;
@@ -224,7 +264,7 @@ export const ProjectsSection: React.FC = () => {
                 }}>
                 {filters.map(filter => {
                     const isActive = activeFilter === filter;
-                    const displayLabel = filter === 'ALL' ? 'ALL' : getDisplayLabel(filter);
+                    const displayLabel = filter === 'ALL' ? 'ALL' : getBadgeLabel(filter);
                     return (
                         <button
                             key={filter}
@@ -243,11 +283,14 @@ export const ProjectsSection: React.FC = () => {
 
             {/* PROJECT GRID */}
             <div 
-                className="w-full grid grid-cols-1 sm:grid-cols-2 sm:gap-[1px] bg-transparent sm:bg-[#1a1a1a]"
+                className="w-full grid grid-cols-1 sm:grid-cols-2 sm:gap-[1px] bg-transparent sm:bg-[#1a1a1a] [grid-auto-rows:1fr]"
             >
                 {filteredProjects.map((project, index) => (
                     <ProjectCard key={project.id} project={project as Project} index={index} />
                 ))}
+                {filteredProjects.length % 2 !== 0 && (
+                    <div aria-hidden="true" style={{ background: 'transparent' }} />
+                )}
             </div>
         </section>
     );

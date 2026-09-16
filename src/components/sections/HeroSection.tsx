@@ -27,7 +27,7 @@ export const HeroSection: React.FC = () => {
             <div className="flex flex-col sm:flex-row flex-1">
                 {/* LEFT COLUMN */}
                 <div className="w-full sm:w-[55%] lg:w-[65%] flex flex-col justify-center min-h-[calc(100vh-84px)] p-[20px_16px] sm:p-[3.5rem_3.5rem_3.5rem_3rem]">
-                    
+
                     {/* Top section */}
                     <div>
                         <div className="font-mono text-[10px] tracking-[0.2em] mb-[0.5rem]" style={{ color: '#6a6a6a' }}>
@@ -36,28 +36,28 @@ export const HeroSection: React.FC = () => {
                         <h1 className="font-sans text-[36px] sm:text-[56px] lg:text-[73px] font-black leading-[0.92] sm:leading-[0.88] tracking-[-1px] sm:tracking-[-2px] uppercase mb-[6px] sm:mb-2 break-keep whitespace-normal" style={{ color: 'var(--text-primary)' }}>
                             {resumeData.name.split(' ').map((n, i, arr) => <React.Fragment key={i}>{n}{i !== arr.length - 1 && <br />}</React.Fragment>)}
                         </h1>
-                        <h2 role="doc-subtitle" className="font-mono text-[10.5px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
-                            BACKEND ENGINEER · LAZYSTUDENTS.IN
+                        <h2 role="doc-subtitle" className="font-mono text-[10px] tracking-[0.16em] mb-[1.5rem] sm:mb-[2.5rem] uppercase whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
+                            BACKEND ENGINEER | FOUNDING INTERN · LAZYSTUDENTS.IN
                         </h2>
                     </div>
 
                     {/* MOBILE PHOTO BLOCK */}
-                    <div 
+                    <div
                         className="sm:hidden w-full aspect-[3/4] relative overflow-hidden my-[16px] cursor-pointer"
                         style={{ background: '#1a1a1a', border: '0.5px solid rgba(255,255,255,0.08)' }}
                         onClick={() => setIsPhotoRevealed(!isPhotoRevealed)}
                     >
                         {/* Tapped State: Image */}
-                        <div 
+                        <div
                             className="absolute inset-0 z-20 transition-opacity duration-[350ms] ease-in-out"
                             style={{ opacity: isPhotoRevealed ? 1 : 0, pointerEvents: isPhotoRevealed ? 'auto' : 'none' }}
                         >
-                            <img 
-                                src={`${import.meta.env.BASE_URL}vaibhav_sharma.png`} 
-                                alt="Vaibhav Sharma" 
+                            <img
+                                src={`${import.meta.env.BASE_URL}vaibhav_sharma.png`}
+                                alt="Vaibhav Sharma"
                                 className="absolute inset-0 w-full h-full object-cover object-top block"
                             />
-                            <div 
+                            <div
                                 className="absolute bottom-[10px] left-[10px] text-[9px] font-mono tracking-[0.14em]"
                                 style={{ color: '#6a6a6a' }}
                             >
@@ -66,7 +66,7 @@ export const HeroSection: React.FC = () => {
                         </div>
 
                         {/* Default State: Placeholder */}
-                        <div 
+                        <div
                             className="absolute inset-0 flex flex-col items-center justify-center z-10 transition-opacity duration-[350ms] ease-in-out"
                             style={{ opacity: isPhotoRevealed ? 0 : 1, pointerEvents: isPhotoRevealed ? 'none' : 'auto' }}
                         >
@@ -93,11 +93,11 @@ export const HeroSection: React.FC = () => {
                     {/* Middle section — FIELD ROWS */}
                     <div className="flex flex-col">
                         {[
-                            { key: 'SPECIALIZATION', val: 'Backend systems, enterprise workflows, and Linux-level security engineering.' },
-                            { key: 'PRIMARY STACK',  val: 'Java · Python · Node.js · Spring Boot · FastAPI' },
-                            { key: 'CLEARANCE',      val: 'Java · C · Python · seccomp · Redis · Docker' },
-                            { key: 'SYSTEMS BUILT',  val: '7 built · 1 open-source' },
-                            { key: 'USERS SERVED',   val: '8,000+ (ClubChat production)' },
+                            { key: 'SPECIALIZATION', val: 'Backend systems, AI orchestration, and Linux-level security engineering.' },
+                            { key: 'PRIMARY STACK', val: 'Java · Python · Node.js · Spring Boot · FastAPI' },
+                            { key: 'CLEARANCE', val: 'Java · C · Python · seccomp · Redis · Docker' },
+                            { key: 'SYSTEMS BUILT', val: '8 built · 1 open-source' },
+                            { key: 'USERS SERVED', val: '21,000+ (Lazystudents.in, ClubChat production)' },
                         ].map(row => (
                             <div key={row.key} className="flex flex-row items-baseline py-[8px] sm:py-[9px] border-b-[0.5px] gap-[1.5rem]"
                                 style={{ borderColor: 'var(--border-default)' }}>
@@ -115,10 +115,10 @@ export const HeroSection: React.FC = () => {
                                 style={{ color: 'var(--text-muted)' }}>LOCATION</span>
                             <div className="flex flex-col">
                                 <span
-                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-[1px] min-w-[140px] inline-block transition-all duration-200 hover:!bg-transparent hover:!text-[#c8c8c8]"
-                                    style={{ 
-                                        background: isLocationRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)', 
-                                        color: isLocationRevealed ? '#c8c8c8' : 'transparent' 
+                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-0 min-w-[140px] inline-block transition-all duration-250 hover:!bg-transparent hover:!text-[#c8c8c8]"
+                                    style={{
+                                        background: isLocationRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)',
+                                        color: isLocationRevealed ? '#c8c8c8' : 'transparent'
                                     }}
                                     onClick={() => setIsLocationRevealed(!isLocationRevealed)}
                                 >Bengaluru, India</span>
@@ -133,10 +133,10 @@ export const HeroSection: React.FC = () => {
                                 style={{ color: 'var(--text-muted)' }}>CONTACT</span>
                             <div className="flex flex-col">
                                 <span
-                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-[1px] min-w-[140px] inline-block transition-all duration-200 hover:!bg-transparent hover:!text-[#c8c8c8]"
-                                    style={{ 
-                                        background: isContactRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)', 
-                                        color: isContactRevealed ? '#c8c8c8' : 'transparent' 
+                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-0 min-w-[140px] inline-block transition-all duration-250 hover:!bg-transparent hover:!text-[#c8c8c8]"
+                                    style={{
+                                        background: isContactRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)',
+                                        color: isContactRevealed ? '#c8c8c8' : 'transparent'
                                     }}
                                     onClick={() => setIsContactRevealed(!isContactRevealed)}
                                 >sharma31stmay@gmail.com</span>
@@ -174,22 +174,22 @@ export const HeroSection: React.FC = () => {
                 </div>
 
                 {/* RIGHT COLUMN (Tablet/Desktop) */}
-                <div 
+                <div
                     className="hidden sm:flex relative w-[45%] lg:w-[35%] border-l-[0.5px] min-h-[calc(100vh-84px)] p-[3rem_2.5rem] flex-col items-center justify-center cursor-pointer"
                     style={{ background: 'var(--bg-raised)', borderColor: 'var(--border-default)' }}
                     onClick={() => setIsPhotoRevealed(!isPhotoRevealed)}
                 >
-                    
+
                     <div className="relative w-full flex flex-col items-center justify-center">
-                        
+
                         {/* Actual Photo */}
-                        <div 
+                        <div
                             className="flex flex-col items-center justify-center w-full transition-opacity duration-[350ms] ease-in-out z-20"
                             style={{ opacity: isPhotoRevealed ? 1 : 0 }}
                         >
-                            <img 
-                                src={`${import.meta.env.BASE_URL}vaibhav_sharma.png`} 
-                                alt="Vaibhav Sharma" 
+                            <img
+                                src={`${import.meta.env.BASE_URL}vaibhav_sharma.png`}
+                                alt="Vaibhav Sharma"
                                 className="w-full h-auto max-h-[75vh] object-cover object-top block border-[0.5px]"
                                 style={{ borderColor: 'var(--border-default)' }}
                             />
@@ -200,14 +200,14 @@ export const HeroSection: React.FC = () => {
                         </div>
 
                         {/* Placeholder */}
-                        <div 
+                        <div
                             className="absolute inset-0 flex flex-col items-center transition-opacity duration-[350ms] ease-in-out z-10 pb-[22px]"
                             style={{ opacity: isPhotoRevealed ? 0 : 1 }}
                         >
                             <div className="relative w-full h-full border-[0.5px] flex flex-col items-center justify-center p-1"
                                 style={{ borderColor: 'var(--border-default)' }}>
                                 <div className="absolute inset-1" style={{ background: 'var(--border-subtle)' }}></div>
-                                
+
                                 {/* Corner Markers */}
                                 {[
                                     '-top-[1px] -left-[1px] border-t-[1px] border-l-[1px]',
