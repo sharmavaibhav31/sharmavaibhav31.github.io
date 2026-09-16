@@ -14,14 +14,15 @@ export const CV: React.FC = () => {
                 ← BACK TO PORTFOLIO
             </Link>
 
-            {/* Floating/Fixed Download Button */}
+            {/* Fixed Download Button */}
             <a 
-                href={`${import.meta.env.BASE_URL}cv/vaibhav_sharma_cv.pdf`}
-                download="Vaibhav_Sharma_CV.pdf"
+                href={`${import.meta.env.BASE_URL}Vaibhav_Sharma_resume.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="cv-download-btn"
-                aria-label="Download CV as PDF"
+                aria-label="Download CV"
             >
-                ↓ DOWNLOAD PDF
+                DOWNLOAD CV
             </a>
 
             <div className="cv-wrap">
@@ -84,7 +85,7 @@ export const CV: React.FC = () => {
                     <div className="identity-grid">
                         <div className="identity-cell">
                             <div className="identity-key">Current Status</div>
-                            <div className="identity-val green">Backend Engineering Intern · LazyStudents.in</div>
+                            <div className="identity-val green">Backend Engineer Intern (Founding Intern) · LazyStudents.in</div>
                         </div>
                         <div className="identity-cell">
                             <div className="identity-key">Degree</div>
@@ -96,7 +97,7 @@ export const CV: React.FC = () => {
                         </div>
                         <div className="identity-cell">
                             <div className="identity-key">Open Source</div>
-                            <div className="identity-val green">Arachnode · 26 ★ · 47 forks · Project Admin (GSSoC)</div>
+                            <div className="identity-val green">Arachnode · 26 ★ · 47 forks · Project Admin (GSSoC / ELUSOC)</div>
                         </div>
                         <div className="identity-cell span2">
                             <div className="identity-key">Looking For</div>
@@ -128,14 +129,45 @@ export const CV: React.FC = () => {
 
                     <div className="exp-entry">
                         <div className="exp-header">
-                            <div className="exp-role">Backend Engineering Intern</div>
+                            <div className="exp-role">Backend Engineer Intern (Founding Intern)</div>
                             <div className="exp-period">Jun 2026 — Present</div>
                         </div>
-                        <div className="exp-company">LazyStudents.in <span className="loc">· Remote</span></div>
+                        <div className="exp-company">LazyStudents.in (The Lazy Labs) <span className="loc">· Internship · Remote</span></div>
                         <ul className="exp-bullets">
-                            <li>Primary backend engineer on a plagiarism detection and reduction service — designing the text-comparison pipeline, backend API, and suggestion engine from scratch.</li>
-                            <li>Own end-to-end quality of <strong>40+ platform tools</strong>: writing structured test plans, identifying integration failures, and filing reproducible bug reports consumed directly by the backend team.</li>
-                            <li>Leading the interns team, coordinating task allocation and review cycles in an Agile environment.</li>
+                            <li>Designed and built the core Workflows engine (Fetch, UseTool, Validation services) enabling users to chain tools on a single file without re-uploading between steps.</li>
+                            <li>Built Lazy Command — an AI orchestration layer parsing natural-language requests into executable workflow graphs, routing intent to 100+ platform tools via Gemini with a complexity-based model router.</li>
+                            <li>Root-caused a 4-cause production incident where multi-step workflow runs stalled after step one — traced to a dispatcher bug, metadata corruption, and an unvalidated-input crash; shipped recovery using <code>SELECT FOR UPDATE SKIP LOCKED</code>.</li>
+                            <li>Found and reported an IDOR, login timing oracle, production HSTS misconfiguration, and a Next.js build-time auth bypass in a concurrent security audit.</li>
+                            <li>Migrated the resuMATCH resume builder (React/Express/MongoDB) into the core platform (Next.js/PostgreSQL) with a rebuilt data layer and standalone Puppeteer PDF-generation service.</li>
+                            <li>Shipped platform-wide dark mode, JSON Path Finder (CodeMirror), DSA visualizer, and edge-to-edge layout revamp across 9 Academic Tools.</li>
+                        </ul>
+                    </div>
+
+                    <div className="exp-entry">
+                        <div className="exp-header">
+                            <div className="exp-role">Project Admin &amp; Open Source Maintainer</div>
+                            <div className="exp-period">May 2026 — Sep 2026</div>
+                        </div>
+                        <div className="exp-company">GirlScript Summer of Code (GSSoC 2026) <span className="loc">· Freelance · Remote</span></div>
+                        <ul className="exp-bullets">
+                            <li>Served as Project Admin for Arachnode during GSSoC 2026 — managed 61+ repository issues and reviewed 12+ contributor PRs.</li>
+                            <li>Guided implementations of semantic job matching (Sentence-BERT), Cutshort.io crawler integration, and platform-selective scraping workflows.</li>
+                            <li>Maintained code quality, architecture consistency, and documentation standards across a growing multi-contributor open-source codebase.</li>
+                        </ul>
+                    </div>
+
+                    <div className="exp-entry">
+                        <div className="exp-header">
+                            <div className="exp-role">Project Maintainer</div>
+                            <div className="exp-period">Jun 2026 — Aug 2026</div>
+                        </div>
+                        <div className="exp-company">EduLinkUp (ELUSOC 2026) <span className="loc">· Freelance · Remote</span></div>
+                        <ul className="exp-bullets">
+                            <li>Led development and maintenance of Arachnode, an open-source AI-powered job aggregation platform during ELUSOC 2026.</li>
+                            <li>Maintained backend infrastructure built on FastAPI, PostgreSQL, Redis Streams, and distributed crawler services across 7 independent microservices.</li>
+                            <li>Coordinated community contributions across crawlers (LinkedIn, Naukri, Internshala, Cutshort), AI workflows (SBERT ranking, resume matching), and monitoring dashboards.</li>
+                            <li>Designed contributor-friendly issue templates, service-level README standards, and onboarding processes for a growing contributor community.</li>
+                            <li>Oversaw repository growth to 26+ GitHub stars with active multi-contributor development.</li>
                         </ul>
                     </div>
 
@@ -144,7 +176,7 @@ export const CV: React.FC = () => {
                             <div className="exp-role">AI/ML Backend Intern</div>
                             <div className="exp-period">Sep 2025 — Nov 2025</div>
                         </div>
-                        <div className="exp-company">Infosys Springboard <span className="loc">· Virtual</span></div>
+                        <div className="exp-company">Infosys Springboard <span className="loc">· Internship · Virtual</span></div>
                         <ul className="exp-bullets">
                             <li>Orchestrated 3 heterogeneous ML inference models (MusicGen, fine-tuned GPT lyric model, YAMNet genre classifier) behind a Flask API layer — MoodHarmonics: an end-to-end AI music generation system.</li>
                             <li>Implemented model preloading and graceful fallback routing, cutting average initialization latency from ~2.2s to ~1.2s (<strong>45% reduction</strong>), measured over 500+ sequential requests.</li>
@@ -154,13 +186,13 @@ export const CV: React.FC = () => {
 
                     <div className="exp-entry">
                         <div className="exp-header">
-                            <div className="exp-role">Flutter Developer Intern</div>
+                            <div className="exp-role">Mobile Application Developer</div>
                             <div className="exp-period">Jul 2025 — Sep 2025</div>
                         </div>
-                        <div className="exp-company">ClubChat <span className="loc">· Remote · IIIT Delhi Startup</span></div>
+                        <div className="exp-company">ClubChat <span className="loc">· Internship · Remote · IIIT Delhi Startup</span></div>
                         <ul className="exp-bullets">
-                            <li>Shipped event-feed and real-time chat to a production app with <strong>8,000+ users</strong>.</li>
-                            <li>Resolved <strong>18 production stability issues</strong> across two releases — including 3 critical crash-on-launch regressions — through log analysis and device-level reproduction.</li>
+                            <li>Shipped event-feed and real-time chat to a production app with <strong>10,000+ users</strong>.</li>
+                            <li>Resolved <strong>20+ bugs</strong> including 3 critical crash-on-launch regressions across two major feature releases through log analysis and device-level reproduction.</li>
                         </ul>
                     </div>
                 </section>

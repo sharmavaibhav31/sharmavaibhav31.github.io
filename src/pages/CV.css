@@ -17,8 +17,8 @@
   background: var(--bg);
   color: var(--body);
   font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 14.5px;
+  line-height: 1.75;
   min-height: 100vh;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -83,7 +83,7 @@
 
 .cv-page .cv-title {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12.5px;
   color: var(--label);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -95,7 +95,7 @@
   flex-wrap: wrap;
   gap: 5px 18px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12.5px;
   color: var(--label);
   margin-top: 12px;
 }
@@ -120,7 +120,7 @@
 
 .cv-page .photo-label {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 9.5px;
   color: var(--muted);
   text-align: center;
   line-height: 1.5;
@@ -142,7 +142,7 @@
   background: repeating-linear-gradient(
     to bottom,
     transparent 0px, transparent 3px,
-    rgba(0,0,0,0.18) 3px, rgba(0,0,0,0.18) 4px
+    rgba(0,0,0,0.18) 3px, rgba(0,0,0,0.4px)
   );
   z-index: 2;
 }
@@ -174,7 +174,7 @@
 
 .cv-page .section-label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12.5px;
   font-weight: bold;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -212,7 +212,7 @@
 
 .cv-page .identity-key {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 10.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -221,9 +221,9 @@
 
 .cv-page .identity-val {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--white);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .cv-page .identity-val.green {
@@ -232,7 +232,7 @@
 
 .cv-page .identity-val.red {
   color: var(--red);
-  font-size: 11px;
+  font-size: 12.5px;
 }
 
 .cv-page .span2 {
@@ -242,9 +242,9 @@
 /* ── NARRATIVE ── */
 .cv-page .narrative {
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 14.5px;
   color: var(--body);
-  line-height: 1.8;
+  line-height: 1.75;
   background: var(--surface);
   border-left: 3px solid rgba(0, 230, 118, 0.31);
   padding: 16px 20px;
@@ -277,14 +277,14 @@
 
 .cv-page .exp-role {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: bold;
   color: var(--white);
 }
 
 .cv-page .exp-period {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--label);
   padding: 3px 8px;
   background: var(--surface2);
@@ -294,7 +294,7 @@
 
 .cv-page .exp-company {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--green);
   margin-bottom: 11px;
 }
@@ -313,7 +313,7 @@
 .cv-page .exp-bullets li {
   font-size: 13.5px;
   color: var(--body);
-  line-height: 1.65;
+  line-height: 1.75;
   padding-left: 18px;
   position: relative;
 }
@@ -351,14 +351,14 @@
 
 .cv-page .project-name {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: bold;
   color: var(--white);
 }
 
 .cv-page .project-year {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--label);
   padding: 2px 8px;
   border: 1px solid var(--border);
@@ -376,7 +376,7 @@
 
 .cv-page .tag {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--green);
   background: var(--green-dim);
   padding: 2px 8px;
@@ -392,11 +392,11 @@
 }
 
 .cv-page .project-story {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--label);
   font-style: italic;
   margin-bottom: 11px;
-  line-height: 1.65;
+  line-height: 1.75;
 }
 
 .cv-page .project-bullets {
@@ -407,9 +407,9 @@
 }
 
 .cv-page .project-bullets li {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--body);
-  line-height: 1.65;
+  line-height: 1.75;
   padding-left: 18px;
   position: relative;
 }
@@ -420,7 +420,7 @@
   left: 0;
   color: var(--green);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   top: 3px;
 }
 
@@ -434,7 +434,7 @@
 
 .cv-page .stat-item {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--muted);
 }
 
@@ -461,7 +461,7 @@
 
 .cv-page .skill-key {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
@@ -473,7 +473,7 @@
 
 .cv-page .skill-val {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--body);
   padding: 9px 13px;
   display: flex;
@@ -495,7 +495,7 @@
 
 .cv-page .cert-issuer {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 10.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--green);
@@ -503,14 +503,14 @@
 }
 
 .cv-page .cert-name {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--white);
   line-height: 1.4;
 }
 
 .cv-page .cert-date {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--muted);
   margin-top: 4px;
 }
@@ -543,7 +543,7 @@
 
 .cv-page .leadership-role {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: bold;
   color: var(--white);
   margin-bottom: 3px;
@@ -551,15 +551,15 @@
 
 .cv-page .leadership-org {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--green);
   margin-bottom: 7px;
 }
 
 .cv-page .leadership-desc {
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--body);
-  line-height: 1.65;
+  line-height: 1.75;
 }
 
 /* ── DIRECTIVES ── */
@@ -571,15 +571,15 @@
 
 .cv-page .directive-label {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 10.5px;
   letter-spacing: 0.1em;
   color: var(--muted);
   margin-bottom: 12px;
 }
 
 .cv-page .directive-text {
-  font-size: 13.5px;
-  line-height: 1.85;
+  font-size: 14.5px;
+  line-height: 1.75;
   color: var(--body);
 }
 
@@ -594,7 +594,7 @@
 
 .cv-page .cv-footer div {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--muted);
 }
 
@@ -603,21 +603,22 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: #00e676;
-  color: #000000;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: bold;
-  font-size: 13px;
+  z-index: 50;
+  background: #0d0d0d;
+  color: #4ade80;
+  border: 0.5px solid rgba(74, 222, 128, 0.4);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
   padding: 10px 18px;
-  border: 1px solid #000000;
-  z-index: 1000;
-  text-decoration: none;
-  transition: opacity 0.2s;
   cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .cv-download-btn:hover {
-  opacity: 0.9;
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.7);
 }
 
 /* Floating Back Button */
@@ -698,4 +699,3 @@
     min-height: auto;
   }
 }
-
