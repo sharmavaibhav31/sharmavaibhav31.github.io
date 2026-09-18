@@ -1,11 +1,16 @@
+// ProjectsSection.tsx — Scroll-driven dossier page-turn effect
 // Theme: Redacted × Kernel/Log hybrid — CSS variables for light/dark support
 // Data: untouched — presentation layer only
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 import projectsData from '../../data/projects.json';
+import { CaseFilePage } from './CaseFilePage';
+import { FRONT_CLAMP_STYLE } from './CaseFileFront';
 
 type Project = typeof projectsData[0];
 
+// ── Badge label helper (shared with filter row) ───────────────────────────────
 function getBadgeLabel(category: string): string {
     const map: Record<string, string> = {
         'Enterprise Workflow System': 'WORKFLOW',
@@ -19,279 +24,446 @@ function getBadgeLabel(category: string): string {
     return map[category] ?? category.toUpperCase();
 }
 
-const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const contentRef = useRef<HTMLDivElement>(null);
-    const [maxHeight, setMaxHeight] = useState('0px');
+// ── Stage dimensions ──────────────────────────────────────────────────────────
+const DESKTOP_W = 780, DESKTOP_H = 520;
+const TABLET_W  = 560, TABLET_H  = 440;
+
+// ── Mobile fallback card (IntersectionObserver fade-in) ───────────────────────
+const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+    const [visible, setVisible] = useState(false);
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (isOpen && contentRef.current) {
-            setMaxHeight(`${contentRef.current.scrollHeight}px`);
-        } else {
-            setMaxHeight('0px');
-        }
-    }, [isOpen]);
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(
+            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+            { threshold: 0.1 }
+        );
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
 
-    const formattedIndex = String(index + 1).padStart(2, '0');
-    const stack = (project.stack || []).slice(0, 4);
-    
-    const archPoints = typeof project.architecture === 'string' 
-        ? project.architecture.split('→').map(s => s.trim()).filter(Boolean)
-        : Array.isArray(project.architecture) ? project.architecture : [];
+    const archText = typeof project.architecture === 'string'
+        ? project.architecture
+        : Array.isArray(project.architecture)
+            ? (project.architecture as string[]).join(' → ')
+            : '';
 
-    const getBadgeStyle = (category?: string) => {
-        const cat = category || '';
-        switch(cat) {
-            case 'Automation': return { color: '#4a9eff', background: 'rgba(74,158,255,0.1)', borderColor: '#4a9eff' };
-            case 'Security': return { color: '#a78bfa', background: 'rgba(167,139,250,0.1)', borderColor: '#a78bfa' };
-            case 'ML Orchestration': return { color: '#4ade80', background: 'rgba(74,222,128,0.08)', borderColor: '#4ade80' };
-            case 'Scalability': return { color: '#fbbf24', background: 'rgba(251,191,36,0.08)', borderColor: '#fbbf24' };
-            case 'HCI': return { color: '#34d399', background: 'rgba(52,211,153,0.08)', borderColor: '#34d399' };
-            case 'IoT Systems': return { color: '#f472b6', background: 'rgba(244,114,182,0.08)', borderColor: '#f472b6' };
-            case 'Enterprise Workflow System': return { color: '#e05c2a', background: 'rgba(224,92,42,0.08)', borderColor: '#e05c2a' };
-            default: return { color: '#8e8e8e', background: 'transparent', borderColor: '#8e8e8e' };
-        }
-    };
-
-    const badgeStyle = getBadgeStyle(project.category);
-    const isPrivateProject = project.isPrivate === true || project.github === null;
+    const isPrivate = (project as any).isPrivate === true || project.github === null;
 
     return (
-        <article 
-            className="flex flex-col h-full p-[16px] sm:p-[14px] lg:p-6 border-b-[0.5px] border-[rgba(255,255,255,0.06)] sm:border-b-0" 
-            style={{ background: '#0d0d0d' }}
+        <div
+            ref={ref}
+            style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(24px)',
+                transition: `opacity 0.5s ease ${index * 0.08}s, transform 0.5s ease ${index * 0.08}s`,
+                background: '#0d0d0d',
+                border: '0.5px solid rgba(255,255,255,0.08)',
+                display: 'flex',
+                flexDirection: 'column',
+                marginBottom: 1,
+            }}
         >
-            {/* Top row */}
-            <div className="flex justify-between items-center mb-4">
-                <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-[#6a6a6a]">{formattedIndex}</span>
-                    {project.id === 'arachnode' && (
-                        <span 
-                            className="font-mono text-[8px] tracking-[0.1em] px-[7px] py-[2px]"
-                            style={{
-                                color: '#4ade80',
-                                border: '0.5px solid rgba(74,222,128,0.3)',
-                                background: 'rgba(74,222,128,0.06)'
-                            }}
-                        >
-                            OPEN SOURCE
-                        </span>
-                    )}
+            {/* Header */}
+            <div style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '0 16px', height: 36,
+                borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+            }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'rgba(255,80,80,0.6)' }}>
+                    CASE FILE {String(index + 1).padStart(3, '0')}
+                </span>
+            </div>
+
+            {/* Body */}
+            <div style={{ padding: '16px 16px 0', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <p style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.16em', margin: 0 }}>
+                    // SYSTEMS BUILT
+                </p>
+                <h3 style={{ fontFamily: 'sans-serif', fontSize: 15, fontWeight: 700, color: '#f5f5f5', margin: 0, lineHeight: 1.25 }}>
+                    {project.title}
+                </h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                    {(project.stack ?? []).slice(0, 4).map(t => (
+                        <span key={t} style={{
+                            fontFamily: 'monospace', fontSize: 9, padding: '1px 6px',
+                            color: '#8e8e8e', background: 'rgba(255,255,255,0.04)',
+                            border: '0.5px solid rgba(255,255,255,0.08)',
+                        }}>{t}</span>
+                    ))}
                 </div>
-                {project.category && (
-                    <span 
-                        className="font-mono text-[9px] tracking-[0.1em] px-[8px] py-[2px]"
-                        style={{
-                            color: badgeStyle.color,
-                            backgroundColor: badgeStyle.background,
-                            border: `0.5px solid ${badgeStyle.borderColor}`
-                        }}
-                    >
-                        {getBadgeLabel(project.category)}
-                    </span>
-                )}
+                <p style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#c8c8c8', lineHeight: 1.7, margin: 0 }}>
+                    {project.solution ?? ''}
+                </p>
             </div>
 
-            {/* Title */}
-            <h3 className="font-sans text-[14px] font-semibold text-[#f5f5f5] leading-[1.3] mb-[6px]">
-                {project.title}
-            </h3>
-
-            {/* Description */}
-            <div 
-                className="project-desc-clamp font-sans text-[12px] text-[#c8c8c8] leading-[1.6] mb-[10px] flex-1"
-            >
-                {project.solution}
-            </div>
-
-            {/* Stack tags */}
-            <div className="flex flex-wrap gap-[4px] mb-[12px]">
-                {stack.map(tech => (
-                    <span 
-                        key={tech} 
-                        className="font-mono text-[9px] px-[6px] py-[1px]"
-                        style={{
-                            color: '#8e8e8e',
-                            background: 'rgba(255,255,255,0.04)',
-                            border: '0.5px solid rgba(255,255,255,0.08)'
-                        }}
-                    >
-                        {tech}
-                    </span>
-                ))}
-            </div>
-
-            {/* Arachnode metrics row */}
-            {project.id === 'arachnode' && (
-                <div 
-                    className="font-mono text-[10px] mb-[8px]"
-                    style={{ color: 'rgba(255,255,255,0.3)' }}
-                >
-                    26 ★  47 forks
-                </div>
-            )}
-
-            {/* Architecture Drawer */}
-            <div 
-                className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
-                style={{ maxHeight }}
-            >
-                <div ref={contentRef} className="pb-4 flex flex-col gap-3">
-                    {/* Architecture */}
-                    <div>
-                        <div className="font-mono text-[9px] text-[#6a6a6a] tracking-[0.12em] mb-2">ARCHITECTURE</div>
-                        <div className="flex flex-col gap-1">
-                            {archPoints.map((pt, i) => (
-                                <div key={i} className="font-mono text-[11px] text-[#c8c8c8] leading-[1.7]">
-                                    {typeof project.architecture === 'string' ? `→ ${pt}` : `• ${pt}`}
-                                </div>
-                            ))}
-                        </div>
+            {/* Architecture accordion */}
+            <div style={{ overflow: 'hidden', maxHeight: open ? 300 : 0, transition: 'max-height 0.3s ease' }}>
+                {archText && (
+                    <div style={{ padding: '12px 16px 0' }}>
+                        <p style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', marginBottom: 6 }}>
+                            ARCHITECTURE
+                        </p>
+                        <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: '#c8c8c8', lineHeight: 1.7, margin: 0 }}>
+                            {archText}
+                        </p>
                     </div>
-
-                    {/* Impact */}
-                    {project.impact && (
-                        <div className="mt-2">
-                            <div className="font-mono text-[9px] text-[#6a6a6a] tracking-[0.12em] mb-2">IMPACT</div>
-                            <div 
-                                className="font-mono text-[11px] text-[#c8c8c8] leading-[1.7] p-[8px]"
-                                style={{
-                                    borderLeft: '2px solid rgba(74,222,128,0.25)',
-                                    background: 'rgba(74,222,128,0.04)'
-                                }}
-                            >
-                                {project.impact}
-                            </div>
-                        </div>
-                    )}
-                </div>
+                )}
+                {project.impact && (
+                    <div style={{
+                        margin: '12px 16px 0',
+                        background: 'rgba(74,222,128,0.04)',
+                        border: '0.5px solid rgba(74,222,128,0.15)',
+                        padding: '8px 12px',
+                    }}>
+                        <p style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', marginBottom: 4 }}>
+                            IMPACT
+                        </p>
+                        <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: '#c8c8c8', lineHeight: 1.7, margin: 0 }}>
+                            {project.impact}
+                        </p>
+                    </div>
+                )}
             </div>
 
             {/* Footer */}
-            <div 
-                className="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-auto pt-[10px] gap-3 sm:gap-0"
-                style={{ borderTop: '0.5px solid rgba(255,255,255,0.06)' }}
-            >
-                <div className="font-mono text-[9px] text-[#6a6a6a] italic whitespace-nowrap overflow-hidden text-ellipsis sm:max-w-[55%]">
-                    {project.role}
-                </div>
-                
-                <div className="flex gap-2 w-full sm:w-auto items-center">
-                    <button 
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="flex-1 sm:flex-none flex items-center justify-center font-mono text-[10px] sm:text-[9px] px-[10px] h-[36px] sm:h-auto sm:py-[3px] bg-transparent transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer"
-                        style={{ color: '#8e8e8e', border: '0.5px solid rgba(255,255,255,0.12)' }}
+            <div style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '0 16px', height: 40,
+                borderTop: '0.5px solid rgba(255,255,255,0.06)',
+                marginTop: 12, gap: 12,
+            }}>
+                <button
+                    onClick={() => setOpen(o => !o)}
+                    style={{
+                        fontFamily: 'monospace', fontSize: 9, padding: '3px 10px',
+                        color: '#8e8e8e', background: 'transparent',
+                        border: '0.5px solid rgba(255,255,255,0.12)', cursor: 'pointer',
+                    }}
+                >
+                    Architecture {open ? '▴' : '▾'}
+                </button>
+                {isPrivate ? (
+                    <span style={{
+                        fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em',
+                        padding: '2px 8px', color: 'rgba(255,255,255,0.2)',
+                        border: '0.5px solid rgba(255,255,255,0.08)',
+                    }}>PRIVATE</span>
+                ) : (
+                    <button
+                        style={{
+                            fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em',
+                            padding: '3px 10px', color: 'rgba(255,80,80,0.8)',
+                            background: 'rgba(255,65,65,0.08)',
+                            border: '0.5px solid rgba(255,80,80,0.3)', cursor: 'pointer',
+                        }}
+                        onClick={() => window.open((project as any).github!, '_blank')}
                     >
-                        Architecture {isOpen ? '▴' : '▾'}
+                        {project.id === 'arachnode' ? 'GITHUB' : 'SRC'}
                     </button>
-                    {isPrivateProject ? (
-                        <span 
-                            className="font-mono text-[9px] tracking-[0.1em] px-[8px] py-[3px] shrink-0 flex items-center justify-center select-none"
-                            style={{ 
-                                color: 'rgba(255,255,255,0.2)', 
-                                border: '0.5px solid rgba(255,255,255,0.08)' 
-                            }}
-                        >
-                            PRIVATE
-                        </span>
-                    ) : (
-                        <button 
-                            className="shrink-0 flex items-center justify-center font-mono text-[10px] sm:text-[9px] px-[20px] sm:px-[10px] h-[36px] sm:h-auto sm:py-[3px] transition-colors hover:bg-[rgba(255,65,65,0.15)] cursor-pointer"
-                            style={{ 
-                                color: 'rgba(255,80,80,0.8)', 
-                                background: 'rgba(255,65,65,0.08)',
-                                border: '0.5px solid rgba(255,80,80,0.3)'
-                            }}
-                            onClick={() => window.open(project.github!, '_blank')}
-                        >
-                            {project.id === 'arachnode' ? 'GITHUB' : 'SRC'}
-                        </button>
-                    )}
-                </div>
+                )}
             </div>
-        </article>
+        </div>
     );
 };
 
+// ── Scroll hint (pulsing, fades out after first page starts turning) ──────────
+const ScrollHint: React.FC<{ visible: boolean }> = ({ visible }) => (
+    <div style={{
+        position: 'absolute',
+        bottom: 20,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        fontFamily: 'monospace',
+        fontSize: 9,
+        letterSpacing: '0.12em',
+        color: 'rgba(255,255,255,0.25)',
+        whiteSpace: 'nowrap',
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 0.4s ease',
+        animation: visible ? 'dossier-pulse 2s ease-in-out infinite' : 'none',
+        pointerEvents: 'none',
+    }}>
+        ↓ scroll to open case files
+    </div>
+);
+
+// ── Left-panel background (turned pages land here) ────────────────────────────
+const LeftPanelBg: React.FC<{ width: number; height: number }> = ({ width, height }) => (
+    <div style={{
+        position: 'absolute',
+        top: 0, left: 0,
+        width, height,
+        background: '#111111',
+        border: '0.5px solid rgba(255,255,255,0.06)',
+        borderRight: 'none',
+    }} />
+);
+
+// ── Right-panel background (unturned pages sit here) ─────────────────────────
+const RightPanelBg: React.FC<{ stageWidth: number; height: number }> = ({ stageWidth, height }) => (
+    <div style={{
+        position: 'absolute',
+        top: 0, left: stageWidth / 2,
+        width: stageWidth / 2, height,
+        background: '#0d0d0d',
+        border: '0.5px solid rgba(255,255,255,0.06)',
+    }} />
+);
+
+// ── Main component ─────────────────────────────────────────────────────────────
 export const ProjectsSection: React.FC = () => {
     const [activeFilter, setActiveFilter] = useState<string>('ALL');
+    const [isMobile, setIsMobile] = useState(false);
+    const [isTablet, setIsTablet] = useState(false);
+    const [reducedMotion, setReducedMotion] = useState(false);
+    const [activePageIndex, setActivePageIndex] = useState(0);
+    const [showHint, setShowHint] = useState(true);
 
+    const outerRef = useRef<HTMLDivElement>(null);
+
+    // ── Breakpoint detection ─────────────────────────────────────────────────
+    useEffect(() => {
+        const check = () => {
+            setIsMobile(window.innerWidth < 640);
+            setIsTablet(window.innerWidth >= 640 && window.innerWidth < 1024);
+        };
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
+
+    // ── Reduced motion ───────────────────────────────────────────────────────
+    useEffect(() => {
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        setReducedMotion(mq.matches);
+        const handler = () => setReducedMotion(mq.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
+
+    // ── Data / filter ────────────────────────────────────────────────────────
     const categories = Array.from(new Set(
         projectsData.map(p => p.category).filter(Boolean)
     )) as string[];
-
     const filters = ['ALL', ...categories];
 
-    const sortedProjects = [...projectsData].sort((a, b) => 
-        ((a as any).display_order ?? 0) - ((b as any).display_order ?? 0)
+    const sortedProjects = [...projectsData].sort((a, b) =>
+        (((a as any).display_order ?? 0) - ((b as any).display_order ?? 0))
     );
-
-    const filteredProjects = sortedProjects.filter(p => 
+    const filteredProjects = sortedProjects.filter(p =>
         activeFilter === 'ALL' || p.category === activeFilter
-    );
+    ) as Project[];
+
+    const N = filteredProjects.length;
+
+    // ── Stage dimensions ─────────────────────────────────────────────────────
+    const stageW = isTablet ? TABLET_W : DESKTOP_W;
+    const stageH = isTablet ? TABLET_H : DESKTOP_H;
+
+    // ── Scroll tracking ──────────────────────────────────────────────────────
+    const { scrollYProgress } = useScroll({
+        target: outerRef,
+        offset: ['start start', 'end end'],
+    });
+
+    // Active page index for counter
+    useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+        const idx = Math.min(Math.floor(latest * N), N - 1);
+        setActivePageIndex(Math.max(0, idx));
+        // Hide hint once the first page starts turning (progress > 0.5/N)
+        if (latest > 0.5 / N) setShowHint(false);
+        else setShowHint(true);
+    });
+
+    // Reset hint and page index when filter changes
+    const handleFilterChange = useCallback((f: string) => {
+        setActiveFilter(f);
+        setActivePageIndex(0);
+        setShowHint(true);
+    }, []);
+
+    // ── Reduced-motion static list ───────────────────────────────────────────
+    if (reducedMotion) {
+        return (
+            <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+                <SectionHeader total={projectsData.length} />
+                <FilterRow filters={filters} active={activeFilter} onChange={handleFilterChange} />
+                <div style={{ display: 'flex', flexDirection: 'column', padding: '2rem 1rem' }}>
+                    {filteredProjects.map((p, i) => <MobileCard key={p.id} project={p} index={i} />)}
+                </div>
+            </section>
+        );
+    }
+
+    // ── Mobile fallback ──────────────────────────────────────────────────────
+    if (isMobile) {
+        return (
+            <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
+                <SectionHeader total={projectsData.length} />
+                <FilterRow filters={filters} active={activeFilter} onChange={handleFilterChange} />
+                <div style={{ display: 'flex', flexDirection: 'column', padding: '1rem 0' }}>
+                    {filteredProjects.map((p, i) => <MobileCard key={p.id} project={p} index={i} />)}
+                </div>
+            </section>
+        );
+    }
+
+    // ── Desktop / tablet — full dossier ─────────────────────────────────────
+    const scrollHeight = N * 120; // vh units
 
     return (
         <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
-            <style dangerouslySetInnerHTML={{__html: `
-                .project-desc-clamp {
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                    -webkit-line-clamp: 4;
-                }
-                .filter-scrollbar-hide::-webkit-scrollbar {
-                    display: none;
+            <style dangerouslySetInnerHTML={{ __html: `
+                ${FRONT_CLAMP_STYLE}
+                @keyframes dossier-pulse {
+                    0%, 100% { opacity: 0.25; }
+                    50%       { opacity: 0.55; }
                 }
             `}} />
 
-            {/* SECTION HEADER BAR */}
-            <div className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
-                style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
-                <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
-                    PROCESS TABLE — SELECTED WORK
-                </div>
-                <div className="font-mono text-[9px] sm:text-[10px]" style={{ color: 'var(--text-muted)' }}>
-                    {projectsData.length} processes · 0 errors
-                </div>
-            </div>
+            {/* ── SECTION HEADER (scrolls away normally) ─────────── */}
+            <SectionHeader total={projectsData.length} />
 
-            {/* FILTER ROW */}
-            <div className="filter-scrollbar-hide w-full px-4 md:px-8 py-[1rem] flex flex-row sm:flex-wrap gap-0 border-b-[0.5px] overflow-x-auto overflow-y-hidden"
-                style={{ 
-                    borderColor: 'var(--border-default)',
-                    scrollbarWidth: 'none',
-                    WebkitOverflowScrolling: 'touch'
-                }}>
-                {filters.map(filter => {
-                    const isActive = activeFilter === filter;
-                    const displayLabel = filter === 'ALL' ? 'ALL' : getBadgeLabel(filter);
-                    return (
-                        <button
-                            key={filter}
-                            onClick={() => setActiveFilter(filter)}
-                            className="font-mono text-[10px] tracking-[0.12em] px-[14px] sm:px-[16px] py-[6px] bg-transparent cursor-pointer transition-all duration-150 border-b-[2px] whitespace-nowrap shrink-0"
+            {/* ── FILTER ROW (scrolls away normally) ─────────────── */}
+            <FilterRow filters={filters} active={activeFilter} onChange={handleFilterChange} />
+
+            {/* ── OUTER SCROLL CONTAINER ─────────────────────────── */}
+            <div
+                ref={outerRef}
+                style={{
+                    position: 'relative',
+                    height: `${scrollHeight}vh`,
+                }}
+            >
+                {/* ── STICKY WRAPPER ─────────────────────────────── */}
+                <div
+                    style={{
+                        position: 'sticky',
+                        top: 0,
+                        height: '100vh',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        background: 'var(--bg-primary)',
+                    }}
+                >
+                    {/* ── BOOK STAGE ─────────────────────────────── */}
+                    <div
+                        style={{
+                            position: 'relative',
+                            width: stageW,
+                            height: stageH,
+                            perspective: 1600,
+                            transformStyle: 'preserve-3d',
+                        }}
+                    >
+                        {/* Left panel background (where turned pages land) */}
+                        <LeftPanelBg width={stageW / 2} height={stageH} />
+
+                        {/* Right panel background (where unturned pages sit) */}
+                        <RightPanelBg stageWidth={stageW} height={stageH} />
+
+                        {/* Center spine */}
+                        <div
                             style={{
-                                color: isActive ? '#4ade80' : '#6a6a6a',
-                                borderBottomColor: isActive ? '#4ade80' : 'transparent',
+                                position: 'absolute',
+                                top: 0, bottom: 0,
+                                left: '50%',
+                                width: 1,
+                                background: 'rgba(255,255,255,0.06)',
+                                zIndex: 200,
+                                pointerEvents: 'none',
+                            }}
+                        />
+
+                        {/* ── PAGES ───────────────────────────────── */}
+                        {filteredProjects.map((project, i) => (
+                            <CaseFilePage
+                                key={`${activeFilter}-${project.id}`}
+                                project={project as any}
+                                index={i}
+                                totalPages={N}
+                                scrollYProgress={scrollYProgress}
+                                stageWidth={stageW}
+                                stageHeight={stageH}
+                                isTablet={isTablet}
+                            />
+                        ))}
+
+                        {/* Page counter */}
+                        <div
+                            style={{
+                                position: 'absolute',
+                                bottom: 20, right: 20,
+                                fontFamily: 'monospace',
+                                fontSize: 8,
+                                letterSpacing: '0.14em',
+                                color: 'rgba(255,255,255,0.2)',
+                                pointerEvents: 'none',
+                                zIndex: 300,
                             }}
                         >
-                            {displayLabel}
-                        </button>
-                    );
-                })}
-            </div>
+                            CASE {String(activePageIndex + 1).padStart(3, '0')} OF {String(N).padStart(3, '0')}
+                        </div>
 
-            {/* PROJECT GRID */}
-            <div 
-                className="w-full grid grid-cols-1 sm:grid-cols-2 sm:gap-[1px] bg-transparent sm:bg-[#1a1a1a] [grid-auto-rows:1fr]"
-            >
-                {filteredProjects.map((project, index) => (
-                    <ProjectCard key={project.id} project={project as Project} index={index} />
-                ))}
-                {filteredProjects.length % 2 !== 0 && (
-                    <div aria-hidden="true" style={{ background: 'transparent' }} />
-                )}
+                        {/* Scroll hint */}
+                        <ScrollHint visible={showHint} />
+                    </div>
+                </div>
             </div>
         </section>
     );
 };
+
+// ── Sub-components for header and filter (keeps main component readable) ──────
+
+const SectionHeader: React.FC<{ total: number }> = ({ total }) => (
+    <div
+        className="w-full h-[36px] border-y-[0.5px] px-4 md:px-8 flex justify-between items-center shrink-0"
+        style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}
+    >
+        <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] font-medium" style={{ color: 'var(--text-muted)' }}>
+            PROCESS TABLE — SELECTED WORK
+        </div>
+        <div className="font-mono text-[9px] sm:text-[10px]" style={{ color: 'var(--text-muted)' }}>
+            {total} processes · 0 errors
+        </div>
+    </div>
+);
+
+interface FilterRowProps {
+    filters: string[];
+    active: string;
+    onChange: (f: string) => void;
+}
+const FilterRow: React.FC<FilterRowProps> = ({ filters, active, onChange }) => (
+    <div
+        className="w-full px-4 md:px-8 py-[1rem] flex flex-row sm:flex-wrap gap-0 border-b-[0.5px] overflow-x-auto"
+        style={{
+            borderColor: 'var(--border-default)',
+            scrollbarWidth: 'none',
+        }}
+    >
+        {filters.map(f => {
+            const isActive = active === f;
+            return (
+                <button
+                    key={f}
+                    onClick={() => onChange(f)}
+                    className="font-mono text-[10px] tracking-[0.12em] px-[14px] sm:px-[16px] py-[6px] bg-transparent cursor-pointer transition-all duration-150 border-b-[2px] whitespace-nowrap shrink-0"
+                    style={{
+                        color: isActive ? '#4ade80' : '#6a6a6a',
+                        borderBottomColor: isActive ? '#4ade80' : 'transparent',
+                    }}
+                >
+                    {f === 'ALL' ? 'ALL' : getBadgeLabel(f)}
+                </button>
+            );
+        })}
+    </div>
+);
