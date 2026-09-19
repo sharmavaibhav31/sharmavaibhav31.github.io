@@ -1,6 +1,5 @@
 // CaseFileBack.tsx
-// Back face of a dossier page — each instance is bound to its own project.
-// NEVER rendered with shared/fallthrough data; props are required and explicit.
+// Back face of a dossier page — displays architecture, key decisions, prominent role, metrics, and impact.
 
 import React from 'react';
 
@@ -10,12 +9,24 @@ interface Metrics {
     [key: string]: number | undefined;
 }
 
+interface Stats {
+    stars?: number;
+    forks?: number;
+    commits?: number;
+    issues?: number;
+    prs?: string;
+    [key: string]: string | number | undefined;
+}
+
 interface Project {
     id: string;
     title: string;
     category?: string;
     architecture?: string;
     impact?: string;
+    bullets?: string[];
+    role?: string;
+    stats?: Stats;
     metrics?: Metrics;
     [key: string]: unknown;
 }
@@ -25,18 +36,30 @@ interface CaseFileBackProps {
     caseNumber: string; // e.g. "001"
 }
 
+const stripHtml = (s: string): string => s.replace(/<[^>]*>/g, '');
+
 export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber }) => {
-    // Normalize architecture field: may be a "→"-delimited string or already an array
+    // Normalize architecture field: may be a "→"-delimited string or array
     const archText: string = typeof project.architecture === 'string'
         ? project.architecture
         : Array.isArray(project.architecture)
             ? (project.architecture as string[]).join(' → ')
             : '';
 
-    const hasMetrics =
-        project.metrics &&
-        typeof project.metrics === 'object' &&
-        Object.keys(project.metrics).length > 0;
+    const bullets = (project.bullets ?? []).slice(0, 3);
+
+    // Extract metrics list from metrics object or stats object
+    const metricItems: { label: string; value: string | number }[] = [];
+    if (project.metrics) {
+        if (project.metrics.stars !== undefined) metricItems.push({ label: '★ STARS', value: project.metrics.stars });
+        if (project.metrics.forks !== undefined) metricItems.push({ label: 'FORKS', value: project.metrics.forks });
+    } else if (project.stats) {
+        if (project.stats.stars !== undefined) metricItems.push({ label: '★ STARS', value: project.stats.stars });
+        if (project.stats.forks !== undefined) metricItems.push({ label: 'FORKS', value: project.stats.forks });
+        if (project.stats.commits !== undefined) metricItems.push({ label: 'COMMITS', value: project.stats.commits });
+        if (project.stats.issues !== undefined) metricItems.push({ label: 'ISSUES', value: project.stats.issues });
+        if (project.stats.prs !== undefined) metricItems.push({ label: 'PRS', value: project.stats.prs });
+    }
 
     return (
         <div
@@ -90,23 +113,23 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
             <div
                 style={{
                     flex: 1,
-                    padding: '20px',
+                    padding: '16px 20px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 14,
+                    gap: 12,
                     overflowY: 'auto',
                 }}
             >
-                {/* Section 1 — ARCHITECTURE */}
+                {/* SECTION 1 — ARCHITECTURE */}
                 {archText && (
                     <div>
                         <div
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: 9,
-                                letterSpacing: '0.14em',
-                                color: 'rgba(255,255,255,0.3)',
-                                marginBottom: 8,
+                                fontSize: 8,
+                                letterSpacing: '0.12em',
+                                color: 'rgba(255,255,255,0.25)',
+                                marginBottom: 6,
                             }}
                         >
                             ARCHITECTURE
@@ -114,10 +137,14 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <p
                             style={{
                                 fontFamily: 'sans-serif',
-                                fontSize: 12,
+                                fontSize: 11,
                                 color: '#c8c8c8',
-                                lineHeight: 1.7,
+                                lineHeight: 1.65,
                                 margin: 0,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 4,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
                             }}
                         >
                             {archText}
@@ -125,22 +152,136 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                     </div>
                 )}
 
-                {/* Section 2 — IMPACT */}
-                {project.impact && (
+                {/* SECTION 2 — KEY DECISIONS */}
+                {bullets.length > 0 && (
+                    <div>
+                        <div
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: 8,
+                                letterSpacing: '0.12em',
+                                color: 'rgba(255,255,255,0.25)',
+                                marginBottom: 6,
+                            }}
+                        >
+                            KEY DECISIONS
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {bullets.map((b, idx) => (
+                                <div key={idx} style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
+                                    <div
+                                        style={{
+                                            width: 3,
+                                            height: 3,
+                                            minWidth: 3,
+                                            background: '#4ade80',
+                                            borderRadius: '50%',
+                                            marginTop: 5,
+                                            flexShrink: 0,
+                                        }}
+                                    />
+                                    <span
+                                        style={{
+                                            fontFamily: 'sans-serif',
+                                            fontSize: 10,
+                                            color: 'rgba(255,255,255,0.5)',
+                                            lineHeight: 1.5,
+                                        }}
+                                    >
+                                        {stripHtml(b)}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* SECTION 3 — MY ROLE (Prominent Container) */}
+                {project.role && (
                     <div
                         style={{
-                            background: 'rgba(74,222,128,0.04)',
-                            border: '0.5px solid rgba(74,222,128,0.15)',
+                            background: 'rgba(74,158,255,0.04)',
+                            border: '0.5px solid rgba(74,158,255,0.12)',
+                            borderLeft: '2px solid rgba(74,158,255,0.4)',
                             padding: '10px 12px',
                         }}
                     >
                         <div
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: 9,
+                                fontSize: 7,
                                 letterSpacing: '0.14em',
-                                color: 'rgba(255,255,255,0.3)',
-                                marginBottom: 6,
+                                color: 'rgba(74,158,255,0.6)',
+                                marginBottom: 5,
+                            }}
+                        >
+                            MY ROLE
+                        </div>
+                        <p
+                            style={{
+                                fontFamily: 'sans-serif',
+                                fontSize: 11,
+                                color: '#c8c8c8',
+                                lineHeight: 1.65,
+                                margin: 0,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 4,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            {project.role}
+                        </p>
+                    </div>
+                )}
+
+                {/* METRICS ROW */}
+                {metricItems.length > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                        {metricItems.map(m => (
+                            <div key={m.label} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <span
+                                    style={{
+                                        fontFamily: 'sans-serif',
+                                        fontSize: 18,
+                                        fontWeight: 700,
+                                        color: '#f5f5f5',
+                                        lineHeight: 1,
+                                    }}
+                                >
+                                    {m.value}
+                                </span>
+                                <span
+                                    style={{
+                                        fontFamily: 'monospace',
+                                        fontSize: 8,
+                                        color: 'rgba(255,255,255,0.25)',
+                                        letterSpacing: '0.1em',
+                                    }}
+                                >
+                                    {m.label}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* SECTION 4 — IMPACT */}
+                {project.impact && (
+                    <div
+                        style={{
+                            background: 'rgba(74,222,128,0.04)',
+                            border: '0.5px solid rgba(74,222,128,0.12)',
+                            padding: '8px 10px',
+                        }}
+                    >
+                        <div
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: 7,
+                                letterSpacing: '0.14em',
+                                color: 'rgba(74,222,128,0.5)',
+                                marginBottom: 4,
                             }}
                         >
                             IMPACT
@@ -148,64 +289,18 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <p
                             style={{
                                 fontFamily: 'sans-serif',
-                                fontSize: 11,
-                                color: '#c8c8c8',
-                                lineHeight: 1.7,
+                                fontSize: 10,
+                                color: 'rgba(255,255,255,0.45)',
+                                lineHeight: 1.5,
                                 margin: 0,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
                             }}
                         >
                             {project.impact}
                         </p>
-                    </div>
-                )}
-
-                {/* Section 3 — METRICS (only when project has numeric metrics) */}
-                {hasMetrics && (
-                    <div>
-                        <div
-                            style={{
-                                fontFamily: 'monospace',
-                                fontSize: 9,
-                                letterSpacing: '0.14em',
-                                color: 'rgba(255,255,255,0.3)',
-                                marginBottom: 10,
-                            }}
-                        >
-                            METRICS
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
-                            {Object.entries(project.metrics!).map(([key, value]) => {
-                                if (value === undefined || value === null) return null;
-                                const label = key === 'stars' ? '★ Stars'
-                                    : key === 'forks' ? 'Forks'
-                                    : key.toUpperCase();
-                                return (
-                                    <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                                        <span
-                                            style={{
-                                                fontFamily: 'sans-serif',
-                                                fontSize: 20,
-                                                fontWeight: 700,
-                                                color: '#f5f5f5',
-                                                lineHeight: 1,
-                                            }}
-                                        >
-                                            {value}
-                                        </span>
-                                        <span
-                                            style={{
-                                                fontFamily: 'monospace',
-                                                fontSize: 9,
-                                                color: 'rgba(255,255,255,0.3)',
-                                                letterSpacing: '0.1em',
-                                            }}
-                                        >
-                                            {label}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
                     </div>
                 )}
             </div>

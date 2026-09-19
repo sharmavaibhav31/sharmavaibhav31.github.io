@@ -1,6 +1,6 @@
 // CaseFileFront.tsx
 // Front face of a dossier page — project-specific content only.
-// Renders classification label, title, badge, stack tags, solution, field rows, footer.
+// Renders classification label, title, badges, stack tags, WHY block, WHAT WAS BUILT (solution), and footer hint.
 
 import React from 'react';
 
@@ -10,29 +10,43 @@ interface Metrics {
     [key: string]: number | undefined;
 }
 
+interface Stats {
+    stars?: number;
+    forks?: number;
+    commits?: number;
+    issues?: number;
+    prs?: string;
+    [key: string]: string | number | undefined;
+}
+
 interface Project {
     id: string;
     title: string;
     category?: string;
     solution?: string;
     problem?: string;
+    why?: string;
+    story?: string;
+    architecture?: string;
     impact?: string;
+    bullets?: string[];
     stack?: string[];
     role?: string;
     github?: string | null;
     isPrivate?: boolean;
+    stats?: Stats;
     metrics?: Metrics;
     [key: string]: unknown;
 }
 
 interface CaseFileFrontProps {
     project: Project;
-    caseNumber: string;       // e.g. "001"
+    caseNumber: string;          // e.g. "001"
     classificationLabel: string; // e.g. "CLASSIFIED", "RESTRICTED", etc.
-    isTablet?: boolean;       // reduces font sizes by ~1px
+    isTablet?: boolean;          // reduces font sizes by ~1px
 }
 
-// ── Badge helpers (same logic as ProjectsSection) ───────────────────────────
+// ── Badge helpers ─────────────────────────────────────────────────────────────
 
 function getBadgeLabel(category: string): string {
     const map: Record<string, string> = {
@@ -60,12 +74,12 @@ function getBadgeStyle(category?: string): { color: string; background: string; 
     }
 }
 
-// ── Shared CSS for line-clamp (injected once via a style tag in parent) ──────
+// ── Shared CSS for line-clamp ────────────────────────────────────────────────
 export const FRONT_CLAMP_STYLE = `
-    .casefile-desc {
+    .casefile-solution-clamp {
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         overflow: hidden;
     }
 `;
@@ -82,32 +96,11 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
     const isOpenSource = project.isPrivate !== true && project.github !== null && project.github !== undefined;
     const isPrivateProject = project.isPrivate === true || project.github === null || project.github === undefined;
 
-    // Stack tags: 5 on desktop/tablet (caller trims to 4 by passing isTablet, but we keep logic here)
+    const whyText = (project.why ?? project.story ?? null) as string | null;
+
+    // Stack tags: first 5 on desktop, 4 on tablet
     const maxTags = isTablet ? 4 : 5;
     const stackTags = (project.stack ?? []).slice(0, maxTags);
-
-    // Field rows: prefer metrics, then problem snippet, then impact snippet
-    const fieldRows: { key: string; value: string }[] = [];
-    if (project.metrics && Object.keys(project.metrics).length > 0) {
-        const m = project.metrics;
-        if (m.stars !== undefined)  fieldRows.push({ key: 'STARS',  value: String(m.stars) });
-        if (m.forks !== undefined)  fieldRows.push({ key: 'FORKS',  value: String(m.forks) });
-    } else {
-        if (project.problem) {
-            // Show first ~80 chars of problem
-            const snippet = project.problem.length > 80
-                ? project.problem.slice(0, 80).trim() + '…'
-                : project.problem;
-            fieldRows.push({ key: 'PROBLEM', value: snippet });
-        }
-        if (project.impact) {
-            const snippet = project.impact.length > 80
-                ? project.impact.slice(0, 80).trim() + '…'
-                : project.impact;
-            fieldRows.push({ key: 'IMPACT', value: snippet });
-        }
-    }
-    const visibleRows = fieldRows.slice(0, 3);
 
     // Font sizes: reduce by 1px on tablet
     const fs = (base: number) => base - (isTablet ? 1 : 0);
@@ -172,7 +165,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     minHeight: 0,
                 }}
             >
-                {/* Eyebrow */}
+                {/* 1. Eyebrow */}
                 <div
                     style={{
                         fontFamily: 'monospace',
@@ -185,7 +178,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     // SYSTEMS BUILT
                 </div>
 
-                {/* Title */}
+                {/* 2. Title */}
                 <h3
                     style={{
                         fontFamily: 'sans-serif',
@@ -199,7 +192,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     {project.title}
                 </h3>
 
-                {/* Badge row */}
+                {/* 3. Badge row */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
                     {project.category && (
                         <span
@@ -233,8 +226,8 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     )}
                 </div>
 
-                {/* Stack tags */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 12 }}>
+                {/* 4. Stack tags (first 5) */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 10 }}>
                     {stackTags.map(tech => (
                         <span
                             key={tech}
@@ -252,64 +245,78 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     ))}
                 </div>
 
-                {/* Description */}
-                <p
-                    className="casefile-desc"
-                    style={{
-                        fontFamily: 'sans-serif',
-                        fontSize: fs(12),
-                        color: '#c8c8c8',
-                        lineHeight: 1.7,
-                        margin: '0 0 12px 0',
-                        flexShrink: 0,
-                    }}
-                >
-                    {project.solution ?? ''}
-                </p>
+                {/* 5. WHY block */}
+                {whyText && (
+                    <div
+                        style={{
+                            background: 'rgba(255,255,255,0.02)',
+                            border: '0.5px solid rgba(255,255,255,0.05)',
+                            borderLeft: '2px solid rgba(255,80,80,0.3)',
+                            padding: '10px 12px',
+                            margin: '4px 0 10px 0',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <div
+                            style={{
+                                fontSize: 8,
+                                letterSpacing: '0.12em',
+                                color: 'rgba(255,80,80,0.5)',
+                                marginBottom: 5,
+                                fontFamily: 'monospace',
+                            }}
+                        >
+                            // WHY THIS WAS BUILT
+                        </div>
+                        <p
+                            style={{
+                                fontSize: 11,
+                                fontFamily: 'sans-serif',
+                                color: '#c8c8c8',
+                                lineHeight: 1.65,
+                                margin: 0,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            {whyText}
+                        </p>
+                    </div>
+                )}
 
-                {/* Field rows */}
-                {visibleRows.length > 0 && (
-                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 12 }}>
-                        {visibleRows.map(row => (
-                            <div
-                                key={row.key}
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'flex-start',
-                                    gap: 12,
-                                    padding: '5px 0',
-                                    borderBottom: '0.5px solid rgba(255,255,255,0.04)',
-                                }}
-                            >
-                                <span
-                                    style={{
-                                        fontFamily: 'monospace',
-                                        fontSize: fs(9),
-                                        color: 'rgba(255,255,255,0.3)',
-                                        letterSpacing: '0.1em',
-                                        flexShrink: 0,
-                                    }}
-                                >
-                                    {row.key}
-                                </span>
-                                <span
-                                    style={{
-                                        fontFamily: 'monospace',
-                                        fontSize: fs(11),
-                                        color: '#c8c8c8',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    {row.value}
-                                </span>
-                            </div>
-                        ))}
+                {/* 6. Solution / What was built */}
+                {project.solution && (
+                    <div style={{ display: 'flex', flexDirection: 'column', marginTop: 2 }}>
+                        <div
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: 7,
+                                letterSpacing: '0.12em',
+                                color: 'rgba(255,255,255,0.25)',
+                                marginBottom: 4,
+                            }}
+                        >
+                            WHAT WAS BUILT
+                        </div>
+                        <p
+                            className="casefile-solution-clamp"
+                            style={{
+                                fontFamily: 'sans-serif',
+                                fontSize: 11,
+                                color: 'rgba(255,255,255,0.6)',
+                                lineHeight: 1.6,
+                                margin: 0,
+                            }}
+                        >
+                            {project.solution}
+                        </p>
                     </div>
                 )}
             </div>
 
-            {/* ── FOOTER BAR ─────────────────────────────────────── */}
+            {/* ── FOOTER BAR (pinned to bottom) ─────────────────── */}
             <div
                 style={{
                     height: 40,
@@ -322,21 +329,16 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     gap: 12,
                 }}
             >
-                {/* Role — left, truncated */}
+                {/* Role hint — left */}
                 <span
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: fs(9),
+                        fontSize: 8,
                         fontStyle: 'italic',
                         color: 'rgba(255,255,255,0.25)',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        flex: 1,
-                        minWidth: 0,
                     }}
                 >
-                    {project.role ?? ''}
+                    Role → back
                 </span>
 
                 {/* SRC button or PRIVATE label — right */}

@@ -229,57 +229,49 @@ const FilterRail: React.FC<FilterRailProps> = ({ filters, active, onChange }) =>
             borderRight: '0.5px solid rgba(255,255,255,0.06)',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
             boxSizing: 'border-box',
             overflowY: 'auto',
         }}
     >
-        <div
+        <span
             style={{
-                writingMode: 'vertical-rl',
-                transform: 'rotate(180deg)',
+                display: 'block',
                 fontFamily: 'monospace',
-                fontSize: 8,
-                letterSpacing: '0.16em',
-                color: 'rgba(255,255,255,0.15)',
-                padding: '12px 0',
+                fontSize: 7,
+                letterSpacing: '0.14em',
+                color: 'rgba(255,255,255,0.12)',
+                textAlign: 'center',
+                padding: '10px 4px 8px',
                 borderBottom: '0.5px solid rgba(255,255,255,0.06)',
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 flexShrink: 0,
             }}
         >
             FILTER
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 4, padding: '8px 0' }}>
+        </span>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             {filters.map(f => {
                 const isActive = active === f;
                 return (
                     <button
                         key={f}
                         onClick={() => onChange(f)}
+                        className="filter-rail-btn"
                         style={{
-                            writingMode: 'vertical-rl',
-                            transform: 'rotate(180deg)',
+                            display: 'block',
+                            width: '100%',
+                            padding: '8px 0',
                             fontFamily: 'monospace',
                             fontSize: 8,
-                            letterSpacing: '0.08em',
-                            color: isActive ? '#4ade80' : 'rgba(255,255,255,0.2)',
-                            borderLeft: isActive ? '2px solid #4ade80' : '2px solid transparent',
-                            padding: '8px 4px',
-                            cursor: 'pointer',
-                            width: '100%',
+                            letterSpacing: '0.1em',
                             textAlign: 'center',
-                            borderTop: 'none',
-                            borderRight: 'none',
-                            borderBottom: 'none',
-                            background: 'transparent',
-                            transition: 'color 0.15s ease',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            color: isActive ? '#4ade80' : 'rgba(255,255,255,0.2)',
+                            background: isActive ? 'rgba(74,222,128,0.04)' : 'transparent',
+                            border: 'none',
+                            borderRight: isActive ? '2px solid #4ade80' : '2px solid transparent',
+                            borderBottom: '0.5px solid rgba(255,255,255,0.04)',
+                            cursor: 'pointer',
+                            transition: 'color 0.15s, background 0.15s',
+                            whiteSpace: 'nowrap',
                         }}
                     >
                         {f === 'ALL' ? 'ALL' : getRailBadgeLabel(f)}
@@ -411,6 +403,9 @@ export const ProjectsSection: React.FC = () => {
                     0%, 100% { opacity: 0.25; }
                     50%       { opacity: 0.55; }
                 }
+                .filter-rail-btn:hover {
+                    color: rgba(255,255,255,0.6) !important;
+                }
             `}} />
 
             {/* ── OUTER SCROLL CONTAINER ─────────────────────────── */}
@@ -442,7 +437,7 @@ export const ProjectsSection: React.FC = () => {
                         style={{
                             flex: 1,
                             display: 'grid',
-                            gridTemplateColumns: isTablet ? '40px 1fr' : '48px 1fr 360px',
+                            gridTemplateColumns: isTablet ? '52px 1fr' : '64px 1fr 360px',
                             overflow: 'hidden',
                             height: 'calc(100% - 36px)',
                         }}

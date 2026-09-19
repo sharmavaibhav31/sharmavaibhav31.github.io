@@ -14,6 +14,7 @@
         "stack": ["Python", "FastAPI", "Redis Streams", "PostgreSQL", "Docker", "Scrapy", "Playwright", "pytest", "testcontainers"],
         "stats": { "stars": 26, "forks": 47, "commits": 143, "issues": 32, "prs": "25+" },
         "story": "Built because I genuinely needed it — manually tracking job postings and cold-emailing recruiters was unscalable as placement season approached.",
+        "why": "Manually tracking job postings and cold-emailing recruiters was unscalable as placement season approached. I built the system I actually needed.",
         "bullets": [
             "Architected across <strong>7 independent microservices</strong> communicating via Redis Streams consumer groups — chose Redis Streams over Kafka for at-least-once delivery with lower operational overhead for a self-hosted deployment.",
             "<strong>4-tier test suite</strong>: unit, integration (testcontainers with ephemeral Postgres + Redis), contract (schema consistency across services), and e2e (full dashboard flows).",
@@ -39,6 +40,7 @@
         "display_order": 1,
         "stack": ["Node.js", "Express", "PostgreSQL", "Prisma", "React", "JWT", "Docker", "Nginx", "node-cron", "QR Codes"],
         "story": "Hostel students had to hand-write permission letters on A4 sheets — wardens often unavailable, no audit trail. I designed the full digital replacement.",
+        "why": "Hostel students hand-wrote permission letters on A4 sheets with no audit trail and no accountability. I designed the full digital replacement.",
         "bullets": [
             "5-role permission workflow (Student / Warden / Chief Warden / Admin / Security) with JWT-signed QR certificates generated on approval — valid for exactly 2 scans (exit + entry), auto-invalidated after both.",
             "Modular monolith backend (Node.js + Express + Prisma) across 7 feature modules: auth, users, master, requests, certificates, gate, admin — served behind Nginx reverse proxy with SSL termination for HTTPS-required camera access at the gate.",
@@ -65,6 +67,7 @@
         "display_order": 2,
         "stack": ["Java 21", "Spring Boot 4", "Spring Security", "PostgreSQL", "Flyway", "JWT", "Docker", "OpenAPI"],
         "story": "The college's faculty appraisal process was entirely paper-based — no audit trail, no consistency. I built the backend to replace it.",
+        "why": "The college's faculty appraisal process was entirely paper-based — no audit trail, no consistency. I built the backend to replace it.",
         "bullets": [
             "State-machine workflow: <strong>DRAFT → SUBMITTED → HOD_REVIEWED → FINALIZED → LOCKED</strong>, with legal revert paths and immutability post-finalization.",
             "Full audit trail on every transition (userId, timestamp, old/new value); JWT auth with RBAC across Faculty / HOD / Principal / Admin roles.",
@@ -89,6 +92,7 @@
         "display_order": 3,
         "stack": ["Java 17", "Spring Boot 3", "PostgreSQL", "Flyway", "H2 Testing", "Apache POI", "Docker"],
         "story": "Departments spend days generating timetables manually each semester. The constraint-satisfaction problem hooked me.",
+        "why": "Departments spent days generating timetables manually each semester. The constraint-satisfaction problem hooked me — I wanted to solve it properly.",
         "bullets": [
             "Greedy constraint-propagation engine enforcing <strong>8 hard constraints</strong>: no double-booking across faculty/room/section, 55-min consecutive-class gap, designation load caps, room-type matching, break isolation.",
             "Section-first generation strategy prevents slot starvation; fallback faculty via priority-ranked FacultyPreference entries before failing.",
@@ -114,6 +118,7 @@
         "display_order": 4,
         "stack": ["Python", "FastAPI", "OpenPyXL", "RapidFuzz", "HTML5", "Vanilla JS", "Render"],
         "story": "During the intensive Wipro Salesforce coursework in college, ~650 students faced heavy friction navigating multi-tab Excel sheets and waiting biweekly for manual instructor progress reports. I built Trailhead Tracker to parse the curriculum into a digital roadmap and verify student badge completion in real-time.",
+        "why": "650 students were scanning multi-tab Excel sheets and waiting biweekly for manual progress reports. I built instant self-service progress verification.",
         "bullets": [
             "Parsed 6-week Wipro Salesforce Excel training schedules into structured JSON datasets using custom <strong>OpenPyXL</strong> scripts.",
             "Engineered an asynchronous <strong>FastAPI REST backend</strong> featuring a custom Trailhead Aura API client to fetch public profile data, rank totals, and earned awards.",
@@ -139,6 +144,7 @@
         "display_order": 5,
         "stack": ["C", "llama.cpp", "TinyLlama-1.1B", "Seccomp", "Linux Namespaces", "rlimits", "CMake"],
         "story": "I wanted AI assistance in my terminal, locally, with no internet. Making it safe on a live system turned it into a real security engineering problem.",
+        "why": "I wanted AI assistance in my terminal, locally, with no internet. Making it safe on a live system turned it into a real security engineering problem.",
         "bullets": [
             "Sandboxed C shell integrating TinyLlama-1.1B via llama.cpp — fully offline, air-gapped execution post-setup.",
             "Four-layer security: Seccomp syscall whitelist, PID/mount namespace isolation, capability dropping, rlimit caps — prevents privilege escalation and system exposure.",
@@ -164,6 +170,7 @@
         "demo": "https://mood-harmonics.vercel.app/",
         "stack": ["Python", "Flask", "MusicGen", "YAMNet", "GPT (fine-tuned)", "PyTorch", "TensorFlow", "MongoDB", "React"],
         "story": "Not another AI music app — the goal was to answer: can multiple ML models with different runtimes be orchestrated into a reliable, end-to-end system?",
+        "why": "The goal wasn't another AI music app — it was to answer: can multiple ML models with different runtimes be orchestrated into a reliable end-to-end system?",
         "bullets": [
             "Orchestrated 3 heterogeneous ML models: MusicGen (text-to-audio), a fine-tuned GPT lyric model (enforcing verse/chorus structure vs. base GPT descriptive output), and YAMNet + GTZAN classifier (genre + confidence score) — all behind a single Flask API layer.",
             "Model preloading at server startup + graceful fallback paths (local inference preferred, Hugging Face fallback) to manage heavy initialization and failure modes under real performance constraints.",
@@ -189,6 +196,7 @@
         "display_order": 7,
         "stack": ["Python", "OpenCV", "MediaPipe", "NumPy", "Jupyter"],
         "story": "Built for fun — wanted my own air-drawing Paint app. The LinkedIn post reached 176,000+ impressions.",
+        "why": "Built for fun — wanted my own air-drawing Paint app. The LinkedIn post reached 176,000+ impressions.",
         "bullets": [
             "Tracked 21 hand landmarks per hand via MediaPipe Hand Landmarker, mapping raw landmark coordinates to drawing strokes via weighted moving-average smoothing (configurable factor) to reduce jitter.",
             "Dual-hand control: left hand for tool/color selection via pinch gesture (Euclidean distance threshold); right hand for drawing via index-finger extension detection using relative Y-coordinates.",
@@ -213,6 +221,7 @@
         "display_order": 8,
         "stack": ["Java", "Spring Boot", "Redis", "PostgreSQL", "Docker", "Base62"],
         "story": "System design deep dive into building a high-throughput, low-latency URL shortening service using Base62 encoding and Redis caching.",
+        "why": "Wanted to implement a real distributed systems pattern end-to-end — Base62 encoding, Redis cache-aside, horizontal scaling — not just read about them.",
         "bullets": [
             "Implemented Base62 encoding with distributed range-based ID generation for unique, collision-free short URLs.",
             "Designed multi-tier caching with Redis ahead of PostgreSQL to achieve low-latency URL resolution under heavy read traffic.",
