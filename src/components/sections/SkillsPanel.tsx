@@ -1,5 +1,5 @@
 // SkillsPanel.tsx
-// Displays tech capabilities in a 2x2 grid and highlights skills used in the currently focused project.
+// Displays tech capabilities in a 2x2 grid, highlights active skills, and lists additional project-specific skills.
 
 import React from 'react';
 
@@ -42,6 +42,20 @@ const skillProjectMap: Record<string, string[]> = {
     'H2 Integration': ['timetable-scheduler', 'appraisal-management'],
 };
 
+// ── CUSTOM OTHER SKILLS PLACEHOLDERS PER PROJECT ─────────────────────────────
+// You can edit or add custom skills for each project ID here.
+const otherSkillsMap: Record<string, string[]> = {
+    'arachnode':           ['Scrapy', 'Playwright', 'APScheduler', 'Ollama', 'OSINT'],
+    'hpms':                ['QR Codes', 'html5-qrcode', 'node-cron', 'SMTP'],
+    'appraisal-management':['State Machine', 'Audit Trail', 'Immutability'],
+    'timetable-scheduler': ['Constraint Propagation', 'Apache POI', 'H2 Ephemeral'],
+    'trailhead-tracker':   ['OpenPyXL', 'RapidFuzz', 'Aura Client'],
+    'offline-ai-shell':    ['TinyLlama-1.1B', 'CMake', 'rlimits'],
+    'moodharmonics':       ['MusicGen', 'YAMNet', 'GTZAN Classifier'],
+    'air-notepad':         ['OpenCV', 'MediaPipe', 'NumPy', 'Hand Landmarks'],
+    'urlshortener':        ['Base62 Encoding', 'Cache-Aside', 'Connection Pooling'],
+};
+
 interface SkillCategory {
     category: string;
     skills: string[];
@@ -67,6 +81,9 @@ const SKILL_CATEGORIES: SkillCategory[] = [
 ];
 
 export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
+    const activeId = activeProject?.id ?? '';
+    const otherSkills = activeId ? (otherSkillsMap[activeId] ?? []) : [];
+
     return (
         <div
             style={{
@@ -133,118 +150,195 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                 </span>
             </div>
 
-            {/* ── PANEL BODY — 2x2 GRID ───────────────────────────────────── */}
+            {/* ── PANEL BODY ──────────────────────────────────────────────── */}
             <div
                 className="skills-panel-body"
                 style={{
                     flex: 1,
                     overflowY: 'auto',
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: 10,
-                    padding: 10,
-                    boxSizing: 'border-box',
-                    alignContent: 'start',
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
             >
-                {SKILL_CATEGORIES.map(({ category, skills }) => (
-                    <div
-                        key={category}
-                        style={{
-                            background: 'rgba(255,255,255,0.02)',
-                            border: '0.5px solid rgba(255,255,255,0.06)',
-                            padding: '8px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 3,
-                            boxSizing: 'border-box',
-                        }}
-                    >
-                        {/* Category Label */}
+                {/* ── 2x2 GRID FOR CORE CATEGORIES ─────────────────────────── */}
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: 10,
+                        padding: 10,
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    {SKILL_CATEGORIES.map(({ category, skills }) => (
                         <div
+                            key={category}
                             style={{
-                                fontFamily: 'monospace',
-                                fontSize: 8,
-                                letterSpacing: '0.12em',
-                                color: 'rgba(255,255,255,0.3)',
-                                borderBottom: '0.5px solid rgba(255,255,255,0.06)',
-                                paddingBottom: 4,
-                                marginBottom: 4,
+                                background: 'rgba(255,255,255,0.02)',
+                                border: '0.5px solid rgba(255,255,255,0.06)',
+                                padding: '8px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 3,
+                                boxSizing: 'border-box',
                             }}
                         >
-                            {category}
+                            {/* Category Label */}
+                            <div
+                                style={{
+                                    fontFamily: 'monospace',
+                                    fontSize: 8,
+                                    letterSpacing: '0.12em',
+                                    color: 'rgba(255,255,255,0.3)',
+                                    borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                                    paddingBottom: 4,
+                                    marginBottom: 4,
+                                }}
+                            >
+                                {category}
+                            </div>
+
+                            {/* Skill Rows */}
+                            {skills.map(skill => {
+                                const projectList = skillProjectMap[skill] ?? [];
+                                const isProjectFocused = activeProject !== null;
+                                const isActive = isProjectFocused && activeProject.id && projectList.includes(activeProject.id);
+
+                                let rowBg = 'transparent';
+                                let textColor = 'rgba(255,255,255,0.35)';
+                                let dotOpacity = 0;
+
+                                if (!isProjectFocused) {
+                                    textColor = 'rgba(255,255,255,0.4)';
+                                    dotOpacity = 0;
+                                } else if (isActive) {
+                                    rowBg = 'rgba(74,222,128,0.08)';
+                                    textColor = '#f5f5f5';
+                                    dotOpacity = 1;
+                                } else {
+                                    textColor = 'rgba(255,255,255,0.15)';
+                                    dotOpacity = 0;
+                                }
+
+                                return (
+                                    <div
+                                        key={skill}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            padding: '3px 4px',
+                                            borderRadius: 2,
+                                            background: rowBg,
+                                            borderLeft: isActive ? '2px solid #4ade80' : '2px solid transparent',
+                                            transition: 'all 0.2s ease',
+                                            boxSizing: 'border-box',
+                                        }}
+                                    >
+                                        {/* Dot Indicator */}
+                                        <div
+                                            style={{
+                                                width: 4,
+                                                height: 4,
+                                                minWidth: 4,
+                                                borderRadius: '50%',
+                                                background: '#4ade80',
+                                                marginRight: 5,
+                                                opacity: dotOpacity,
+                                                transition: 'opacity 0.2s ease',
+                                            }}
+                                        />
+
+                                        {/* Skill Name */}
+                                        <span
+                                            style={{
+                                                fontFamily: 'monospace',
+                                                fontSize: 10,
+                                                fontWeight: isActive ? 600 : 400,
+                                                color: textColor,
+                                                transition: 'color 0.2s ease',
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                            }}
+                                        >
+                                            {skill}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                         </div>
+                    ))}
+                </div>
 
-                        {/* Skill Rows */}
-                        {skills.map(skill => {
-                            const projectList = skillProjectMap[skill] ?? [];
-                            const isProjectFocused = activeProject !== null;
-                            const isActive = isProjectFocused && activeProject.id && projectList.includes(activeProject.id);
+                {/* ── OTHER SKILLS SECTION ───────────────────────────────── */}
+                <div
+                    style={{
+                        margin: '0 10px 10px',
+                        padding: '8px',
+                        background: 'rgba(255,255,255,0.02)',
+                        border: '0.5px solid rgba(255,255,255,0.06)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 6,
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <div
+                        style={{
+                            fontFamily: 'monospace',
+                            fontSize: 8,
+                            letterSpacing: '0.12em',
+                            color: 'rgba(255,255,255,0.3)',
+                            borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                            paddingBottom: 4,
+                        }}
+                    >
+                        OTHER SKILLS
+                    </div>
 
-                            let rowBg = 'transparent';
-                            let textColor = 'rgba(255,255,255,0.35)';
-                            let dotOpacity = 0;
-
-                            if (!isProjectFocused) {
-                                textColor = 'rgba(255,255,255,0.4)';
-                                dotOpacity = 0;
-                            } else if (isActive) {
-                                rowBg = 'rgba(74,222,128,0.08)';
-                                textColor = '#f5f5f5';
-                                dotOpacity = 1;
-                            } else {
-                                textColor = 'rgba(255,255,255,0.15)';
-                                dotOpacity = 0;
-                            }
-
-                            return (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, paddingTop: 2 }}>
+                        {otherSkills.length > 0 ? (
+                            otherSkills.map(skill => (
                                 <div
                                     key={skill}
                                     style={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        padding: '3px 4px',
+                                        padding: '2px 6px',
                                         borderRadius: 2,
-                                        background: rowBg,
-                                        borderLeft: isActive ? '2px solid #4ade80' : '2px solid transparent',
-                                        transition: 'all 0.2s ease',
+                                        background: activeProject ? 'rgba(74,222,128,0.08)' : 'rgba(255,255,255,0.03)',
+                                        border: '0.5px solid ' + (activeProject ? 'rgba(74,222,128,0.2)' : 'rgba(255,255,255,0.06)'),
                                         boxSizing: 'border-box',
                                     }}
                                 >
-                                    {/* Dot Indicator */}
                                     <div
                                         style={{
                                             width: 4,
                                             height: 4,
-                                            minWidth: 4,
                                             borderRadius: '50%',
                                             background: '#4ade80',
-                                            marginRight: 5,
-                                            opacity: dotOpacity,
-                                            transition: 'opacity 0.2s ease',
+                                            marginRight: 4,
+                                            opacity: activeProject ? 1 : 0,
                                         }}
                                     />
-
-                                    {/* Skill Name */}
                                     <span
                                         style={{
                                             fontFamily: 'monospace',
-                                            fontSize: 10,
-                                            fontWeight: isActive ? 600 : 400,
-                                            color: textColor,
-                                            transition: 'color 0.2s ease',
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
+                                            fontSize: 9,
+                                            color: activeProject ? '#f5f5f5' : 'rgba(255,255,255,0.3)',
                                         }}
                                     >
                                         {skill}
                                     </span>
                                 </div>
-                            );
-                        })}
+                            ))
+                        ) : (
+                            <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>
+                                // Select a project to view specialized tech
+                            </span>
+                        )}
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );
