@@ -38,6 +38,10 @@
                 {
                     "name": "JWT & RBAC",
                     "tooltip": "JSON Web Tokens and Role-Based Access Control"
+                },
+                {
+                    "name": "RapidFuzz",
+                    "tooltip": "Token-based fuzzy string matching and data reconciliation"
                 }
             ]
         },
@@ -63,6 +67,10 @@
                 {
                     "name": "Prisma",
                     "tooltip": "Type-safe database client and ORM"
+                },
+                {
+                    "name": "OpenPyXL",
+                    "tooltip": "Excel spreadsheet parsing and structured JSON data extraction"
                 }
             ]
         },
@@ -100,6 +108,10 @@
                 {
                     "name": "EC2 / SSH Deployment",
                     "tooltip": "Cloud server provisioning and secure SSH remote management"
+                },
+                {
+                    "name": "Render",
+                    "tooltip": "Cloud web service deployment and hosting"
                 }
             ]
         },

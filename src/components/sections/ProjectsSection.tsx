@@ -7,18 +7,19 @@ import { useScroll, useMotionValueEvent } from 'framer-motion';
 import projectsData from '../../data/projects.json';
 import { CaseFilePage } from './CaseFilePage';
 import { FRONT_CLAMP_STYLE } from './CaseFileFront';
+import { SkillsPanel } from './SkillsPanel';
 
 type Project = typeof projectsData[0];
 
-// ── Badge label helper (shared with filter row) ───────────────────────────────
-function getBadgeLabel(category: string): string {
+// ── Badge label helper for rail ───────────────────────────────────────────────
+function getRailBadgeLabel(category: string): string {
     const map: Record<string, string> = {
-        'Enterprise Workflow System': 'WORKFLOW',
+        'Enterprise Workflow System': 'WFLOW',
         'IoT Systems': 'IOT',
         'ML Orchestration': 'ML',
-        'Automation': 'AUTOMATION',
-        'Security': 'SECURITY',
-        'Scalability': 'SCALABILITY',
+        'Automation': 'AUTO',
+        'Security': 'SEC',
+        'Scalability': 'SCALE',
         'HCI': 'HCI',
     };
     return map[category] ?? category.toUpperCase();
@@ -214,6 +215,81 @@ const RightPanelBg: React.FC<{ stageWidth: number; height: number }> = ({ stageW
     }} />
 );
 
+// ── FilterRail Component ───────────────────────────────────────────────────────
+interface FilterRailProps {
+    filters: string[];
+    active: string;
+    onChange: (f: string) => void;
+}
+const FilterRail: React.FC<FilterRailProps> = ({ filters, active, onChange }) => (
+    <div
+        style={{
+            height: '100%',
+            background: 'rgba(0,0,0,0.3)',
+            borderRight: '0.5px solid rgba(255,255,255,0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            boxSizing: 'border-box',
+            overflowY: 'auto',
+        }}
+    >
+        <div
+            style={{
+                writingMode: 'vertical-rl',
+                transform: 'rotate(180deg)',
+                fontFamily: 'monospace',
+                fontSize: 8,
+                letterSpacing: '0.16em',
+                color: 'rgba(255,255,255,0.15)',
+                padding: '12px 0',
+                borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+            }}
+        >
+            FILTER
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 4, padding: '8px 0' }}>
+            {filters.map(f => {
+                const isActive = active === f;
+                return (
+                    <button
+                        key={f}
+                        onClick={() => onChange(f)}
+                        style={{
+                            writingMode: 'vertical-rl',
+                            transform: 'rotate(180deg)',
+                            fontFamily: 'monospace',
+                            fontSize: 8,
+                            letterSpacing: '0.08em',
+                            color: isActive ? '#4ade80' : 'rgba(255,255,255,0.2)',
+                            borderLeft: isActive ? '2px solid #4ade80' : '2px solid transparent',
+                            padding: '8px 4px',
+                            cursor: 'pointer',
+                            width: '100%',
+                            textAlign: 'center',
+                            borderTop: 'none',
+                            borderRight: 'none',
+                            borderBottom: 'none',
+                            background: 'transparent',
+                            transition: 'color 0.15s ease',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        {f === 'ALL' ? 'ALL' : getRailBadgeLabel(f)}
+                    </button>
+                );
+            })}
+        </div>
+    </div>
+);
+
 // ── Main component ─────────────────────────────────────────────────────────────
 export const ProjectsSection: React.FC = () => {
     const [activeFilter, setActiveFilter] = useState<string>('ALL');
@@ -270,10 +346,22 @@ export const ProjectsSection: React.FC = () => {
         offset: ['start start', 'end end'],
     });
 
-    // Active page index for counter
+    const [activeProject, setActiveProject] = useState<Project | null>(
+        activeFilter === 'ALL' ? (filteredProjects[0] ?? null) : null
+    );
+
+    // Active page index & active project for counter & SkillsPanel
     useMotionValueEvent(scrollYProgress, 'change', (latest) => {
         const idx = Math.min(Math.floor(latest * N), N - 1);
-        setActivePageIndex(Math.max(0, idx));
+        const safeIdx = Math.max(0, idx);
+        setActivePageIndex(safeIdx);
+
+        if (activeFilter === 'ALL') {
+            setActiveProject(filteredProjects[safeIdx] ?? null);
+        } else {
+            setActiveProject(filteredProjects[safeIdx] ?? null);
+        }
+
         // Hide hint once the first page starts turning (progress > 0.5/N)
         if (latest > 0.5 / N) setShowHint(false);
         else setShowHint(true);
@@ -284,14 +372,15 @@ export const ProjectsSection: React.FC = () => {
         setActiveFilter(f);
         setActivePageIndex(0);
         setShowHint(true);
-    }, []);
+        const newFiltered = sortedProjects.filter(p => f === 'ALL' || p.category === f);
+        setActiveProject(f === 'ALL' ? (newFiltered[0] ?? null) : (newFiltered[0] ?? null));
+    }, [sortedProjects]);
 
     // ── Reduced-motion static list ───────────────────────────────────────────
     if (reducedMotion) {
         return (
             <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
                 <SectionHeader total={projectsData.length} />
-                <FilterRow filters={filters} active={activeFilter} onChange={handleFilterChange} />
                 <div style={{ display: 'flex', flexDirection: 'column', padding: '2rem 1rem' }}>
                     {filteredProjects.map((p, i) => <MobileCard key={p.id} project={p} index={i} />)}
                 </div>
@@ -304,7 +393,6 @@ export const ProjectsSection: React.FC = () => {
         return (
             <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
                 <SectionHeader total={projectsData.length} />
-                <FilterRow filters={filters} active={activeFilter} onChange={handleFilterChange} />
                 <div style={{ display: 'flex', flexDirection: 'column', padding: '1rem 0' }}>
                     {filteredProjects.map((p, i) => <MobileCard key={p.id} project={p} index={i} />)}
                 </div>
@@ -325,12 +413,6 @@ export const ProjectsSection: React.FC = () => {
                 }
             `}} />
 
-            {/* ── SECTION HEADER (scrolls away normally) ─────────── */}
-            <SectionHeader total={projectsData.length} />
-
-            {/* ── FILTER ROW (scrolls away normally) ─────────────── */}
-            <FilterRow filters={filters} active={activeFilter} onChange={handleFilterChange} />
-
             {/* ── OUTER SCROLL CONTAINER ─────────────────────────── */}
             <div
                 ref={outerRef}
@@ -339,80 +421,112 @@ export const ProjectsSection: React.FC = () => {
                     height: `${scrollHeight}vh`,
                 }}
             >
-                {/* ── STICKY WRAPPER ─────────────────────────────── */}
+                {/* ── STICKY WRAPPER ───────────────────────────────── */}
                 <div
                     style={{
                         position: 'sticky',
-                        top: 0,
-                        height: '100vh',
+                        top: 48, // Sticky below fixed navbar (48px)
+                        height: 'calc(100vh - 48px)',
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        flexDirection: 'column',
                         overflow: 'hidden',
                         background: 'var(--bg-primary)',
+                        zIndex: 30,
                     }}
                 >
-                    {/* ── BOOK STAGE ─────────────────────────────── */}
+                    {/* ── SECTION HEADER (Sticky top bar) ──────────── */}
+                    <SectionHeader total={projectsData.length} />
+
+                    {/* ── 3-COLUMN CONTENT GRID ─────────────────────── */}
                     <div
                         style={{
-                            position: 'relative',
-                            width: stageW,
-                            height: stageH,
-                            perspective: 1600,
-                            transformStyle: 'preserve-3d',
+                            flex: 1,
+                            display: 'grid',
+                            gridTemplateColumns: isTablet ? '40px 1fr' : '48px 1fr 360px',
+                            overflow: 'hidden',
+                            height: 'calc(100% - 36px)',
                         }}
                     >
-                        {/* Left panel background (where turned pages land) */}
-                        <LeftPanelBg width={stageW / 2} height={stageH} />
+                        {/* ── COLUMN 1: FilterRail ─────────────────────── */}
+                        <FilterRail filters={filters} active={activeFilter} onChange={handleFilterChange} />
 
-                        {/* Right panel background (where unturned pages sit) */}
-                        <RightPanelBg stageWidth={stageW} height={stageH} />
-
-                        {/* Center spine */}
+                        {/* ── COLUMN 2: Book Stage ─────────────────────── */}
                         <div
                             style={{
-                                position: 'absolute',
-                                top: 0, bottom: 0,
-                                left: '50%',
-                                width: 1,
-                                background: 'rgba(255,255,255,0.06)',
-                                zIndex: 200,
-                                pointerEvents: 'none',
-                            }}
-                        />
-
-                        {/* ── PAGES ───────────────────────────────── */}
-                        {filteredProjects.map((project, i) => (
-                            <CaseFilePage
-                                key={`${activeFilter}-${project.id}`}
-                                project={project as any}
-                                index={i}
-                                totalPages={N}
-                                scrollYProgress={scrollYProgress}
-                                stageWidth={stageW}
-                                stageHeight={stageH}
-                                isTablet={isTablet}
-                            />
-                        ))}
-
-                        {/* Page counter */}
-                        <div
-                            style={{
-                                position: 'absolute',
-                                bottom: 20, right: 20,
-                                fontFamily: 'monospace',
-                                fontSize: 8,
-                                letterSpacing: '0.14em',
-                                color: 'rgba(255,255,255,0.2)',
-                                pointerEvents: 'none',
-                                zIndex: 300,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100%',
+                                position: 'relative',
                             }}
                         >
-                            CASE {String(activePageIndex + 1).padStart(3, '0')} OF {String(N).padStart(3, '0')}
+                            <div
+                                style={{
+                                    position: 'relative',
+                                    width: stageW,
+                                    height: stageH,
+                                    perspective: 1600,
+                                    transformStyle: 'preserve-3d',
+                                }}
+                            >
+                                {/* Left panel background (where turned pages land) */}
+                                <LeftPanelBg width={stageW / 2} height={stageH} />
+
+                                {/* Right panel background (where unturned pages sit) */}
+                                <RightPanelBg stageWidth={stageW} height={stageH} />
+
+                                {/* Center spine */}
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0, bottom: 0,
+                                        left: '50%',
+                                        width: 1,
+                                        background: 'rgba(255,255,255,0.06)',
+                                        zIndex: 200,
+                                        pointerEvents: 'none',
+                                    }}
+                                />
+
+                                {/* ── PAGES ───────────────────────────────── */}
+                                {filteredProjects.map((project, i) => (
+                                    <CaseFilePage
+                                        key={`${activeFilter}-${i}-${project.id}`}
+                                        project={project as any}
+                                        index={i}
+                                        totalPages={N}
+                                        scrollYProgress={scrollYProgress}
+                                        stageWidth={stageW}
+                                        stageHeight={stageH}
+                                        isTablet={isTablet}
+                                    />
+                                ))}
+
+                                {/* Page counter */}
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        bottom: 20, right: 20,
+                                        fontFamily: 'monospace',
+                                        fontSize: 8,
+                                        letterSpacing: '0.14em',
+                                        color: 'rgba(255,255,255,0.2)',
+                                        pointerEvents: 'none',
+                                        zIndex: 300,
+                                    }}
+                                >
+                                    CASE {String(activePageIndex + 1).padStart(3, '0')} OF {String(N).padStart(3, '0')}
+                                </div>
+
+                                {/* Scroll hint */}
+                                <ScrollHint visible={showHint} />
+                            </div>
                         </div>
 
-                        {/* Scroll hint */}
-                        <ScrollHint visible={showHint} />
+                        {/* ── COLUMN 3: SkillsPanel (Desktop only) ─────── */}
+                        {!isTablet && (
+                            <SkillsPanel activeProject={activeProject} />
+                        )}
                     </div>
                 </div>
             </div>
@@ -420,7 +534,7 @@ export const ProjectsSection: React.FC = () => {
     );
 };
 
-// ── Sub-components for header and filter (keeps main component readable) ──────
+// ── Sub-component for header ──────────────────────────────────────────────────
 
 const SectionHeader: React.FC<{ total: number }> = ({ total }) => (
     <div
@@ -436,34 +550,3 @@ const SectionHeader: React.FC<{ total: number }> = ({ total }) => (
     </div>
 );
 
-interface FilterRowProps {
-    filters: string[];
-    active: string;
-    onChange: (f: string) => void;
-}
-const FilterRow: React.FC<FilterRowProps> = ({ filters, active, onChange }) => (
-    <div
-        className="w-full px-4 md:px-8 py-[1rem] flex flex-row sm:flex-wrap gap-0 border-b-[0.5px] overflow-x-auto"
-        style={{
-            borderColor: 'var(--border-default)',
-            scrollbarWidth: 'none',
-        }}
-    >
-        {filters.map(f => {
-            const isActive = active === f;
-            return (
-                <button
-                    key={f}
-                    onClick={() => onChange(f)}
-                    className="font-mono text-[10px] tracking-[0.12em] px-[14px] sm:px-[16px] py-[6px] bg-transparent cursor-pointer transition-all duration-150 border-b-[2px] whitespace-nowrap shrink-0"
-                    style={{
-                        color: isActive ? '#4ade80' : '#6a6a6a',
-                        borderBottomColor: isActive ? '#4ade80' : 'transparent',
-                    }}
-                >
-                    {f === 'ALL' ? 'ALL' : getBadgeLabel(f)}
-                </button>
-            );
-        })}
-    </div>
-);

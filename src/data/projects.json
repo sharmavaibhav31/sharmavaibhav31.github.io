@@ -101,6 +101,32 @@
         "role": "Designed the domain model, implemented the scheduling algorithm, built the REST API, and developed the admin dashboard."
     },
     {
+        "id": "trailhead-tracker",
+        "title": "Trailhead Tracker — Salesforce Skill Training Platform",
+        "subtitle": "Enterprise Curriculum Navigation & Progress Tracker",
+        "year": "2026",
+        "status": "open-source",
+        "category": "Automation",
+        "github": "https://github.com/sharmavaibhav31/trailhead-tracker",
+        "isPrivate": false,
+        "liveUrl": "https://trailhead-tracker.onrender.com",
+        "demo": "https://trailhead-tracker.onrender.com",
+        "display_order": 4,
+        "stack": ["Python", "FastAPI", "OpenPyXL", "RapidFuzz", "HTML5", "Vanilla JS", "Render"],
+        "story": "During the intensive Wipro Salesforce coursework in college, ~650 students faced heavy friction navigating multi-tab Excel sheets and waiting biweekly for manual instructor progress reports. I built Trailhead Tracker to parse the curriculum into a digital roadmap and verify student badge completion in real-time.",
+        "bullets": [
+            "Parsed 6-week Wipro Salesforce Excel training schedules into structured JSON datasets using custom <strong>OpenPyXL</strong> scripts.",
+            "Engineered an asynchronous <strong>FastAPI REST backend</strong> featuring a custom Trailhead Aura API client to fetch public profile data, rank totals, and earned awards.",
+            "Implemented a token-based fuzzy string matching engine via <strong>RapidFuzz</strong> to cross-reference assigned calendar tasks with earned badges, overcoming naming discrepancies.",
+            "Adopted by <strong>500+ active student users</strong> across a cohort of ~650, replacing manual biweekly instructor reporting with instant self-service progress verification and one-click module access."
+        ],
+        "problem": "During the Wipro Salesforce training program, 650 students had to repeatedly scan multi-tab Excel sheets for daily module links and wait for instructors to manually pull biweekly progress reports.",
+        "solution": "Built an interactive digital roadmap web service that parses the 6-week curriculum spreadsheet and cross-checks student public Trailhead profiles against assigned badges in real time using token-based fuzzy string matching.",
+        "architecture": "Excel Schedule → parse_calendar.py (OpenPyXL) → data/calendar.json → FastAPI (app.py & matcher.py) ← Trailhead Aura Client → Vanilla JS Frontend (Render Cloud Host)",
+        "impact": "500+ active student users (~650 target scale); eliminated biweekly manual reporting friction with instant self-service progress verification.",
+        "role": "Architected and built the full web service: Excel calendar parser, FastAPI REST backend, custom Trailhead Aura client, RapidFuzz matching engine, single-page frontend UI, and Render cloud deployment."
+    },
+    {
         "id": "offline-ai-shell",
         "title": "Offline AI Assistant Shell",
         "subtitle": "Sandboxed LLM in a C Shell",
@@ -110,7 +136,7 @@
         "github": "https://github.com/sharmavaibhav31/offline-shell-assistant",
         "isPrivate": false,
         "liveUrl": null,
-        "display_order": 4,
+        "display_order": 5,
         "stack": ["C", "llama.cpp", "TinyLlama-1.1B", "Seccomp", "Linux Namespaces", "rlimits", "CMake"],
         "story": "I wanted AI assistance in my terminal, locally, with no internet. Making it safe on a live system turned it into a real security engineering problem.",
         "bullets": [
@@ -134,7 +160,7 @@
         "github": "https://github.com/sharmavaibhav31/MoodHarmonics",
         "isPrivate": false,
         "liveUrl": null,
-        "display_order": 5,
+        "display_order": 6,
         "demo": "https://mood-harmonics.vercel.app/",
         "stack": ["Python", "Flask", "MusicGen", "YAMNet", "GPT (fine-tuned)", "PyTorch", "TensorFlow", "MongoDB", "React"],
         "story": "Not another AI music app — the goal was to answer: can multiple ML models with different runtimes be orchestrated into a reliable, end-to-end system?",
@@ -160,7 +186,7 @@
         "isPrivate": false,
         "liveUrl": null,
         "metrics": { "stars": 10, "forks": 3 },
-        "display_order": 6,
+        "display_order": 7,
         "stack": ["Python", "OpenCV", "MediaPipe", "NumPy", "Jupyter"],
         "story": "Built for fun — wanted my own air-drawing Paint app. The LinkedIn post reached 176,000+ impressions.",
         "bullets": [
@@ -184,7 +210,7 @@
         "github": "https://github.com/sharmavaibhav31/urlshortner",
         "isPrivate": false,
         "liveUrl": null,
-        "display_order": 7,
+        "display_order": 8,
         "stack": ["Java", "Spring Boot", "Redis", "PostgreSQL", "Docker", "Base62"],
         "story": "System design deep dive into building a high-throughput, low-latency URL shortening service using Base62 encoding and Redis caching.",
         "bullets": [
