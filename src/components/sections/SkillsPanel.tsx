@@ -40,15 +40,17 @@ const skillProjectMap: Record<string, string[]> = {
     'pytest':         ['arachnode'],
     'testcontainers': ['arachnode'],
     'H2 Integration': ['timetable-scheduler', 'appraisal-management'],
+    'RapidFuzz':      ['trailhead-tracker', 'arachnode'],
+    'OpenPyXL':       ['trailhead-tracker', 'timetable-scheduler', 'appraisal-management'],
 };
 
 // ── CUSTOM OTHER SKILLS PLACEHOLDERS PER PROJECT ─────────────────────────────
 // You can edit or add custom skills for each project ID here.
 const otherSkillsMap: Record<string, string[]> = {
-    'arachnode':           ['Scrapy', 'Playwright', 'APScheduler', 'Ollama', 'OSINT'],
+    'arachnode':           ['Scrapy', 'Playwright', 'APScheduler', 'Ollama', 'OSINT', 'fuzzy matching / contact enrichment using RapidFuzz'],
     'hpms':                ['QR Codes', 'html5-qrcode', 'node-cron', 'SMTP'],
-    'appraisal-management':['State Machine', 'Audit Trail', 'Immutability'],
-    'timetable-scheduler': ['Constraint Propagation', 'Apache POI', 'H2 Ephemeral'],
+    'appraisal-management':['State Machine', 'Audit Trail', 'Immutability', 'Apache POI / OpenPyXL'],
+    'timetable-scheduler': ['Constraint Propagation', 'Apache POI', 'Apache POI / OpenPyXL', 'H2 Ephemeral'],
     'trailhead-tracker':   ['OpenPyXL', 'RapidFuzz', 'Aura Client'],
     'offline-ai-shell':    ['TinyLlama-1.1B', 'CMake', 'rlimits'],
     'moodharmonics':       ['MusicGen', 'YAMNet', 'GTZAN Classifier'],
@@ -89,8 +91,8 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
             style={{
                 width: '100%',
                 height: '100%',
-                background: 'rgba(0,0,0,0.3)',
-                borderLeft: '0.5px solid rgba(255,255,255,0.06)',
+                background: 'var(--bg-surface)',
+                borderLeft: '0.5px solid var(--border-default)',
                 display: 'flex',
                 flexDirection: 'column',
                 boxSizing: 'border-box',
@@ -104,7 +106,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                     background: transparent;
                 }
                 .skills-panel-body::-webkit-scrollbar-thumb {
-                    background: rgba(255,255,255,0.1);
+                    background: var(--border-default);
                 }
             `}} />
 
@@ -112,14 +114,14 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
             <div
                 style={{
                     height: 36,
-                    borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                    borderBottom: '0.5px solid var(--border-default)',
                     padding: '0 12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     flexShrink: 0,
                     boxSizing: 'border-box',
-                    background: 'rgba(0,0,0,0.2)',
+                    background: 'var(--bg-primary)',
                 }}
             >
                 <span
@@ -127,7 +129,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                         fontFamily: 'monospace',
                         fontSize: 8,
                         letterSpacing: '0.14em',
-                        color: 'rgba(255,255,255,0.4)',
+                        color: 'var(--text-muted)',
                     }}
                 >
                     CAPABILITIES USED
@@ -136,7 +138,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                     style={{
                         fontFamily: 'monospace',
                         fontSize: 9,
-                        color: '#4ade80',
+                        color: 'var(--accent-green)',
                         opacity: 1,
                         transition: 'opacity 0.2s ease',
                         whiteSpace: 'nowrap',
@@ -174,8 +176,8 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                         <div
                             key={category}
                             style={{
-                                background: 'rgba(255,255,255,0.02)',
-                                border: '0.5px solid rgba(255,255,255,0.06)',
+                                background: 'var(--bg-primary)',
+                                border: '0.5px solid var(--border-default)',
                                 padding: '8px',
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -189,8 +191,8 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                     fontFamily: 'monospace',
                                     fontSize: 8,
                                     letterSpacing: '0.12em',
-                                    color: 'rgba(255,255,255,0.3)',
-                                    borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                                    color: 'var(--text-muted)',
+                                    borderBottom: '0.5px solid var(--border-subtle)',
                                     paddingBottom: 4,
                                     marginBottom: 4,
                                 }}
@@ -205,18 +207,18 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                 const isActive = isProjectFocused && activeProject.id && projectList.includes(activeProject.id);
 
                                 let rowBg = 'transparent';
-                                let textColor = 'rgba(255,255,255,0.35)';
+                                let textColor = 'var(--text-muted)';
                                 let dotOpacity = 0;
 
                                 if (!isProjectFocused) {
-                                    textColor = 'rgba(255,255,255,0.4)';
+                                    textColor = 'var(--text-muted)';
                                     dotOpacity = 0;
                                 } else if (isActive) {
-                                    rowBg = 'rgba(74,222,128,0.08)';
-                                    textColor = '#f5f5f5';
+                                    rowBg = 'var(--accent-green-bg)';
+                                    textColor = 'var(--text-primary)';
                                     dotOpacity = 1;
                                 } else {
-                                    textColor = 'rgba(255,255,255,0.15)';
+                                    textColor = 'var(--text-muted)';
                                     dotOpacity = 0;
                                 }
 
@@ -229,7 +231,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                             padding: '3px 4px',
                                             borderRadius: 2,
                                             background: rowBg,
-                                            borderLeft: isActive ? '2px solid #4ade80' : '2px solid transparent',
+                                            borderLeft: isActive ? '2px solid var(--accent-green)' : '2px solid transparent',
                                             transition: 'all 0.2s ease',
                                             boxSizing: 'border-box',
                                         }}
@@ -241,7 +243,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                                 height: 4,
                                                 minWidth: 4,
                                                 borderRadius: '50%',
-                                                background: '#4ade80',
+                                                background: 'var(--accent-green)',
                                                 marginRight: 5,
                                                 opacity: dotOpacity,
                                                 transition: 'opacity 0.2s ease',
@@ -275,8 +277,8 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                     style={{
                         margin: '0 10px 10px',
                         padding: '8px',
-                        background: 'rgba(255,255,255,0.02)',
-                        border: '0.5px solid rgba(255,255,255,0.06)',
+                        background: 'var(--bg-primary)',
+                        border: '0.5px solid var(--border-default)',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 6,
@@ -288,8 +290,8 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                             fontFamily: 'monospace',
                             fontSize: 8,
                             letterSpacing: '0.12em',
-                            color: 'rgba(255,255,255,0.3)',
-                            borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                            color: 'var(--text-muted)',
+                            borderBottom: '0.5px solid var(--border-subtle)',
                             paddingBottom: 4,
                         }}
                     >
@@ -306,8 +308,8 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                         alignItems: 'center',
                                         padding: '2px 6px',
                                         borderRadius: 2,
-                                        background: activeProject ? 'rgba(74,222,128,0.08)' : 'rgba(255,255,255,0.03)',
-                                        border: '0.5px solid ' + (activeProject ? 'rgba(74,222,128,0.2)' : 'rgba(255,255,255,0.06)'),
+                                        background: activeProject ? 'var(--accent-green-bg)' : 'var(--bg-surface)',
+                                        border: '0.5px solid ' + (activeProject ? 'var(--accent-green-border)' : 'var(--border-default)'),
                                         boxSizing: 'border-box',
                                     }}
                                 >
@@ -316,7 +318,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                             width: 4,
                                             height: 4,
                                             borderRadius: '50%',
-                                            background: '#4ade80',
+                                            background: 'var(--accent-green)',
                                             marginRight: 4,
                                             opacity: activeProject ? 1 : 0,
                                         }}
@@ -325,7 +327,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                         style={{
                                             fontFamily: 'monospace',
                                             fontSize: 9,
-                                            color: activeProject ? '#f5f5f5' : 'rgba(255,255,255,0.3)',
+                                            color: activeProject ? 'var(--text-primary)' : 'var(--text-muted)',
                                         }}
                                     >
                                         {skill}
@@ -333,7 +335,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                 </div>
                             ))
                         ) : (
-                            <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>
+                            <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--text-muted)' }}>
                                 // Select a project to view specialized tech
                             </span>
                         )}

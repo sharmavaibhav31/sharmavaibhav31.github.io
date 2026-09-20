@@ -30,7 +30,7 @@ export const HeroSection: React.FC = () => {
 
                     {/* Top section */}
                     <div>
-                        <div className="font-mono text-[10px] tracking-[0.2em] mb-[0.5rem]" style={{ color: '#6a6a6a' }}>
+                        <div className="font-mono text-[10px] tracking-[0.2em] mb-[0.5rem]" style={{ color: 'var(--text-muted)' }}>
                             // PERSONNEL FILE
                         </div>
                         <h1 className="font-sans text-[36px] sm:text-[56px] lg:text-[73px] font-black leading-[0.92] sm:leading-[0.88] tracking-[-1px] sm:tracking-[-2px] uppercase mb-[6px] sm:mb-2 break-keep whitespace-normal" style={{ color: 'var(--text-primary)' }}>
@@ -44,7 +44,7 @@ export const HeroSection: React.FC = () => {
                     {/* MOBILE PHOTO BLOCK */}
                     <div
                         className="sm:hidden w-full aspect-[3/4] relative overflow-hidden my-[16px] cursor-pointer"
-                        style={{ background: '#1a1a1a', border: '0.5px solid rgba(255,255,255,0.08)' }}
+                        style={{ background: 'var(--bg-raised)', border: '0.5px solid var(--border-default)' }}
                         onClick={() => setIsPhotoRevealed(!isPhotoRevealed)}
                     >
                         {/* Tapped State: Image */}
@@ -59,7 +59,7 @@ export const HeroSection: React.FC = () => {
                             />
                             <div
                                 className="absolute bottom-[10px] left-[10px] text-[9px] font-mono tracking-[0.14em]"
-                                style={{ color: '#6a6a6a' }}
+                                style={{ color: 'var(--text-muted)' }}
                             >
                                 // IDENTITY CONFIRMED
                             </div>
@@ -78,15 +78,15 @@ export const HeroSection: React.FC = () => {
                                 'bottom-0 right-0 border-b-[0.5px] border-r-[0.5px]',
                             ].map((pos, i) => (
                                 <div key={i} className={`absolute ${pos} w-[10px] h-[10px] z-20`}
-                                    style={{ borderColor: 'rgba(255,255,255,0.15)' }}></div>
+                                    style={{ borderColor: 'var(--border-default)' }}></div>
                             ))}
 
                             <span className="font-mono text-[9px] tracking-[0.2em]"
-                                style={{ color: 'rgba(255,255,255,0.15)' }}>PHOTO</span>
+                                style={{ color: 'var(--text-muted)' }}>PHOTO</span>
                             <span className="font-mono text-[9px] tracking-[0.2em] mt-[4px]"
-                                style={{ color: 'rgba(255,80,80,0.45)' }}>REDACTED</span>
+                                style={{ color: 'var(--accent-red)' }}>REDACTED</span>
                             <span className="font-mono text-[9px] mt-[8px] italic"
-                                style={{ color: 'rgba(255,255,255,0.2)' }}>tap to reveal</span>
+                                style={{ color: 'var(--text-muted)' }}>tap to reveal</span>
                         </div>
                     </div>
 
@@ -115,14 +115,14 @@ export const HeroSection: React.FC = () => {
                                 style={{ color: 'var(--text-muted)' }}>LOCATION</span>
                             <div className="flex flex-col">
                                 <span
-                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-0 min-w-[140px] inline-block transition-all duration-250 hover:!bg-transparent hover:!text-[#c8c8c8]"
+                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-0 min-w-[140px] inline-block transition-all duration-250 hover:!bg-transparent hover:!text-[var(--text-primary)]"
                                     style={{
-                                        background: isLocationRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)',
-                                        color: isLocationRevealed ? '#c8c8c8' : 'transparent'
+                                        background: isLocationRevealed ? 'transparent' : 'var(--text-primary)',
+                                        color: isLocationRevealed ? 'var(--text-secondary)' : 'transparent'
                                     }}
                                     onClick={() => setIsLocationRevealed(!isLocationRevealed)}
                                 >Bengaluru, India</span>
-                                <span className="sm:hidden font-mono text-[8px] italic mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>tap to reveal</span>
+                                <span className="sm:hidden font-mono text-[8px] italic mt-1" style={{ color: 'var(--text-muted)' }}>tap to reveal</span>
                             </div>
                         </div>
 
@@ -133,14 +133,14 @@ export const HeroSection: React.FC = () => {
                                 style={{ color: 'var(--text-muted)' }}>CONTACT</span>
                             <div className="flex flex-col">
                                 <span
-                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-0 min-w-[140px] inline-block transition-all duration-250 hover:!bg-transparent hover:!text-[#c8c8c8]"
+                                    className="font-mono text-[11px] sm:text-[11.5px] lg:text-[12.5px] font-normal leading-[1.6] select-none cursor-pointer px-[4px] py-0 min-w-[140px] inline-block transition-all duration-250 hover:!bg-transparent hover:!text-[var(--text-primary)]"
                                     style={{
-                                        background: isContactRevealed ? 'transparent' : 'rgba(255, 255, 255, 0.10)',
-                                        color: isContactRevealed ? '#c8c8c8' : 'transparent'
+                                        background: isContactRevealed ? 'transparent' : 'var(--text-primary)',
+                                        color: isContactRevealed ? 'var(--text-secondary)' : 'transparent'
                                     }}
                                     onClick={() => setIsContactRevealed(!isContactRevealed)}
                                 >sharma31stmay@gmail.com</span>
-                                <span className="sm:hidden font-mono text-[8px] italic mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>tap to reveal</span>
+                                <span className="sm:hidden font-mono text-[8px] italic mt-1" style={{ color: 'var(--text-muted)' }}>tap to reveal</span>
                             </div>
                         </div>
 
@@ -161,13 +161,13 @@ export const HeroSection: React.FC = () => {
                     {/* Bottom section — buttons */}
                     <div className="flex flex-row gap-2 sm:gap-4 mt-[2.5rem]">
                         <a href="#work"
-                            className="flex-1 sm:flex-none text-center font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.08em] uppercase border-[0.5px] px-[12px] sm:px-[22px] py-[10px] sm:py-[9px] transition-all duration-150 rounded-none hover:bg-[rgba(255,65,65,0.20)] hover:border-[rgba(255,65,65,0.70)] hover:text-[#ff8080]"
-                            style={{ background: 'rgba(255, 65, 65, 0.12)', color: '#ff6b6b', borderColor: 'rgba(255, 65, 65, 0.45)' }}>
+                            className="flex-1 sm:flex-none text-center font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.08em] uppercase border-[0.5px] px-[12px] sm:px-[22px] py-[10px] sm:py-[9px] transition-all duration-150 rounded-none hover:bg-[var(--accent-red-bg)] hover:border-[var(--accent-red-border)] hover:text-[var(--accent-red)]"
+                            style={{ background: 'var(--accent-red-bg)', color: 'var(--accent-red)', borderColor: 'var(--accent-red-border)' }}>
                             VIEW PROJECTS
                         </a>
                         <a href={`${import.meta.env.BASE_URL}Vaibhav_Sharma_resume.pdf`} target="_blank" rel="noopener noreferrer"
-                            className="flex-1 sm:flex-none text-center font-mono text-[10px] sm:text-[11px] font-medium tracking-[0.08em] uppercase bg-transparent border-[0.5px] px-[12px] sm:px-[22px] py-[10px] sm:py-[9px] transition-all duration-150 rounded-none hover:text-[#f5f5f5] hover:border-[rgba(255,255,255,0.50)]"
-                            style={{ color: '#c8c8c8', borderColor: 'rgba(255, 255, 255, 0.25)' }}>
+                            className="flex-1 sm:flex-none text-center font-mono text-[10px] sm:text-[11px] font-medium tracking-[0.08em] uppercase bg-transparent border-[0.5px] px-[12px] sm:px-[22px] py-[10px] sm:py-[9px] transition-all duration-150 rounded-none hover:text-[var(--text-primary)] hover:border-[var(--border-default)]"
+                            style={{ color: 'var(--text-secondary)', borderColor: 'var(--border-default)' }}>
                             DOWNLOAD RESUME
                         </a>
                     </div>
@@ -194,7 +194,7 @@ export const HeroSection: React.FC = () => {
                                 style={{ borderColor: 'var(--border-default)' }}
                             />
                             <div className="text-center mt-[10px] text-[9px] font-mono tracking-[0.14em]"
-                                style={{ color: '#6a6a6a' }}>
+                                style={{ color: 'var(--text-muted)' }}>
                                 // IDENTITY CONFIRMED
                             </div>
                         </div>

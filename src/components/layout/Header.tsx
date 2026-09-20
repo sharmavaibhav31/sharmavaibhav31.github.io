@@ -126,9 +126,9 @@ export const Header: React.FC = () => {
                         className="flex lg:hidden flex-col justify-between cursor-pointer w-[18px] h-[12px] ml-2"
                         onClick={() => setIsDrawerOpen(true)}
                     >
-                        <div style={{ width: '100%', height: '1.5px', background: 'rgba(255,255,255,0.7)' }}></div>
-                        <div style={{ width: '100%', height: '1.5px', background: 'rgba(255,255,255,0.7)' }}></div>
-                        <div style={{ width: '8px', height: '1.5px', background: 'rgba(255,255,255,0.7)' }}></div>
+                        <div style={{ width: '100%', height: '1.5px', background: 'var(--text-secondary)' }}></div>
+                        <div style={{ width: '100%', height: '1.5px', background: 'var(--text-secondary)' }}></div>
+                        <div style={{ width: '8px', height: '1.5px', background: 'var(--text-secondary)' }}></div>
                     </div>
                 </div>
             </header>
@@ -137,7 +137,7 @@ export const Header: React.FC = () => {
             <div 
                 className="fixed top-0 right-0 w-[100vw] h-[100vh] z-[200] flex flex-col items-center justify-center"
                 style={{
-                    background: '#0d0d0d',
+                    background: 'var(--bg-primary)',
                     transform: isDrawerOpen ? 'translateX(0)' : 'translateX(100%)',
                     transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)'
                 }}
@@ -146,7 +146,7 @@ export const Header: React.FC = () => {
                 {/* Close Button */}
                 <button 
                     className="absolute top-[20px] right-[20px] cursor-pointer"
-                    style={{ fontSize: '18px', color: 'rgba(255,255,255,0.4)' }}
+                    style={{ fontSize: '18px', color: 'var(--text-muted)' }}
                     onClick={(e) => {
                         e.stopPropagation();
                         setIsDrawerOpen(false);

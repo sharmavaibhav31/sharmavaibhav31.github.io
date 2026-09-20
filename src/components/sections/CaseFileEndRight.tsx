@@ -14,8 +14,8 @@ export const CaseFileEndRight: React.FC<CaseFileEndRightProps> = ({ isTablet = f
             style={{
                 position: 'absolute',
                 inset: 0,
-                background: '#0d0d0d',
-                border: '0.5px solid rgba(255,255,255,0.08)',
+                background: 'var(--bg-surface)',
+                border: '0.5px solid var(--border-default)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -31,14 +31,14 @@ export const CaseFileEndRight: React.FC<CaseFileEndRightProps> = ({ isTablet = f
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                    borderBottom: '0.5px solid var(--border-subtle)',
                     paddingBottom: 8,
                 }}
             >
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.3)' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'var(--text-muted)' }}>
                     CLASSIFIED ARCHIVE // END
                 </span>
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', color: '#4ade80' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', color: 'var(--accent-green)' }}>
                     SEALED
                 </span>
             </div>
@@ -46,26 +46,26 @@ export const CaseFileEndRight: React.FC<CaseFileEndRightProps> = ({ isTablet = f
             {/* Center Content */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, margin: 'auto 0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', color: 'rgba(255,255,255,0.4)' }}>
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-green)', boxShadow: '0 0 8px var(--accent-green)' }} />
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', color: 'var(--text-muted)' }}>
                         DOSSIER BINDER SEALED
                     </span>
                 </div>
 
                 <div
                     style={{
-                        border: '1px dashed rgba(74,222,128,0.25)',
-                        background: 'rgba(74,222,128,0.02)',
+                        border: '1px dashed var(--accent-green-border)',
+                        background: 'var(--accent-green-bg)',
                         padding: '16px',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 6,
                     }}
                 >
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4ade80', letterSpacing: '0.14em' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--accent-green)', letterSpacing: '0.14em' }}>
                         SYSTEM AUDIT COMPLETE
                     </div>
-                    <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, margin: 0 }}>
+                    <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
                         All 9 production systems and case files have been audited. No structural errors found.
                     </p>
                 </div>
@@ -78,17 +78,18 @@ export const CaseFileEndRight: React.FC<CaseFileEndRightProps> = ({ isTablet = f
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderTop: '0.5px solid rgba(255,255,255,0.06)',
+                    borderTop: '0.5px solid var(--border-subtle)',
                     paddingTop: 8,
                 }}
             >
-                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.12em' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                     ↑ SCROLL UP TO RE-EXAMINE
                 </span>
-                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
                     FILE 009/009
                 </span>
             </div>
         </div>
     );
 };
+

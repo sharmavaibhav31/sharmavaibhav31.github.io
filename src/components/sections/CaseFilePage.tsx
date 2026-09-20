@@ -116,6 +116,9 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
     const nextClassLabel = nextProject ? getClassificationLabel(nextProject) : '';
     const nextCaseNumber = String(i + 2).padStart(3, '0');
 
+    const leftPanelPointerEvents = useTransform(leftPanelOpacity, (op) => (op > 0.1 ? 'auto' : 'none'));
+    const rightLeafPointerEvents = useTransform(pageProgress, (p) => (p >= 0 && p < 0.95 ? 'auto' : 'none'));
+
     return (
         <div
             style={{
@@ -123,7 +126,7 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
                 inset: 0,
                 width: stageWidth,
                 height: stageHeight,
-                pointerEvents: 'auto',
+                pointerEvents: 'none',
             }}
         >
             {/* ── LEFT PANEL OF BINDER STAGE (Identity of project i) ───────────── */}
@@ -136,6 +139,7 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
                     height: stageHeight,
                     zIndex: leftPanelZIndex,
                     opacity: leftPanelOpacity,
+                    pointerEvents: leftPanelPointerEvents,
                 }}
             >
                 <CaseFileFront
@@ -158,6 +162,7 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
                     transformStyle: 'preserve-3d',
                     rotateY,
                     zIndex: rightLeafZIndex,
+                    pointerEvents: rightLeafPointerEvents,
                     willChange: 'transform',
                 }}
             >

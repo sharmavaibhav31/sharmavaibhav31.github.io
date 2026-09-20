@@ -41,6 +41,8 @@ const CoverLeftLeaf: React.FC<{
 
     const pageProgress = useTransform(scrollYProgress, [inputStart, inputEnd], [0, 1], { clamp: true });
     const opacity = useTransform(pageProgress, [0, 0.8, 1], [1, 0.2, 0]);
+    const zIndex = useTransform(opacity, (op) => op > 0.1 ? 500 : 0);
+    const pointerEvents = useTransform(opacity, (op) => op > 0.1 ? 'auto' : 'none');
 
     return (
         <motion.div
@@ -50,8 +52,9 @@ const CoverLeftLeaf: React.FC<{
                 left: 0,
                 width: stageWidth / 2,
                 height: stageHeight,
-                zIndex: 500,
+                zIndex,
                 opacity,
+                pointerEvents,
             }}
         >
             <CaseFileCoverLeft isTablet={isTablet} />
@@ -76,6 +79,7 @@ const CoverPageLeaf: React.FC<{
     const rotateY = useTransform(pageProgress, [0, 0.3, 0.6, 0.85, 1], [0, -22, -99, -158, -180]);
     const curlOpacity = useTransform(pageProgress, (p) => Math.sin(p * Math.PI));
     const zIndex = useTransform(pageProgress, (p) => (p >= 1 ? 0 : 500));
+    const pointerEvents = useTransform(pageProgress, (p) => (p < 0.95 ? 'auto' : 'none'));
 
     return (
         <motion.div
@@ -89,6 +93,7 @@ const CoverPageLeaf: React.FC<{
                 transformStyle: 'preserve-3d',
                 rotateY,
                 zIndex,
+                pointerEvents,
                 willChange: 'transform',
             }}
         >
@@ -157,6 +162,7 @@ const EndRightLeaf: React.FC<{
     const opacity = useTransform(scrollYProgress, (progress) => {
         return progress >= inputStart ? 1 : 0;
     });
+    const pointerEvents = useTransform(opacity, (op) => op > 0.1 ? 'auto' : 'none');
 
     return (
         <motion.div
@@ -168,6 +174,7 @@ const EndRightLeaf: React.FC<{
                 height: stageHeight,
                 zIndex: 1,
                 opacity,
+                pointerEvents,
             }}
         >
             <CaseFileEndRight isTablet={isTablet} />
@@ -207,8 +214,8 @@ const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, in
                 opacity: visible ? 1 : 0,
                 transform: visible ? 'translateY(0)' : 'translateY(24px)',
                 transition: `opacity 0.5s ease ${index * 0.08}s, transform 0.5s ease ${index * 0.08}s`,
-                background: '#0d0d0d',
-                border: '0.5px solid rgba(255,255,255,0.08)',
+                background: 'var(--bg-surface)',
+                border: '0.5px solid var(--border-default)',
                 display: 'flex',
                 flexDirection: 'column',
                 marginBottom: 1,
@@ -218,31 +225,31 @@ const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, in
             <div style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 padding: '0 16px', height: 36,
-                borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                borderBottom: '0.5px solid var(--border-subtle)',
             }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'rgba(255,80,80,0.6)' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'var(--accent-red)' }}>
                     CASE FILE {String(index + 1).padStart(3, '0')}
                 </span>
             </div>
 
             {/* Body */}
             <div style={{ padding: '16px 16px 0', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <p style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.16em', margin: 0 }}>
+                <p style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.16em', margin: 0 }}>
                     // SYSTEMS BUILT
                 </p>
-                <h3 style={{ fontFamily: 'sans-serif', fontSize: 15, fontWeight: 700, color: '#f5f5f5', margin: 0, lineHeight: 1.25 }}>
+                <h3 style={{ fontFamily: 'sans-serif', fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', margin: 0, lineHeight: 1.25 }}>
                     {project.title}
                 </h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                     {(project.stack ?? []).slice(0, 4).map(t => (
                         <span key={t} style={{
                             fontFamily: 'monospace', fontSize: 9, padding: '1px 6px',
-                            color: '#8e8e8e', background: 'rgba(255,255,255,0.04)',
-                            border: '0.5px solid rgba(255,255,255,0.08)',
+                            color: 'var(--text-secondary)', background: 'var(--bg-raised)',
+                            border: '0.5px solid var(--border-default)',
                         }}>{t}</span>
                     ))}
                 </div>
-                <p style={{ fontFamily: 'sans-serif', fontSize: 12, color: '#c8c8c8', lineHeight: 1.7, margin: 0 }}>
+                <p style={{ fontFamily: 'sans-serif', fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
                     {project.solution ?? ''}
                 </p>
             </div>
@@ -251,10 +258,10 @@ const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, in
             <div style={{ overflow: 'hidden', maxHeight: open ? 300 : 0, transition: 'max-height 0.3s ease' }}>
                 {archText && (
                     <div style={{ padding: '12px 16px 0' }}>
-                        <p style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', marginBottom: 6 }}>
+                        <p style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
                             ARCHITECTURE
                         </p>
-                        <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: '#c8c8c8', lineHeight: 1.7, margin: 0 }}>
+                        <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
                             {archText}
                         </p>
                     </div>
@@ -262,14 +269,14 @@ const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, in
                 {project.impact && (
                     <div style={{
                         margin: '12px 16px 0',
-                        background: 'rgba(74,222,128,0.04)',
-                        border: '0.5px solid rgba(74,222,128,0.15)',
+                        background: 'var(--accent-green-bg)',
+                        border: '0.5px solid var(--accent-green-border)',
                         padding: '8px 12px',
                     }}>
-                        <p style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', marginBottom: 4 }}>
+                        <p style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--accent-green)', letterSpacing: '0.12em', marginBottom: 4 }}>
                             IMPACT
                         </p>
-                        <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: '#c8c8c8', lineHeight: 1.7, margin: 0 }}>
+                        <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
                             {project.impact}
                         </p>
                     </div>
@@ -280,38 +287,59 @@ const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, in
             <div style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 padding: '0 16px', height: 40,
-                borderTop: '0.5px solid rgba(255,255,255,0.06)',
+                borderTop: '0.5px solid var(--border-subtle)',
                 marginTop: 12, gap: 12,
             }}>
                 <button
                     onClick={() => setOpen(o => !o)}
                     style={{
                         fontFamily: 'monospace', fontSize: 9, padding: '3px 10px',
-                        color: '#8e8e8e', background: 'transparent',
-                        border: '0.5px solid rgba(255,255,255,0.12)', cursor: 'pointer',
+                        color: 'var(--text-muted)', background: 'transparent',
+                        border: '0.5px solid var(--border-default)', cursor: 'pointer',
                     }}
                 >
                     Architecture {open ? '▴' : '▾'}
                 </button>
-                {isPrivate ? (
-                    <span style={{
-                        fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em',
-                        padding: '2px 8px', color: 'rgba(255,255,255,0.2)',
-                        border: '0.5px solid rgba(255,255,255,0.08)',
-                    }}>PRIVATE</span>
-                ) : (
-                    <button
-                        style={{
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    {((project.liveUrl ?? (project as any).demo ?? null) as string | null) && (
+                        <a
+                            href={(project.liveUrl ?? (project as any).demo) as string}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em',
+                                padding: '3px 8px', color: 'var(--accent-green)',
+                                background: 'var(--accent-green-bg)',
+                                border: '0.5px solid var(--accent-green-border)',
+                                textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3,
+                            }}
+                        >
+                            LIVE ↗
+                        </a>
+                    )}
+                    {isPrivate ? (
+                        <span style={{
                             fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em',
-                            padding: '3px 10px', color: 'rgba(255,80,80,0.8)',
-                            background: 'rgba(255,65,65,0.08)',
-                            border: '0.5px solid rgba(255,80,80,0.3)', cursor: 'pointer',
-                        }}
-                        onClick={() => window.open((project as any).github!, '_blank')}
-                    >
-                        {project.id === 'arachnode' ? 'GITHUB' : 'SRC'}
-                    </button>
-                )}
+                            padding: '2px 8px', color: 'var(--text-muted)',
+                            border: '0.5px solid var(--border-default)',
+                        }}>PRIVATE</span>
+                    ) : (
+                        <a
+                            href={project.github!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em',
+                                padding: '3px 10px', color: 'var(--accent-red)',
+                                background: 'var(--accent-red-bg)',
+                                border: '0.5px solid var(--accent-red-border)',
+                                textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3,
+                            }}
+                        >
+                            {project.id === 'arachnode' ? 'GITHUB ↗' : 'SRC ↗'}
+                        </a>
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -327,7 +355,7 @@ const ScrollHint: React.FC<{ visible: boolean }> = ({ visible }) => (
         fontFamily: 'monospace',
         fontSize: 9,
         letterSpacing: '0.12em',
-        color: 'rgba(255,255,255,0.25)',
+        color: 'var(--text-muted)',
         whiteSpace: 'nowrap',
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.4s ease',
@@ -345,8 +373,8 @@ const LeftPanelBg: React.FC<{ width: number; height: number }> = ({ width, heigh
         position: 'absolute',
         top: 0, left: 0,
         width, height,
-        background: '#111111',
-        border: '0.5px solid rgba(255,255,255,0.06)',
+        background: 'var(--bg-raised)',
+        border: '0.5px solid var(--border-default)',
         borderRight: 'none',
     }} />
 );
@@ -357,8 +385,8 @@ const RightPanelBg: React.FC<{ stageWidth: number; height: number }> = ({ stageW
         position: 'absolute',
         top: 0, left: stageWidth / 2,
         width: stageWidth / 2, height,
-        background: '#0d0d0d',
-        border: '0.5px solid rgba(255,255,255,0.06)',
+        background: 'var(--bg-primary)',
+        border: '0.5px solid var(--border-default)',
     }} />
 );
 
@@ -372,8 +400,8 @@ const FilterRail: React.FC<FilterRailProps> = ({ filters, active, onChange }) =>
     <div
         style={{
             height: '100%',
-            background: 'rgba(0,0,0,0.3)',
-            borderRight: '0.5px solid rgba(255,255,255,0.06)',
+            background: 'var(--bg-surface)',
+            borderRight: '0.5px solid var(--border-default)',
             display: 'flex',
             flexDirection: 'column',
             boxSizing: 'border-box',
@@ -386,10 +414,10 @@ const FilterRail: React.FC<FilterRailProps> = ({ filters, active, onChange }) =>
                 fontFamily: 'monospace',
                 fontSize: 7,
                 letterSpacing: '0.14em',
-                color: 'rgba(255,255,255,0.12)',
+                color: 'var(--text-muted)',
                 textAlign: 'center',
                 padding: '10px 4px 8px',
-                borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                borderBottom: '0.5px solid var(--border-default)',
                 flexShrink: 0,
             }}
         >
@@ -411,11 +439,11 @@ const FilterRail: React.FC<FilterRailProps> = ({ filters, active, onChange }) =>
                             fontSize: 8,
                             letterSpacing: '0.1em',
                             textAlign: 'center',
-                            color: isActive ? '#4ade80' : 'rgba(255,255,255,0.2)',
-                            background: isActive ? 'rgba(74,222,128,0.04)' : 'transparent',
+                            color: isActive ? 'var(--accent-green)' : 'var(--text-muted)',
+                            background: isActive ? 'var(--accent-green-bg)' : 'transparent',
                             border: 'none',
-                            borderRight: isActive ? '2px solid #4ade80' : '2px solid transparent',
-                            borderBottom: '0.5px solid rgba(255,255,255,0.04)',
+                            borderRight: isActive ? '2px solid var(--accent-green)' : '2px solid transparent',
+                            borderBottom: '0.5px solid var(--border-subtle)',
                             cursor: 'pointer',
                             transition: 'color 0.15s, background 0.15s',
                             whiteSpace: 'nowrap',
@@ -569,7 +597,7 @@ export const ProjectsSection: React.FC = () => {
                     50%       { opacity: 0.55; }
                 }
                 .filter-rail-btn:hover {
-                    color: rgba(255,255,255,0.6) !important;
+                    color: var(--text-primary) !important;
                 }
             `}} />
 
@@ -643,7 +671,7 @@ export const ProjectsSection: React.FC = () => {
                                         top: 0, bottom: 0,
                                         left: '50%',
                                         width: 1,
-                                        background: 'rgba(255,255,255,0.06)',
+                                        background: 'var(--border-default)',
                                         zIndex: 650,
                                         pointerEvents: 'none',
                                     }}
@@ -699,7 +727,7 @@ export const ProjectsSection: React.FC = () => {
                                         fontFamily: 'monospace',
                                         fontSize: 8,
                                         letterSpacing: '0.14em',
-                                        color: activePageIndex === 0 ? 'rgba(255,80,80,0.8)' : 'rgba(255,255,255,0.3)',
+                                        color: activePageIndex === 0 ? 'var(--accent-red)' : 'var(--text-muted)',
                                         pointerEvents: 'none',
                                         zIndex: 700,
                                     }}

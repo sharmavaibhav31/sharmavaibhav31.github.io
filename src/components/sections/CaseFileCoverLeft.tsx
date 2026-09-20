@@ -14,10 +14,9 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
             style={{
                 position: 'absolute',
                 inset: 0,
-                background: '#0a0a0a',
-                border: '0.5px solid rgba(255,255,255,0.12)',
+                background: 'var(--bg-primary)',
+                border: '0.5px solid var(--border-default)',
                 borderRight: 'none',
-                boxShadow: 'inset 0 0 40px rgba(0,0,0,0.6)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -32,7 +31,7 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderBottom: '0.5px solid rgba(255,255,255,0.08)',
+                    borderBottom: '0.5px solid var(--border-default)',
                     paddingBottom: 12,
                 }}
             >
@@ -41,7 +40,7 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
                         fontFamily: 'monospace',
                         fontSize: 8,
                         letterSpacing: '0.18em',
-                        color: 'rgba(255,80,80,0.6)',
+                        color: 'var(--accent-red)',
                     }}
                 >
                     PROPERTY OF VAIBHAV SHARMA
@@ -51,7 +50,7 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
                         fontFamily: 'monospace',
                         fontSize: 8,
                         letterSpacing: '0.14em',
-                        color: 'rgba(255,255,255,0.25)',
+                        color: 'var(--text-muted)',
                     }}
                 >
                     DOSSIER_BINDER_01
@@ -62,8 +61,8 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, margin: 'auto 0' }}>
                 <div
                     style={{
-                        border: '1px dashed rgba(255,80,80,0.3)',
-                        background: 'rgba(255,80,80,0.03)',
+                        border: '1px dashed var(--accent-red-border)',
+                        background: 'var(--accent-red-bg)',
                         padding: '16px',
                         display: 'flex',
                         flexDirection: 'column',
@@ -76,7 +75,7 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
                             fontSize: 9,
                             fontWeight: 700,
                             letterSpacing: '0.2em',
-                            color: 'rgba(255,80,80,0.85)',
+                            color: 'var(--accent-red)',
                         }}
                     >
                         [!] NOTICE — RESTRICTED DOSSIER
@@ -85,7 +84,7 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
                         style={{
                             fontFamily: 'sans-serif',
                             fontSize: 11,
-                            color: 'rgba(255,255,255,0.5)',
+                            color: 'var(--text-secondary)',
                             lineHeight: 1.6,
                             margin: 0,
                         }}
@@ -96,10 +95,10 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
 
                 {/* Technical Specifications */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.14em' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.14em' }}>
                         SECURITY CHECKSUM
                     </div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4ade80', letterSpacing: '0.08em', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--accent-green)', letterSpacing: '0.08em', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934c
                     </div>
                 </div>
@@ -108,17 +107,17 @@ export const CaseFileCoverLeft: React.FC<CaseFileCoverLeftProps> = ({ isTablet =
             {/* Footer Barcode / Stamp */}
             <div
                 style={{
-                    borderTop: '0.5px solid rgba(255,255,255,0.08)',
+                    borderTop: '0.5px solid var(--border-default)',
                     paddingTop: 12,
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                 }}
             >
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.25)' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', color: 'var(--text-muted)' }}>
                     ||||| ||| |||||| | |||||||
                 </span>
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.3)' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', color: 'var(--text-muted)' }}>
                     CLEARANCE: LEVEL 5
                 </span>
             </div>

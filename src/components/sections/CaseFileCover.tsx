@@ -15,9 +15,8 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
             style={{
                 position: 'absolute',
                 inset: 0,
-                background: '#0a0a0a',
-                border: '0.5px solid rgba(255,255,255,0.12)',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.6)',
+                background: 'var(--bg-primary)',
+                border: '0.5px solid var(--border-default)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -37,11 +36,12 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                     fontSize: 10,
                     fontWeight: 700,
                     letterSpacing: '0.25em',
-                    color: 'rgba(255,80,80,0.18)',
-                    border: '1.5px dashed rgba(255,80,80,0.2)',
+                    color: 'var(--accent-red)',
+                    border: '1.5px dashed var(--accent-red-border)',
                     padding: '4px 48px',
                     pointerEvents: 'none',
                     zIndex: 0,
+                    opacity: 0.3,
                 }}
             >
                 TOP SECRET
@@ -53,7 +53,7 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderBottom: '0.5px solid rgba(255,255,255,0.08)',
+                    borderBottom: '0.5px solid var(--border-default)',
                     paddingBottom: 12,
                     zIndex: 1,
                 }}
@@ -64,8 +64,8 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                             width: 6,
                             height: 6,
                             borderRadius: '50%',
-                            background: '#4ade80',
-                            boxShadow: '0 0 8px #4ade80',
+                            background: 'var(--accent-green)',
+                            boxShadow: '0 0 8px var(--accent-green)',
                         }}
                     />
                     <span
@@ -73,7 +73,7 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                             fontFamily: 'monospace',
                             fontSize: 9,
                             letterSpacing: '0.2em',
-                            color: 'rgba(255,255,255,0.4)',
+                            color: 'var(--text-muted)',
                         }}
                     >
                         CLASSIFIED DOSSIER // FILE #2026-VS
@@ -84,9 +84,9 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                         fontFamily: 'monospace',
                         fontSize: 8,
                         letterSpacing: '0.14em',
-                        color: 'rgba(255,80,80,0.8)',
-                        background: 'rgba(255,80,80,0.08)',
-                        border: '0.5px solid rgba(255,80,80,0.3)',
+                        color: 'var(--accent-red)',
+                        background: 'var(--accent-red-bg)',
+                        border: '0.5px solid var(--accent-red-border)',
                         padding: '2px 8px',
                     }}
                 >
@@ -102,15 +102,15 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                             fontFamily: 'monospace',
                             fontSize: 9,
                             letterSpacing: '0.22em',
-                            color: '#4ade80',
-                            background: 'rgba(74,222,128,0.06)',
-                            border: '0.5px solid rgba(74,222,128,0.25)',
+                            color: 'var(--accent-green)',
+                            background: 'var(--accent-green-bg)',
+                            border: '0.5px solid var(--accent-green-border)',
                             padding: '3px 10px',
                         }}
                     >
                         CONFIDENTIAL WORKS
                     </span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
                         SYS_ARCHIVE_V2.6
                     </span>
                 </div>
@@ -121,21 +121,21 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                         fontSize: isTablet ? 26 : 32,
                         fontWeight: 800,
                         letterSpacing: '-0.02em',
-                        color: '#ffffff',
+                        color: 'var(--text-primary)',
                         margin: 0,
                         lineHeight: 1.1,
                         textTransform: 'uppercase',
                     }}
                 >
                     Selected Systems <br />
-                    <span style={{ color: 'rgba(255,255,255,0.4)' }}>& Architectural Dossier</span>
+                    <span style={{ color: 'var(--text-muted)' }}>& Architectural Dossier</span>
                 </h2>
 
                 <p
                     style={{
                         fontFamily: 'sans-serif',
                         fontSize: isTablet ? 12 : 13,
-                        color: 'rgba(255,255,255,0.6)',
+                        color: 'var(--text-secondary)',
                         maxWidth: 520,
                         lineHeight: 1.6,
                         margin: 0,
@@ -150,33 +150,33 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                         display: 'grid',
                         gridTemplateColumns: 'repeat(3, 1fr)',
                         gap: 12,
-                        background: 'rgba(255,255,255,0.02)',
-                        border: '0.5px solid rgba(255,255,255,0.06)',
+                        background: 'var(--bg-surface)',
+                        border: '0.5px solid var(--border-default)',
                         padding: 12,
                         marginTop: 4,
                     }}
                 >
                     <div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                             CASE FILES INDEXED
                         </div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: '#4ade80', marginTop: 2 }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: 'var(--accent-green)', marginTop: 2 }}>
                             {String(totalProjects).padStart(2, '0')} DOSSIERS
                         </div>
                     </div>
                     <div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                             SECURITY CLEARANCE
                         </div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: '#ffffff', marginTop: 2 }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginTop: 2 }}>
                             LEVEL 5 — GRANTED
                         </div>
                     </div>
                     <div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                             SYSTEM STATUS
                         </div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: '#38bdf8', marginTop: 2 }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: 'var(--accent-green)', marginTop: 2 }}>
                             0 ERRORS / NOMINAL
                         </div>
                     </div>
@@ -186,7 +186,7 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
             {/* ── FOOTER SCROLL HINT ─────────────────────────────── */}
             <div
                 style={{
-                    borderTop: '0.5px solid rgba(255,255,255,0.08)',
+                    borderTop: '0.5px solid var(--border-default)',
                     paddingTop: 12,
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -195,8 +195,8 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                 }}
             >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(255,80,80,0.6)' }}>[!]</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'var(--accent-red)' }}>[!]</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', color: 'var(--text-muted)' }}>
                         SEAL INTEGRITY: ACTIVE
                     </span>
                 </div>
@@ -206,7 +206,7 @@ export const CaseFileCover: React.FC<CaseFileCoverProps> = ({ totalProjects, isT
                         fontFamily: 'monospace',
                         fontSize: 9,
                         letterSpacing: '0.14em',
-                        color: '#4ade80',
+                        color: 'var(--accent-green)',
                         display: 'flex',
                         alignItems: 'center',
                         gap: 6,

@@ -63,14 +63,14 @@ function getBadgeLabel(category: string): string {
 
 function getBadgeStyle(category?: string): { color: string; background: string; borderColor: string } {
     switch (category) {
-        case 'Automation':              return { color: '#4a9eff', background: 'rgba(74,158,255,0.1)',   borderColor: '#4a9eff' };
-        case 'Security':                return { color: '#a78bfa', background: 'rgba(167,139,250,0.1)', borderColor: '#a78bfa' };
-        case 'ML Orchestration':        return { color: '#4ade80', background: 'rgba(74,222,128,0.08)', borderColor: '#4ade80' };
-        case 'Scalability':             return { color: '#fbbf24', background: 'rgba(251,191,36,0.08)', borderColor: '#fbbf24' };
-        case 'HCI':                     return { color: '#34d399', background: 'rgba(52,211,153,0.08)', borderColor: '#34d399' };
-        case 'IoT Systems':             return { color: '#f472b6', background: 'rgba(244,114,182,0.08)', borderColor: '#f472b6' };
-        case 'Enterprise Workflow System': return { color: '#e05c2a', background: 'rgba(224,92,42,0.08)', borderColor: '#e05c2a' };
-        default:                        return { color: '#8e8e8e', background: 'transparent',           borderColor: '#8e8e8e' };
+        case 'Automation':              return { color: 'var(--accent-green)',  background: 'var(--accent-green-bg)',  borderColor: 'var(--accent-green-border)' };
+        case 'Security':                return { color: 'var(--accent-purple)', background: 'var(--accent-purple-bg)', borderColor: 'var(--accent-purple-border)' };
+        case 'ML Orchestration':        return { color: 'var(--accent-green)',  background: 'var(--accent-green-bg)',  borderColor: 'var(--accent-green-border)' };
+        case 'Scalability':             return { color: 'var(--accent-amber)',  background: 'var(--accent-amber-bg)',  borderColor: 'var(--accent-amber-border)' };
+        case 'HCI':                     return { color: 'var(--accent-green)',  background: 'var(--accent-green-bg)',  borderColor: 'var(--accent-green-border)' };
+        case 'IoT Systems':             return { color: 'var(--accent-orange)', background: 'var(--accent-orange-bg)', borderColor: 'var(--accent-orange-border)' };
+        case 'Enterprise Workflow System': return { color: 'var(--accent-orange)', background: 'var(--accent-orange-bg)', borderColor: 'var(--accent-orange-border)' };
+        default:                        return { color: 'var(--text-muted)',     background: 'transparent',             borderColor: 'var(--border-default)' };
     }
 }
 
@@ -114,8 +114,8 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
             style={{
                 position: 'absolute',
                 inset: 0,
-                background: '#0d0d0d',
-                border: '0.5px solid rgba(255,255,255,0.08)',
+                background: 'var(--bg-primary)',
+                border: '0.5px solid var(--border-default)',
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden',
                 display: 'flex',
@@ -131,16 +131,16 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '0 20px',
-                    borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                    borderBottom: '0.5px solid var(--border-default)',
                     flexShrink: 0,
                 }}
             >
                 <span
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: 9,
+                        fontSize: 9.5,
                         letterSpacing: '0.2em',
-                        color: 'rgba(255,80,80,0.7)',
+                        color: 'var(--accent-red)',
                     }}
                 >
                     CASE FILE {caseNumber}
@@ -148,9 +148,9 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 <span
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: 8.5,
+                        fontSize: 9,
                         letterSpacing: '0.14em',
-                        color: 'rgba(255,255,255,0.3)',
+                        color: 'var(--text-muted)',
                     }}
                 >
                     {classificationLabel}
@@ -173,9 +173,9 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 <div
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: fs(9),
+                        fontSize: fs(10),
                         letterSpacing: '0.18em',
-                        color: 'rgba(255,255,255,0.3)',
+                        color: 'var(--text-muted)',
                         marginBottom: 6,
                     }}
                 >
@@ -186,9 +186,9 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 <h3
                     style={{
                         fontFamily: 'sans-serif',
-                        fontSize: fs(18),
+                        fontSize: fs(20),
                         fontWeight: 700,
-                        color: '#f8fafc',
+                        color: 'var(--text-primary)',
                         margin: '0 0 10px 0',
                         lineHeight: 1.25,
                     }}
@@ -202,7 +202,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                         <span
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: fs(10),
+                                fontSize: fs(10.5),
                                 letterSpacing: '0.1em',
                                 padding: '3px 10px',
                                 color: badgeStyle.color,
@@ -217,12 +217,12 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                         <span
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: fs(9),
+                                fontSize: fs(9.5),
                                 letterSpacing: '0.1em',
                                 padding: '3px 9px',
-                                color: '#4ade80',
-                                border: '0.5px solid rgba(74,222,128,0.3)',
-                                background: 'rgba(74,222,128,0.06)',
+                                color: 'var(--accent-green)',
+                                border: '0.5px solid var(--accent-green-border)',
+                                background: 'var(--accent-green-bg)',
                             }}
                         >
                             OPEN SOURCE
@@ -237,11 +237,11 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                             key={tech}
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: fs(10),
+                                fontSize: fs(10.5),
                                 padding: '2px 8px',
-                                color: '#a3a3a3',
-                                background: 'rgba(255,255,255,0.04)',
-                                border: '0.5px solid rgba(255,255,255,0.08)',
+                                color: 'var(--text-secondary)',
+                                background: 'var(--bg-surface)',
+                                border: '0.5px solid var(--border-default)',
                             }}
                         >
                             {tech}
@@ -249,45 +249,125 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     ))}
                 </div>
 
-                {/* 5. WHY block */}
+                {/* 5. WHY block — Entire red container is an interactive button link */}
                 {whyText && (
-                    <div
-                        style={{
-                            background: 'rgba(255,255,255,0.02)',
-                            border: '0.5px solid rgba(255,255,255,0.06)',
-                            borderLeft: '3px solid rgba(255,80,80,0.45)',
-                            padding: '10px 14px',
-                            margin: '4px 0 12px 0',
-                            flexShrink: 0,
-                        }}
-                    >
+                    (project.github || (project.liveUrl ?? project.demo)) ? (
+                        <a
+                            href={(project.github ?? project.liveUrl ?? project.demo) as string}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                display: 'block',
+                                textDecoration: 'none',
+                                background: 'var(--accent-red-bg)',
+                                border: '0.5px solid var(--accent-red-border)',
+                                borderLeft: '3px solid var(--accent-red)',
+                                padding: '10px 14px',
+                                margin: '4px 0 12px 0',
+                                flexShrink: 0,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                pointerEvents: 'auto',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.background = 'var(--accent-red-border)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'var(--accent-red-bg)';
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginBottom: 4,
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontSize: 9.5,
+                                        letterSpacing: '0.14em',
+                                        color: 'var(--accent-red)',
+                                        fontFamily: 'monospace',
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    // WHY THIS WAS BUILT
+                                </span>
+                                <span
+                                    style={{
+                                        fontSize: 9.5,
+                                        fontFamily: 'monospace',
+                                        color: 'var(--accent-red)',
+                                        letterSpacing: '0.1em',
+                                        fontWeight: 700,
+                                        padding: '2px 6px',
+                                        background: 'var(--accent-red-bg)',
+                                        border: '0.5px solid var(--accent-red-border)',
+                                        borderRadius: '2px',
+                                    }}
+                                >
+                                    OPEN REPO ↗
+                                </span>
+                            </div>
+                            <p
+                                style={{
+                                    fontSize: fs(13.5),
+                                    fontFamily: 'sans-serif',
+                                    color: 'var(--text-primary)',
+                                    lineHeight: 1.65,
+                                    margin: 0,
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 4,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                {whyText}
+                            </p>
+                        </a>
+                    ) : (
                         <div
                             style={{
-                                fontSize: 9,
-                                letterSpacing: '0.14em',
-                                color: 'rgba(255,80,80,0.7)',
-                                marginBottom: 4,
-                                fontFamily: 'monospace',
+                                background: 'var(--accent-red-bg)',
+                                border: '0.5px solid var(--accent-red-border)',
+                                borderLeft: '3px solid var(--accent-red)',
+                                padding: '10px 14px',
+                                margin: '4px 0 12px 0',
+                                flexShrink: 0,
                             }}
                         >
-                            // WHY THIS WAS BUILT
+                            <div
+                                style={{
+                                    fontSize: 9.5,
+                                    letterSpacing: '0.14em',
+                                    color: 'var(--accent-red)',
+                                    marginBottom: 4,
+                                    fontFamily: 'monospace',
+                                    fontWeight: 700,
+                                }}
+                            >
+                                // WHY THIS WAS BUILT
+                            </div>
+                            <p
+                                style={{
+                                    fontSize: fs(13.5),
+                                    fontFamily: 'sans-serif',
+                                    color: 'var(--text-primary)',
+                                    lineHeight: 1.65,
+                                    margin: 0,
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 4,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                {whyText}
+                            </p>
                         </div>
-                        <p
-                            style={{
-                                fontSize: fs(12.5),
-                                fontFamily: 'sans-serif',
-                                color: '#d4d4d4',
-                                lineHeight: 1.65,
-                                margin: 0,
-                                display: '-webkit-box',
-                                WebkitLineClamp: 4,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                            }}
-                        >
-                            {whyText}
-                        </p>
-                    </div>
+                    )
                 )}
 
                 {/* 6. Solution / What was built */}
@@ -304,14 +384,39 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                             <span
                                 style={{
                                     fontFamily: 'monospace',
-                                    fontSize: 8.5,
+                                    fontSize: 9.5,
                                     letterSpacing: '0.14em',
-                                    color: 'rgba(255,255,255,0.35)',
+                                    color: 'var(--text-muted)',
                                 }}
                             >
                                 WHAT WAS BUILT
                             </span>
-                            {isLongSolution && (
+                            {project.github ? (
+                                <a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    style={{
+                                        background: 'transparent',
+                                        border: 'none',
+                                        color: 'var(--accent-green)',
+                                        fontFamily: 'monospace',
+                                        fontSize: 10,
+                                        letterSpacing: '0.1em',
+                                        cursor: 'pointer',
+                                        padding: 0,
+                                        lineHeight: 1,
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '3px',
+                                    }}
+                                >
+                                    <span>[+ READ MORE]</span>
+                                    <span style={{ fontSize: 9 }}>↗</span>
+                                </a>
+                            ) : isLongSolution ? (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -320,9 +425,9 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                                     style={{
                                         background: 'transparent',
                                         border: 'none',
-                                        color: expanded ? '#4ade80' : 'rgba(74,222,128,0.85)',
+                                        color: 'var(--accent-green)',
                                         fontFamily: 'monospace',
-                                        fontSize: 9,
+                                        fontSize: 10,
                                         letterSpacing: '0.1em',
                                         cursor: 'pointer',
                                         padding: 0,
@@ -331,13 +436,13 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                                 >
                                     {expanded ? '[- LESS]' : '[+ READ MORE]'}
                                 </button>
-                            )}
+                            ) : null}
                         </div>
                         <p
                             style={{
                                 fontFamily: 'sans-serif',
-                                fontSize: fs(12.5),
-                                color: 'rgba(255,255,255,0.85)',
+                                fontSize: fs(13.5),
+                                color: 'var(--text-primary)',
                                 lineHeight: 1.68,
                                 margin: 0,
                                 ...(expanded
@@ -364,7 +469,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '0 20px',
-                    borderTop: '0.5px solid rgba(255,255,255,0.06)',
+                    borderTop: '0.5px solid var(--border-default)',
                     flexShrink: 0,
                     gap: 12,
                 }}
@@ -373,51 +478,90 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 <span
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: 9,
-                        color: 'rgba(255,255,255,0.35)',
+                        fontSize: 9.5,
+                        color: 'var(--text-muted)',
                         letterSpacing: '0.12em',
                     }}
                 >
                     IDENTITY // CASE {caseNumber}
                 </span>
 
-                {/* SRC button or PRIVATE label — right */}
-                {isPrivateProject ? (
-                    <span
-                        style={{
-                            fontFamily: 'monospace',
-                            fontSize: fs(9),
-                            letterSpacing: '0.1em',
-                            padding: '3px 10px',
-                            color: 'rgba(255,255,255,0.25)',
-                            border: '0.5px solid rgba(255,255,255,0.08)',
-                            flexShrink: 0,
-                        }}
-                    >
-                        PRIVATE
-                    </span>
-                ) : (
-                    <button
-                        style={{
-                            fontFamily: 'monospace',
-                            fontSize: fs(10),
-                            letterSpacing: '0.12em',
-                            padding: '4px 12px',
-                            color: 'rgba(255,80,80,0.9)',
-                            background: 'rgba(255,65,65,0.08)',
-                            border: '0.5px solid rgba(255,80,80,0.35)',
-                            cursor: 'pointer',
-                            flexShrink: 0,
-                            lineHeight: 1,
-                        }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(project.github!, '_blank');
-                        }}
-                    >
-                        {project.id === 'arachnode' ? 'GITHUB' : 'SRC'}
-                    </button>
-                )}
+                {/* Right button group: GITHUB/SRC + LIVE DEMO */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {/* LIVE DEMO button (if available) */}
+                    {((project.liveUrl ?? project.demo ?? null) as string | null) && (
+                        <a
+                            href={(project.liveUrl ?? project.demo) as string}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: fs(10),
+                                letterSpacing: '0.12em',
+                                padding: '4px 12px',
+                                color: 'var(--accent-green)',
+                                background: 'var(--accent-green-bg)',
+                                border: '0.5px solid var(--accent-green-border)',
+                                borderRadius: '2px',
+                                cursor: 'pointer',
+                                flexShrink: 0,
+                                lineHeight: 1,
+                                textDecoration: 'none',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                            }}
+                        >
+                            <span>LIVE DEMO</span>
+                            <span style={{ fontSize: 9 }}>↗</span>
+                        </a>
+                    )}
+
+                    {/* SRC/GITHUB button or PRIVATE label */}
+                    {isPrivateProject ? (
+                        <span
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: fs(9.5),
+                                letterSpacing: '0.1em',
+                                padding: '3px 10px',
+                                color: 'var(--text-muted)',
+                                border: '0.5px solid var(--border-default)',
+                                flexShrink: 0,
+                            }}
+                        >
+                            PRIVATE
+                        </span>
+                    ) : (
+                        <a
+                            href={project.github!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: fs(10),
+                                letterSpacing: '0.12em',
+                                padding: '4px 12px',
+                                color: 'var(--accent-red)',
+                                background: 'var(--accent-red-bg)',
+                                border: '0.5px solid var(--accent-red-border)',
+                                borderRadius: '2px',
+                                cursor: 'pointer',
+                                flexShrink: 0,
+                                lineHeight: 1,
+                                textDecoration: 'none',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                            }}
+                        >
+                            <span>{project.id === 'arachnode' ? 'GITHUB' : 'SRC'}</span>
+                            <span style={{ fontSize: 9 }}>↗</span>
+                        </a>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -55,8 +55,8 @@ export const BottomNav: React.FC = () => {
             className="fixed bottom-0 left-0 right-0 flex sm:hidden z-[100]"
             style={{ 
                 height: '52px', 
-                background: '#0d0d0d', 
-                borderTop: '0.5px solid rgba(255,255,255,0.08)' 
+                background: 'var(--bg-primary)', 
+                borderTop: '0.5px solid var(--border-default)' 
             }}
         >
             {SECTIONS.map(({ id, label }, index) => {
@@ -68,7 +68,7 @@ export const BottomNav: React.FC = () => {
                         key={id}
                         className="flex-1 flex flex-col items-center justify-center gap-[3px] cursor-pointer"
                         style={{
-                            borderRight: isLast ? 'none' : '0.5px solid rgba(255,255,255,0.05)'
+                            borderRight: isLast ? 'none' : '0.5px solid var(--border-subtle)'
                         }}
                         onClick={() => handleScroll(id)}
                     >
@@ -77,7 +77,7 @@ export const BottomNav: React.FC = () => {
                                 width: '4px',
                                 height: '4px',
                                 borderRadius: '50%',
-                                background: isActive ? '#4ade80' : 'rgba(255,255,255,0.15)',
+                                background: isActive ? 'var(--accent-green)' : 'var(--border-default)',
                                 transition: 'background-color 0.2s ease'
                             }}
                         />
@@ -86,7 +86,7 @@ export const BottomNav: React.FC = () => {
                             style={{
                                 fontSize: '8px',
                                 letterSpacing: '0.12em',
-                                color: isActive ? '#4ade80' : '#6a6a6a',
+                                color: isActive ? 'var(--accent-green)' : 'var(--text-muted)',
                                 transition: 'color 0.2s ease'
                             }}
                         >

@@ -14,8 +14,8 @@ export const CaseFileEndBack: React.FC<CaseFileEndBackProps> = ({ isTablet = fal
             style={{
                 position: 'absolute',
                 inset: 0,
-                background: '#0d0d0d',
-                border: '0.5px solid rgba(255,255,255,0.08)',
+                background: 'var(--bg-surface)',
+                border: '0.5px solid var(--border-default)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -31,14 +31,14 @@ export const CaseFileEndBack: React.FC<CaseFileEndBackProps> = ({ isTablet = fal
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+                    borderBottom: '0.5px solid var(--border-subtle)',
                     paddingBottom: 8,
                 }}
             >
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'rgba(255,80,80,0.6)' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', color: 'var(--accent-red)' }}>
                     DOSSIER // ARCHIVE COMPLETE
                 </span>
-                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', color: '#4ade80' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', color: 'var(--accent-green)' }}>
                     END OF FILES
                 </span>
             </div>
@@ -50,9 +50,9 @@ export const CaseFileEndBack: React.FC<CaseFileEndBackProps> = ({ isTablet = fal
                         fontFamily: 'monospace',
                         fontSize: 10,
                         letterSpacing: '0.18em',
-                        color: '#4ade80',
-                        background: 'rgba(74,222,128,0.06)',
-                        border: '0.5px solid rgba(74,222,128,0.2)',
+                        color: 'var(--accent-green)',
+                        background: 'var(--accent-green-bg)',
+                        border: '0.5px solid var(--accent-green-border)',
                         padding: '4px 10px',
                         width: 'fit-content',
                     }}
@@ -60,28 +60,28 @@ export const CaseFileEndBack: React.FC<CaseFileEndBackProps> = ({ isTablet = fal
                     ALL 09 CASE FILES REVIEWED
                 </div>
 
-                <h3 style={{ fontFamily: 'sans-serif', fontSize: 18, fontWeight: 700, color: '#f5f5f5', margin: 0 }}>
+                <h3 style={{ fontFamily: 'sans-serif', fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                     Systems Architecture Portfolio
                 </h3>
 
-                <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: '#c8c8c8', lineHeight: 1.6, margin: 0 }}>
+                <p style={{ fontFamily: 'sans-serif', fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
                     Looking for full-stack engineering, microservice development, or system architecture collaboration? Connect directly or explore source repositories.
                 </p>
 
                 <div
                     style={{
-                        background: 'rgba(255,255,255,0.02)',
-                        border: '0.5px solid rgba(255,255,255,0.06)',
+                        background: 'var(--bg-raised)',
+                        border: '0.5px solid var(--border-subtle)',
                         padding: 10,
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 4,
                     }}
                 >
-                    <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                         CONTACT & LINKS
                     </span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#f5f5f5' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'var(--text-primary)' }}>
                         GitHub: github.com/sharmavaibhav31
                     </span>
                 </div>
@@ -94,17 +94,18 @@ export const CaseFileEndBack: React.FC<CaseFileEndBackProps> = ({ isTablet = fal
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderTop: '0.5px solid rgba(255,255,255,0.06)',
+                    borderTop: '0.5px solid var(--border-subtle)',
                     paddingTop: 8,
                 }}
             >
-                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.12em' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                     VAIBHAV SHARMA // 2026
                 </span>
-                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(255,80,80,0.5)', letterSpacing: '0.1em' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'var(--accent-red)', letterSpacing: '0.1em' }}>
                     CLOSED
                 </span>
             </div>
         </div>
     );
 };
+

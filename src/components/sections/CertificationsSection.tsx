@@ -35,7 +35,7 @@ export const CertificationsSection: React.FC = () => {
                         href={cert.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full p-[12px_16px] sm:p-[12px_2rem] border-b-[0.5px] transition-colors duration-150 grid grid-cols-1 sm:grid-cols-[1fr_180px_100px] items-center gap-2 sm:gap-0 hover:bg-[rgba(255,255,255,0.02)]"
+                        className="w-full p-[12px_16px] sm:p-[12px_2rem] border-b-[0.5px] transition-colors duration-150 grid grid-cols-1 sm:grid-cols-[1fr_180px_100px] items-center gap-2 sm:gap-0 hover:bg-[var(--bg-raised)]"
                         style={{ borderColor: 'var(--border-subtle)' }}
                     >
                         {/* Left: Name & Issuer */}
