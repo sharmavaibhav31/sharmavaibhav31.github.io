@@ -17,10 +17,10 @@ export const AboutSection: React.FC = () => {
 
             {/* MAIN LAYOUT — two columns */}
             <div 
-                className="w-full grid grid-cols-1 lg:grid-cols-[1fr_200px] border-b-[0.5px]"
+                className="w-full grid grid-cols-1 lg:grid-cols-[1fr_220px] border-b-[0.5px]"
                 style={{ borderColor: 'var(--border-subtle)' }}
             >
-                {/* LEFT COLUMN — main narrative */}
+                {/* LEFT COLUMN — Origin, Current, and Directive narrative */}
                 <div 
                     className="p-[20px_16px] sm:p-[28px_24px_28px_28px] border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px]"
                     style={{ borderColor: 'var(--border-subtle)' }}
@@ -56,7 +56,10 @@ export const AboutSection: React.FC = () => {
                     </div>
 
                     {/* CURRENT BLOCK */}
-                    <div className="mb-0">
+                    <div 
+                        className="mb-[24px] pb-[24px] border-b-[0.5px]"
+                        style={{ borderColor: 'var(--border-subtle)' }}
+                    >
                         <div 
                             className="font-mono text-[9px] tracking-[0.16em] mb-[10px]"
                             style={{ color: 'var(--accent-green)' }}
@@ -81,11 +84,41 @@ export const AboutSection: React.FC = () => {
                             </p>
                         </div>
                     </div>
+
+                    {/* DIRECTIVE BLOCK */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-[10px]">
+                            <span 
+                                className="font-mono text-[9px] tracking-[0.1em] px-[6px] py-[1.5px] border-[0.5px]"
+                                style={{
+                                    color: 'var(--accent-red)',
+                                    borderColor: 'var(--accent-red-border)',
+                                    background: 'var(--accent-red-bg)'
+                                }}
+                            >
+                                [DIRECTIVE]
+                            </span>
+                        </div>
+                        <div 
+                            className="font-sans text-[12px] sm:text-[13px] leading-[1.8] flex flex-col gap-[10px]"
+                            style={{ color: 'var(--text-secondary)' }}
+                        >
+                            <p className="m-0 font-[600]" style={{ color: 'var(--text-primary)' }}>
+                                Building toward backend infrastructure where reliability, scalability, and security are first-class concerns.
+                            </p>
+                            <p className="m-0">
+                                <span className="font-mono text-[10.5px] font-[600]" style={{ color: 'var(--accent-green)' }}>Near-term:</span> become a backend engineer capable of owning services end-to-end — from API design and data modeling to deployment, observability, and incident response.
+                            </p>
+                            <p className="m-0">
+                                <span className="font-mono text-[10.5px] font-[600]" style={{ color: 'var(--accent-orange)' }}>Long-term:</span> work on distributed systems, data-intensive platforms, and secure architectures operating at meaningful scale, while continuing to deepen my understanding of cybersecurity and system security.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* RIGHT COLUMN — data sidebar */}
                 <div 
-                    className="p-[20px_16px] bg-[var(--bg-surface)] flex flex-col sm:flex-row lg:flex-col gap-[20px]"
+                    className="p-[20px_16px] sm:p-[28px_20px] bg-[var(--bg-surface)] flex flex-col sm:flex-row lg:flex-col gap-[24px]"
                 >
                     {/* BLOCK 1 — EXPERIENCE */}
                     <div className="flex flex-col sm:flex-1 lg:flex-none">
@@ -189,37 +222,6 @@ export const AboutSection: React.FC = () => {
                             Graduating Jun 2027
                         </div>
                     </div>
-                </div>
-            </div>
-
-            {/* DIRECTIVE BAR — full width below grid */}
-            <div 
-                className="w-full p-[16px_16px] sm:p-[18px_28px] border-t-[0.5px] flex flex-col sm:flex-row items-start gap-[10px] sm:gap-[14px]"
-                style={{ borderColor: 'var(--border-subtle)' }}
-            >
-                <span 
-                    className="font-mono text-[9px] tracking-[0.1em] shrink-0 mt-[2px] px-[7px] py-[2px] border-[0.5px]"
-                    style={{
-                        color: 'var(--accent-red)',
-                        borderColor: 'var(--accent-red-border)',
-                        background: 'var(--accent-red-bg)'
-                    }}
-                >
-                    [DIRECTIVE]
-                </span>
-                <div 
-                    className="font-sans text-[11.5px] sm:text-[12px] leading-[1.75] flex flex-col gap-[6px]"
-                    style={{ color: 'var(--text-secondary)' }}
-                >
-                    <p className="m-0 font-[600]" style={{ color: 'var(--text-primary)' }}>
-                        Building toward backend infrastructure where reliability, scalability, and security are first-class concerns.
-                    </p>
-                    <p className="m-0">
-                        <span className="font-mono text-[10.5px] font-[600]" style={{ color: 'var(--accent-green)' }}>Near-term:</span> become a backend engineer capable of owning services end-to-end — from API design and data modeling to deployment, observability, and incident response.
-                    </p>
-                    <p className="m-0">
-                        <span className="font-mono text-[10.5px] font-[600]" style={{ color: 'var(--accent-orange)' }}>Long-term:</span> work on distributed systems, data-intensive platforms, and secure architectures operating at meaningful scale, while continuing to deepen my understanding of cybersecurity and system security.
-                    </p>
                 </div>
             </div>
         </section>
