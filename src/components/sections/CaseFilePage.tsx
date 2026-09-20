@@ -1,16 +1,16 @@
 // CaseFilePage.tsx
-// Single page in the dossier — owns rotation, curl shadow, z-index.
-// Front and back are bound to the SAME project instance via props.
-//
-// FIX: useTransform input ranges are derived from props (i, N).
-// Each CaseFilePage receives a unique key (activeFilter + project.id + index)
-// from ProjectsSection — this guarantees full remount when filter changes,
-// preventing stale closure over old i/N values.
+// Open Dossier Binder Spread for a project.
+// Left Page = CaseFileFront (Identity)
+// Right Page = CaseFileBack (Depth)
+// 3D Turning Leaf has dual faces:
+//   - Front Face (0 to -90°): CaseFileBack (Depth for current project)
+//   - Back Face (-90 to -180°): CaseFileFront (Identity for next project, rotated 180° so text is never mirrored!)
 
 import React from 'react';
 import { motion, useTransform, MotionValue } from 'framer-motion';
 import { CaseFileFront } from './CaseFileFront';
 import { CaseFileBack } from './CaseFileBack';
+import { CaseFileEndBack } from './CaseFileEndBack';
 
 interface Project {
     id: string;
@@ -28,9 +28,10 @@ interface Project {
 }
 
 interface CaseFilePageProps {
-    project: Project;         // the specific project for this page
+    project: Project;         // current project
+    nextProject?: Project | null; // next project in list (for turning leaf back face)
     index: number;            // 0-based position in the filtered list
-    totalPages: number;       // total pages currently visible (may change on filter)
+    totalPages: number;       // total pages currently visible
     scrollYProgress: MotionValue<number>;
     stageWidth: number;
     stageHeight: number;
@@ -49,6 +50,7 @@ function getClassificationLabel(project: Project): string {
 // ── Component ─────────────────────────────────────────────────────────────────
 export const CaseFilePage: React.FC<CaseFilePageProps> = ({
     project,
+    nextProject = null,
     index,
     totalPages,
     scrollYProgress,
@@ -58,18 +60,11 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
 }) => {
     const i = index;
     const N = totalPages;
+    const totalSteps = N + 1; // Step 0 = Cover, Steps 1..N = Projects 0..N-1
 
-    // Each page occupies an equal slice of the overall scroll range [0, 1].
-    // inputStart and inputEnd are the scroll progress values at which THIS
-    // page begins and finishes turning.
-    const inputStart = i / N;
-    const inputEnd   = (i + 1) / N;
+    const inputStart = (i + 1) / totalSteps;
+    const inputEnd   = (i + 2) / totalSteps;
 
-    // Local progress [0 → 1] for this specific page only.
-    // Because we pass literal numbers — not MotionValues — as the input range,
-    // useTransform creates a fresh mapping every time i or N changes.
-    // The key prop on CaseFilePage (set in ProjectsSection) guarantees remount
-    // when filter changes, so stale closures over old i/N are impossible.
     const pageProgress = useTransform(
         scrollYProgress,
         [inputStart, inputEnd],
@@ -77,7 +72,7 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
         { clamp: true }
     );
 
-    // Paper-curl easing: slow start → accelerates → snaps flat
+    // Paper-curl easing for turning right page:
     // Maps pageProgress [0, 0.3, 0.6, 0.85, 1] → rotateY [0, -22, -99, -158, -180]
     const rotateY = useTransform(
         pageProgress,
@@ -85,67 +80,138 @@ export const CaseFilePage: React.FC<CaseFilePageProps> = ({
         [0,  -22,  -99, -158, -180 ]
     );
 
-    // Curl shadow: sin curve — peaks at p=0.5, zero at 0 and 1
+    // Curl shadow: peaks when page is mid-turn
     const curlOpacity = useTransform(pageProgress, (p) => Math.sin(p * Math.PI));
 
-    // Z-index stacking:
-    //   Turning  (0 < p < 1): 100  — always on top of everything
-    //   Turned   (p >= 1)   : i + 1 — later turned pages sit ON TOP of earlier turned pages on left stack
-    //   Untouched(p <= 0)   : N + (N - i) — top of right stack = highest z
-    const zIndex = useTransform(pageProgress, (p) => {
-        if (p > 0 && p < 1) return 100;
-        if (p >= 1)          return i + 1;
-        return N + (N - i);
+    // Left Panel visibility & z-index:
+    // Future projects (step < i + 1): opacity 0, zIndex 0 (prevents bleeding through)
+    // Active/Past projects (step >= i + 1): opacity 1, zIndex (i + 1) * 10
+    const leftPanelOpacity = useTransform(scrollYProgress, (progress) => {
+        const currentStep = progress * totalSteps;
+        return currentStep >= (i + 1) ? 1 : 0;
+    });
+
+    const leftPanelZIndex = useTransform(scrollYProgress, (progress) => {
+        const currentStep = progress * totalSteps;
+        if (currentStep >= (i + 1)) {
+            return (i + 1) * 10;
+        }
+        return 0;
+    });
+
+    // Z-index stacking for turning right leaf:
+    //   Turning  (0 < p < 1): (i + 1) * 10 + 5 (on top of active left panel)
+    //   Turned   (p >= 1)   : (i + 1) * 10 + 2 (on top of static left panel i)
+    //   Untouched(p <= 0)   : N - i
+    const rightLeafZIndex = useTransform(pageProgress, (p) => {
+        if (p > 0 && p < 1) return (i + 1) * 10 + 5;
+        if (p >= 1)          return (i + 1) * 10 + 2;
+        return N - i;
     });
 
     const halfWidth  = stageWidth / 2;
     const classLabel = getClassificationLabel(project);
     const caseNumber = String(i + 1).padStart(3, '0');
 
+    const nextClassLabel = nextProject ? getClassificationLabel(nextProject) : '';
+    const nextCaseNumber = String(i + 2).padStart(3, '0');
+
     return (
-        <motion.div
+        <div
             style={{
                 position: 'absolute',
-                top: 0,
-                left: '50%',               // anchored to the center spine
-                width: halfWidth,
+                inset: 0,
+                width: stageWidth,
                 height: stageHeight,
-                transformOrigin: 'left center', // rotates around the spine
-                transformStyle: 'preserve-3d',
-                rotateY,
-                zIndex,
-                willChange: 'transform',
+                pointerEvents: 'auto',
             }}
         >
-            {/* ── FRONT FACE ──────────────────────────────────────────────── */}
-            {/* project prop passed directly — never shared across pages      */}
-            <CaseFileFront
-                project={project}
-                caseNumber={caseNumber}
-                classificationLabel={classLabel}
-                isTablet={isTablet}
-            />
-
-            {/* ── PAPER CURL SHADOW (front face, right edge) ──────────────── */}
+            {/* ── LEFT PANEL OF BINDER STAGE (Identity of project i) ───────────── */}
             <motion.div
                 style={{
                     position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
-                    background: 'linear-gradient(to left, rgba(0,0,0,0.45) 0%, transparent 40%)',
-                    zIndex: 10,
-                    opacity: curlOpacity,
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
+                    top: 0,
+                    left: 0,
+                    width: halfWidth,
+                    height: stageHeight,
+                    zIndex: leftPanelZIndex,
+                    opacity: leftPanelOpacity,
                 }}
-            />
+            >
+                <CaseFileFront
+                    project={project}
+                    caseNumber={caseNumber}
+                    classificationLabel={classLabel}
+                    isTablet={isTablet}
+                />
+            </motion.div>
 
-            {/* ── BACK FACE ───────────────────────────────────────────────── */}
-            {/* CRITICAL: same project instance as front — guaranteed by props */}
-            <CaseFileBack
-                project={project}
-                caseNumber={caseNumber}
-            />
-        </motion.div>
+            {/* ── TURNING RIGHT LEAF (Rotates 180° around spine) ─────────────────── */}
+            <motion.div
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: '50%',                  // anchored to center spine
+                    width: halfWidth,
+                    height: stageHeight,
+                    transformOrigin: 'left center', // rotates around spine
+                    transformStyle: 'preserve-3d',
+                    rotateY,
+                    zIndex: rightLeafZIndex,
+                    willChange: 'transform',
+                }}
+            >
+                {/* ── FRONT FACE OF LEAF (0 to -90°): Depth of Current Project ────── */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                    }}
+                >
+                    <CaseFileBack
+                        project={project}
+                        caseNumber={caseNumber}
+                    />
+                </div>
+
+                {/* ── BACK FACE OF LEAF (-90 to -180°): Identity of Next Project ──── */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        transform: 'rotateY(180deg)',
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                    }}
+                >
+                    {nextProject ? (
+                        <CaseFileFront
+                            project={nextProject}
+                            caseNumber={nextCaseNumber}
+                            classificationLabel={nextClassLabel}
+                            isTablet={isTablet}
+                        />
+                    ) : (
+                        <CaseFileEndBack isTablet={isTablet} />
+                    )}
+                </div>
+
+                {/* ── PAPER CURL SHADOW ────────────────────────────────── */}
+                <motion.div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        pointerEvents: 'none',
+                        background: 'linear-gradient(to left, rgba(0,0,0,0.45) 0%, transparent 40%)',
+                        zIndex: 10,
+                        opacity: curlOpacity,
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                    }}
+                />
+            </motion.div>
+        </div>
     );
 };

@@ -3,11 +3,14 @@
 // Data: untouched — presentation layer only
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useScroll, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useMotionValueEvent, motion, useTransform, MotionValue } from 'framer-motion';
 import projectsData from '../../data/projects.json';
 import { CaseFilePage } from './CaseFilePage';
-import { FRONT_CLAMP_STYLE } from './CaseFileFront';
+import { FRONT_CLAMP_STYLE, CaseFileFront } from './CaseFileFront';
 import { SkillsPanel } from './SkillsPanel';
+import { CaseFileCover } from './CaseFileCover';
+import { CaseFileCoverLeft } from './CaseFileCoverLeft';
+import { CaseFileEndRight } from './CaseFileEndRight';
 
 type Project = typeof projectsData[0];
 
@@ -28,6 +31,153 @@ function getRailBadgeLabel(category: string): string {
 // ── Stage dimensions ──────────────────────────────────────────────────────────
 const DESKTOP_W = 780, DESKTOP_H = 520;
 const TABLET_W  = 560, TABLET_H  = 440;
+
+// ── CoverLeftLeaf (Step 0 - Left Cover Panel) ────────────────────────────────
+const CoverLeftLeaf: React.FC<{
+    scrollYProgress: MotionValue<number>;
+    totalSteps: number;
+    stageWidth: number;
+    stageHeight: number;
+    isTablet?: boolean;
+}> = ({ scrollYProgress, totalSteps, stageWidth, stageHeight, isTablet }) => {
+    const inputStart = 0;
+    const inputEnd = 1 / totalSteps;
+
+    const pageProgress = useTransform(scrollYProgress, [inputStart, inputEnd], [0, 1], { clamp: true });
+    const opacity = useTransform(pageProgress, [0, 0.8, 1], [1, 0.2, 0]);
+
+    return (
+        <motion.div
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: stageWidth / 2,
+                height: stageHeight,
+                zIndex: 500,
+                opacity,
+            }}
+        >
+            <CaseFileCoverLeft isTablet={isTablet} />
+        </motion.div>
+    );
+};
+
+// ── CoverPageLeaf (Step 0 - Right Cover Panel) ───────────────────────────────
+const CoverPageLeaf: React.FC<{
+    totalProjects: number;
+    firstProject: Project | null;
+    scrollYProgress: MotionValue<number>;
+    totalSteps: number;
+    stageWidth: number;
+    stageHeight: number;
+    isTablet?: boolean;
+}> = ({ totalProjects, firstProject, scrollYProgress, totalSteps, stageWidth, stageHeight, isTablet }) => {
+    const inputStart = 0;
+    const inputEnd = 1 / totalSteps;
+
+    const pageProgress = useTransform(scrollYProgress, [inputStart, inputEnd], [0, 1], { clamp: true });
+    const rotateY = useTransform(pageProgress, [0, 0.3, 0.6, 0.85, 1], [0, -22, -99, -158, -180]);
+    const curlOpacity = useTransform(pageProgress, (p) => Math.sin(p * Math.PI));
+    const zIndex = useTransform(pageProgress, (p) => (p >= 1 ? 0 : 500));
+
+    return (
+        <motion.div
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: '50%',
+                width: stageWidth / 2,
+                height: stageHeight,
+                transformOrigin: 'left center',
+                transformStyle: 'preserve-3d',
+                rotateY,
+                zIndex,
+                willChange: 'transform',
+            }}
+        >
+            {/* Front face (0 to -90°): Cover page */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                }}
+            >
+                <CaseFileCover totalProjects={totalProjects} isTablet={isTablet} />
+            </div>
+
+            {/* Back face (-90 to -180°): Identity of Project 1 */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    transform: 'rotateY(180deg)',
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                }}
+            >
+                {firstProject && (
+                    <CaseFileFront
+                        project={firstProject}
+                        caseNumber="001"
+                        classificationLabel={
+                            firstProject.isPrivate !== true && firstProject.github
+                                ? 'PUBLIC · OPEN SOURCE'
+                                : 'RESTRICTED'
+                        }
+                        isTablet={isTablet}
+                    />
+                )}
+            </div>
+
+            <motion.div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    pointerEvents: 'none',
+                    background: 'linear-gradient(to left, rgba(0,0,0,0.45) 0%, transparent 40%)',
+                    zIndex: 10,
+                    opacity: curlOpacity,
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                }}
+            />
+        </motion.div>
+    );
+};
+
+// ── EndRightLeaf (Final Step - Right End Panel) ──────────────────────────────
+const EndRightLeaf: React.FC<{
+    scrollYProgress: MotionValue<number>;
+    totalSteps: number;
+    stageWidth: number;
+    stageHeight: number;
+    isTablet?: boolean;
+}> = ({ scrollYProgress, totalSteps, stageWidth, stageHeight, isTablet }) => {
+    const inputStart = (totalSteps - 1) / totalSteps;
+
+    const opacity = useTransform(scrollYProgress, (progress) => {
+        return progress >= inputStart ? 1 : 0;
+    });
+
+    return (
+        <motion.div
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: '50%',
+                width: stageWidth / 2,
+                height: stageHeight,
+                zIndex: 1,
+                opacity,
+            }}
+        >
+            <CaseFileEndRight isTablet={isTablet} />
+        </motion.div>
+    );
+};
 
 // ── Mobile fallback card (IntersectionObserver fade-in) ───────────────────────
 const MobileCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
@@ -187,8 +337,9 @@ const ScrollHint: React.FC<{ visible: boolean }> = ({ visible }) => (
         transition: 'opacity 0.4s ease',
         animation: visible ? 'dossier-pulse 2s ease-in-out infinite' : 'none',
         pointerEvents: 'none',
+        zIndex: 600,
     }}>
-        ↓ scroll to open case files
+        ↓ scroll to unseal dossier
     </div>
 );
 
@@ -327,6 +478,7 @@ export const ProjectsSection: React.FC = () => {
     ) as Project[];
 
     const N = filteredProjects.length;
+    const totalSteps = N + 1; // Step 0 = Cover, Steps 1..N = Projects 0..N-1
 
     // ── Stage dimensions ─────────────────────────────────────────────────────
     const stageW = isTablet ? TABLET_W : DESKTOP_W;
@@ -338,24 +490,23 @@ export const ProjectsSection: React.FC = () => {
         offset: ['start start', 'end end'],
     });
 
-    const [activeProject, setActiveProject] = useState<Project | null>(
-        activeFilter === 'ALL' ? (filteredProjects[0] ?? null) : null
-    );
+    const [activeProject, setActiveProject] = useState<Project | null>(null);
 
     // Active page index & active project for counter & SkillsPanel
     useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-        const idx = Math.min(Math.floor(latest * N), N - 1);
-        const safeIdx = Math.max(0, idx);
-        setActivePageIndex(safeIdx);
+        const stepIdx = Math.min(Math.floor(latest * totalSteps), totalSteps - 1);
+        const safeStep = Math.max(0, stepIdx);
+        setActivePageIndex(safeStep);
 
-        if (activeFilter === 'ALL') {
-            setActiveProject(filteredProjects[safeIdx] ?? null);
+        if (safeStep === 0) {
+            setActiveProject(null); // Cover page active -> SkillsPanel shows overview
         } else {
-            setActiveProject(filteredProjects[safeIdx] ?? null);
+            const projIdx = safeStep - 1;
+            setActiveProject(filteredProjects[projIdx] ?? null);
         }
 
-        // Hide hint once the first page starts turning (progress > 0.5/N)
-        if (latest > 0.5 / N) setShowHint(false);
+        // Hide hint once user begins scrolling (progress > 0.5 / totalSteps)
+        if (latest > 0.5 / totalSteps) setShowHint(false);
         else setShowHint(true);
     });
 
@@ -364,9 +515,8 @@ export const ProjectsSection: React.FC = () => {
         setActiveFilter(f);
         setActivePageIndex(0);
         setShowHint(true);
-        const newFiltered = sortedProjects.filter(p => f === 'ALL' || p.category === f);
-        setActiveProject(f === 'ALL' ? (newFiltered[0] ?? null) : (newFiltered[0] ?? null));
-    }, [sortedProjects]);
+        setActiveProject(null);
+    }, []);
 
     // ── Reduced-motion static list ───────────────────────────────────────────
     if (reducedMotion) {
@@ -392,8 +542,8 @@ export const ProjectsSection: React.FC = () => {
         );
     }
 
-    // ── Desktop / tablet — full dossier ─────────────────────────────────────
-    const scrollHeight = N * 120; // vh units
+    // ── Desktop / tablet — full dossier binder ──────────────────────────────
+    const scrollHeight = totalSteps * 120; // vh units
 
     return (
         <section id="work" aria-label="Projects" className="w-full flex flex-col pt-0" style={{ background: 'var(--bg-primary)' }}>
@@ -478,16 +628,44 @@ export const ProjectsSection: React.FC = () => {
                                         left: '50%',
                                         width: 1,
                                         background: 'rgba(255,255,255,0.06)',
-                                        zIndex: 200,
+                                        zIndex: 650,
                                         pointerEvents: 'none',
                                     }}
                                 />
 
-                                {/* ── PAGES ───────────────────────────────── */}
+                                {/* ── STEP 0: CLOSED CLASSIFIED DOSSIER COVER ────── */}
+                                <CoverLeftLeaf
+                                    scrollYProgress={scrollYProgress}
+                                    totalSteps={totalSteps}
+                                    stageWidth={stageW}
+                                    stageHeight={stageH}
+                                    isTablet={isTablet}
+                                />
+                                <CoverPageLeaf
+                                    totalProjects={N}
+                                    firstProject={filteredProjects[0] ?? null}
+                                    scrollYProgress={scrollYProgress}
+                                    totalSteps={totalSteps}
+                                    stageWidth={stageW}
+                                    stageHeight={stageH}
+                                    isTablet={isTablet}
+                                />
+
+                                {/* ── END OF DOSSIER: RIGHT END PANEL ───────────── */}
+                                <EndRightLeaf
+                                    scrollYProgress={scrollYProgress}
+                                    totalSteps={totalSteps}
+                                    stageWidth={stageW}
+                                    stageHeight={stageH}
+                                    isTablet={isTablet}
+                                />
+
+                                {/* ── STEPS 1..N: PROJECT DOSSIER SPREADS ──────── */}
                                 {filteredProjects.map((project, i) => (
                                     <CaseFilePage
                                         key={`${activeFilter}-${i}-${project.id}`}
                                         project={project as any}
+                                        nextProject={(filteredProjects[i + 1] as any) ?? null}
                                         index={i}
                                         totalPages={N}
                                         scrollYProgress={scrollYProgress}
@@ -505,12 +683,14 @@ export const ProjectsSection: React.FC = () => {
                                         fontFamily: 'monospace',
                                         fontSize: 8,
                                         letterSpacing: '0.14em',
-                                        color: 'rgba(255,255,255,0.2)',
+                                        color: activePageIndex === 0 ? 'rgba(255,80,80,0.8)' : 'rgba(255,255,255,0.3)',
                                         pointerEvents: 'none',
-                                        zIndex: 300,
+                                        zIndex: 700,
                                     }}
                                 >
-                                    CASE {String(activePageIndex + 1).padStart(3, '0')} OF {String(N).padStart(3, '0')}
+                                    {activePageIndex === 0
+                                        ? 'DOSSIER SEALED // 09 CASE FILES'
+                                        : `CASE FILE ${String(activePageIndex).padStart(3, '0')} OF ${String(N).padStart(3, '0')}`}
                                 </div>
 
                                 {/* Scroll hint */}
@@ -544,4 +724,3 @@ const SectionHeader: React.FC<{ total: number }> = ({ total }) => (
         </div>
     </div>
 );
-

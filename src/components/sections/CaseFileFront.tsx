@@ -2,7 +2,7 @@
 // Front face of a dossier page — project-specific content only.
 // Renders classification label, title, badges, stack tags, WHY block, WHAT WAS BUILT (solution), and footer hint.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Metrics {
     stars?: number;
@@ -79,7 +79,7 @@ export const FRONT_CLAMP_STYLE = `
     .casefile-solution-clamp {
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 5;
         overflow: hidden;
     }
 `;
@@ -92,6 +92,8 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
     classificationLabel,
     isTablet = false,
 }) => {
+    const [expanded, setExpanded] = useState(false);
+
     const badgeStyle = getBadgeStyle(project.category);
     const isOpenSource = project.isPrivate !== true && project.github !== null && project.github !== undefined;
     const isPrivateProject = project.isPrivate === true || project.github === null || project.github === undefined;
@@ -104,6 +106,8 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
 
     // Font sizes: reduce by 1px on tablet
     const fs = (base: number) => base - (isTablet ? 1 : 0);
+
+    const isLongSolution = (project.solution?.length ?? 0) > 120;
 
     return (
         <div
@@ -157,11 +161,11 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
             <div
                 style={{
                     flex: 1,
-                    padding: '20px 20px 0 20px',
+                    padding: '16px 20px 12px 20px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 0,
-                    overflow: 'hidden',
+                    overflowY: 'auto',
                     minHeight: 0,
                 }}
             >
@@ -172,7 +176,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                         fontSize: fs(8),
                         letterSpacing: '0.16em',
                         color: 'rgba(255,255,255,0.25)',
-                        marginBottom: 8,
+                        marginBottom: 6,
                     }}
                 >
                     // SYSTEMS BUILT
@@ -182,7 +186,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 <h3
                     style={{
                         fontFamily: 'sans-serif',
-                        fontSize: fs(16),
+                        fontSize: fs(15),
                         fontWeight: 700,
                         color: '#f5f5f5',
                         margin: '0 0 8px 0',
@@ -193,7 +197,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 </h3>
 
                 {/* 3. Badge row */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
                     {project.category && (
                         <span
                             style={{
@@ -227,7 +231,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                 </div>
 
                 {/* 4. Stack tags (first 5) */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 10 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
                     {stackTags.map(tech => (
                         <span
                             key={tech}
@@ -252,8 +256,8 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                             background: 'rgba(255,255,255,0.02)',
                             border: '0.5px solid rgba(255,255,255,0.05)',
                             borderLeft: '2px solid rgba(255,80,80,0.3)',
-                            padding: '10px 12px',
-                            margin: '4px 0 10px 0',
+                            padding: '8px 10px',
+                            margin: '4px 0 8px 0',
                             flexShrink: 0,
                         }}
                     >
@@ -262,7 +266,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                                 fontSize: 8,
                                 letterSpacing: '0.12em',
                                 color: 'rgba(255,80,80,0.5)',
-                                marginBottom: 5,
+                                marginBottom: 4,
                                 fontFamily: 'monospace',
                             }}
                         >
@@ -273,7 +277,7 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                                 fontSize: 11,
                                 fontFamily: 'sans-serif',
                                 color: '#c8c8c8',
-                                lineHeight: 1.65,
+                                lineHeight: 1.6,
                                 margin: 0,
                                 display: '-webkit-box',
                                 WebkitLineClamp: 3,
@@ -291,23 +295,59 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     <div style={{ display: 'flex', flexDirection: 'column', marginTop: 2 }}>
                         <div
                             style={{
-                                fontFamily: 'monospace',
-                                fontSize: 7,
-                                letterSpacing: '0.12em',
-                                color: 'rgba(255,255,255,0.25)',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
                                 marginBottom: 4,
                             }}
                         >
-                            WHAT WAS BUILT
+                            <span
+                                style={{
+                                    fontFamily: 'monospace',
+                                    fontSize: 7,
+                                    letterSpacing: '0.12em',
+                                    color: 'rgba(255,255,255,0.25)',
+                                }}
+                            >
+                                WHAT WAS BUILT
+                            </span>
+                            {isLongSolution && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setExpanded(!expanded);
+                                    }}
+                                    style={{
+                                        background: 'transparent',
+                                        border: 'none',
+                                        color: expanded ? '#4ade80' : 'rgba(74,222,128,0.85)',
+                                        fontFamily: 'monospace',
+                                        fontSize: 8,
+                                        letterSpacing: '0.1em',
+                                        cursor: 'pointer',
+                                        padding: 0,
+                                        lineHeight: 1,
+                                    }}
+                                >
+                                    {expanded ? '[- LESS]' : '[+ READ MORE]'}
+                                </button>
+                            )}
                         </div>
                         <p
-                            className="casefile-solution-clamp"
                             style={{
                                 fontFamily: 'sans-serif',
                                 fontSize: 11,
-                                color: 'rgba(255,255,255,0.6)',
+                                color: 'rgba(255,255,255,0.7)',
                                 lineHeight: 1.6,
                                 margin: 0,
+                                ...(expanded
+                                    ? { display: 'block', overflow: 'visible' }
+                                    : {
+                                          display: '-webkit-box',
+                                          WebkitLineClamp: 5,
+                                          WebkitBoxOrient: 'vertical',
+                                          overflow: 'hidden',
+                                      }),
                             }}
                         >
                             {project.solution}
@@ -329,16 +369,16 @@ export const CaseFileFront: React.FC<CaseFileFrontProps> = ({
                     gap: 12,
                 }}
             >
-                {/* Role hint — left */}
+                {/* Identity hint — left */}
                 <span
                     style={{
                         fontFamily: 'monospace',
                         fontSize: 8,
-                        fontStyle: 'italic',
-                        color: 'rgba(255,255,255,0.25)',
+                        color: 'rgba(255,255,255,0.3)',
+                        letterSpacing: '0.1em',
                     }}
                 >
-                    Role → back
+                    IDENTITY // CASE {caseNumber}
                 </span>
 
                 {/* SRC button or PRIVATE label — right */}

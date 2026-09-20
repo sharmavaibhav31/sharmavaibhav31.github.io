@@ -67,9 +67,7 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                 position: 'absolute',
                 inset: 0,
                 background: '#111111',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
+                border: '0.5px solid rgba(255,255,255,0.08)',
                 display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden',
@@ -102,10 +100,10 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         fontFamily: 'monospace',
                         fontSize: 8,
                         letterSpacing: '0.14em',
-                        color: 'rgba(255,255,255,0.2)',
+                        color: '#4ade80',
                     }}
                 >
-                    BACK
+                    DEPTH // CASE {caseNumber}
                 </span>
             </div>
 
