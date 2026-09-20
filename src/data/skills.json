@@ -2,134 +2,60 @@
     "capabilities": [
         {
             "category": "Backend Engineering",
+            "glyph": "{ }",
             "items": [
-                {
-                    "name": "Java",
-                    "tooltip": "Core backend language for scalable enterprise systems"
-                },
-                {
-                    "name": "Python",
-                    "tooltip": "Language for microservices, scrapers, and ML pipelines"
-                },
-                {
-                    "name": "C",
-                    "tooltip": "Systems-level programming, security, and sandboxing"
-                },
-                {
-                    "name": "Spring Boot",
-                    "tooltip": "REST APIs, Security, Data JPA, Validation"
-                },
-                {
-                    "name": "FastAPI",
-                    "tooltip": "Asynchronous python web APIs"
-                },
-                {
-                    "name": "Flask",
-                    "tooltip": "Lightweight python web services and ML interfaces"
-                },
-                {
-                    "name": "Express.js",
-                    "tooltip": "Node.js web frameworks"
-                },
-                {
-                    "name": "REST APIs",
-                    "tooltip": "Clean resource modeling and stateless interface design"
-                },
-                {
-                    "name": "JWT & RBAC",
-                    "tooltip": "JSON Web Tokens and Role-Based Access Control"
-                },
-                {
-                    "name": "RapidFuzz",
-                    "tooltip": "Token-based fuzzy string matching and data reconciliation"
-                }
+                { "name": "Java", "tier": 1, "tooltip": "Core backend language for scalable enterprise systems" },
+                { "name": "Spring Boot", "tier": 1, "tooltip": "REST APIs, Security, Data JPA, Validation" },
+                { "name": "REST APIs", "tier": 1, "tooltip": "Clean resource modeling and stateless interface design" },
+                { "name": "Python", "tier": 1, "tooltip": "Language for microservices, scrapers, and ML pipelines" },
+                { "name": "Express.js", "tier": 1, "tooltip": "Node.js web framework and REST services" },
+                { "name": "JWT / RBAC", "tier": 1, "tooltip": "JSON Web Tokens and Role-Based Access Control" },
+                { "name": "FastAPI", "tier": 2, "tooltip": "Asynchronous Python web APIs" },
+                { "name": "Flask", "tier": 2, "tooltip": "Lightweight Python web services and ML interfaces" }
             ]
         },
         {
-            "category": "Data & Databases",
+            "category": "Data & Persistence",
+            "glyph": ">_",
             "items": [
-                {
-                    "name": "PostgreSQL",
-                    "tooltip": "Relational schema design, constraints, and JSONB"
-                },
-                {
-                    "name": "Redis Streams",
-                    "tooltip": "Event backbone and messaging consumer groups"
-                },
-                {
-                    "name": "MongoDB",
-                    "tooltip": "Document storage for metadata and user states"
-                },
-                {
-                    "name": "Flyway",
-                    "tooltip": "Version-controlled SQL schema database migrations"
-                },
-                {
-                    "name": "Prisma",
-                    "tooltip": "Type-safe database client and ORM"
-                },
-                {
-                    "name": "OpenPyXL",
-                    "tooltip": "Excel spreadsheet parsing and structured JSON data extraction"
-                }
+                { "name": "PostgreSQL", "tier": 1, "tooltip": "Relational schema design, constraints, and JSONB" },
+                { "name": "MongoDB", "tier": 1, "tooltip": "Document storage for metadata and user states" },
+                { "name": "Redis Streams", "tier": 1, "tooltip": "Event backbone and messaging consumer groups" },
+                { "name": "Flyway", "tier": 2, "tooltip": "Version-controlled SQL schema database migrations" },
+                { "name": "Prisma", "tier": 2, "tooltip": "Type-safe database client and ORM" }
             ]
         },
         {
-            "category": "Infrastructure, DevOps & Systems",
+            "category": "Infrastructure & DevOps",
+            "glyph": "[-]",
             "items": [
-                {
-                    "name": "Docker",
-                    "tooltip": "Containerizing backend services for reproducible deployments"
-                },
-                {
-                    "name": "Nginx",
-                    "tooltip": "Reverse proxy, SSL termination, and static site serving"
-                },
-                {
-                    "name": "GitHub Actions",
-                    "tooltip": "Automated linting, testing, and continuous deployment"
-                },
-                {
-                    "name": "Linux",
-                    "tooltip": "Operating system configuration, shell scripting, and administration"
-                },
-                {
-                    "name": "Seccomp",
-                    "tooltip": "Linux syscall filtering for process sandboxing"
-                },
-                {
-                    "name": "Linux Namespaces",
-                    "tooltip": "Process, PID, and mount isolation for secure execution environments"
-                },
-                {
-                    "name": "llama.cpp",
-                    "tooltip": "Running high-performance sandboxed LLMs locally in C/C++"
-                },
-                {
-                    "name": "EC2 / SSH Deployment",
-                    "tooltip": "Cloud server provisioning and secure SSH remote management"
-                },
-                {
-                    "name": "Render",
-                    "tooltip": "Cloud web service deployment and hosting"
-                }
+                { "name": "Docker", "tier": 1, "tooltip": "Containerizing backend services for reproducible deployments" },
+                { "name": "Linux", "tier": 1, "tooltip": "Operating system configuration, shell scripting, and administration" },
+                { "name": "Git", "tier": 1, "tooltip": "Version control, branching strategies, and collaboration" },
+                { "name": "GitHub Actions", "tier": 1, "tooltip": "Automated linting, testing, and continuous deployment" },
+                { "name": "Nginx", "tier": 2, "tooltip": "Reverse proxy, SSL termination, and static site serving" },
+                { "name": "EC2 / SSH", "tier": 2, "tooltip": "Cloud server provisioning and secure remote management" },
+                { "name": "Render", "tier": 2, "tooltip": "Cloud web service deployment and hosting" }
+            ]
+        },
+        {
+            "category": "Systems & Security",
+            "glyph": ">_",
+            "items": [
+                { "name": "Seccomp", "tier": 1, "tooltip": "Linux syscall filtering for process sandboxing" },
+                { "name": "Linux Namespaces", "tier": 1, "tooltip": "Process, PID, and mount isolation for secure execution environments" },
+                { "name": "Capability Dropping", "tier": 1, "tooltip": "POSIX capabilities management for security hardening" },
+                { "name": "rlimits", "tier": 2, "tooltip": "Linux resource limit enforcement (CPU, Memory, File Descriptors)" },
+                { "name": "llama.cpp", "tier": 2, "tooltip": "Running high-performance sandboxed LLMs locally in C/C++" }
             ]
         },
         {
             "category": "Testing & Integration",
+            "glyph": "[]",
             "items": [
-                {
-                    "name": "pytest",
-                    "tooltip": "Testing framework for python unit and integration tests"
-                },
-                {
-                    "name": "testcontainers",
-                    "tooltip": "Ephemeral Docker containers for database integration testing"
-                },
-                {
-                    "name": "H2 Integration",
-                    "tooltip": "In-memory database testing for Java applications"
-                }
+                { "name": "pytest", "tier": 2, "tooltip": "Testing framework for Python unit and integration tests" },
+                { "name": "Testcontainers", "tier": 2, "tooltip": "Ephemeral Docker containers for database integration testing" },
+                { "name": "H2 Integration", "tier": 2, "tooltip": "In-memory database testing for Java applications" }
             ]
         }
     ]

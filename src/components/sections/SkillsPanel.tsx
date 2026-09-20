@@ -1,5 +1,6 @@
 // SkillsPanel.tsx
-// Displays tech capabilities in a 2x2 grid, highlights active skills, and lists additional project-specific skills.
+// Displays tech capabilities in categorized sections with tier-encoded typography,
+// highlights active skills based on active project, and lists additional project-specific skills.
 
 import React from 'react';
 
@@ -14,71 +15,120 @@ interface SkillsPanelProps {
 }
 
 const skillProjectMap: Record<string, string[]> = {
-    'Java':           ['timetable-scheduler', 'appraisal-management', 'hpms'],
-    'Python':         ['arachnode', 'moodharmonics', 'air-notepad', 'trailhead-tracker'],
-    'Node.js':        ['hpms'],
-    'C':              ['offline-ai-shell'],
-    'Spring Boot':    ['timetable-scheduler', 'appraisal-management'],
-    'FastAPI':        ['arachnode', 'trailhead-tracker'],
-    'Flask':          ['moodharmonics'],
-    'Express.js':     ['hpms'],
-    'REST APIs':      ['arachnode', 'hpms', 'timetable-scheduler', 'appraisal-management', 'trailhead-tracker'],
-    'JWT & RBAC':     ['hpms', 'appraisal-management'],
-    'PostgreSQL':     ['arachnode', 'hpms', 'appraisal-management', 'timetable-scheduler'],
-    'Redis Streams':  ['arachnode'],
-    'MongoDB':        ['moodharmonics'],
-    'Flyway':         ['timetable-scheduler', 'appraisal-management'],
-    'Prisma':         ['hpms'],
-    'Docker':         ['arachnode', 'hpms', 'appraisal-management', 'timetable-scheduler'],
-    'Nginx':          ['hpms'],
-    'GitHub Actions': ['arachnode'],
-    'Linux':          ['offline-ai-shell', 'arachnode'],
-    'Seccomp':        ['offline-ai-shell'],
-    'Linux Namespaces':['offline-ai-shell'],
-    'llama.cpp':      ['offline-ai-shell'],
-    'EC2 / SSH':      ['arachnode'],
-    'pytest':         ['arachnode'],
-    'testcontainers': ['arachnode'],
-    'H2 Integration': ['timetable-scheduler', 'appraisal-management'],
-    'RapidFuzz':      ['trailhead-tracker', 'arachnode'],
-    'OpenPyXL':       ['trailhead-tracker', 'timetable-scheduler', 'appraisal-management'],
+    'Java':                ['timetable-scheduler', 'appraisal-management', 'hpms'],
+    'Spring Boot':         ['timetable-scheduler', 'appraisal-management', 'urlshortener'],
+    'REST APIs':           ['arachnode', 'hpms', 'timetable-scheduler', 'appraisal-management', 'trailhead-tracker', 'moodharmonics', 'urlshortener'],
+    'Python':              ['arachnode', 'moodharmonics', 'air-notepad', 'trailhead-tracker'],
+    'Express.js':          ['hpms'],
+    'JWT / RBAC':          ['hpms', 'appraisal-management'],
+    'FastAPI':             ['arachnode', 'trailhead-tracker'],
+    'Flask':               ['moodharmonics'],
+    'PostgreSQL':          ['arachnode', 'hpms', 'appraisal-management', 'timetable-scheduler', 'urlshortener'],
+    'MongoDB':             ['moodharmonics'],
+    'Redis Streams':       ['arachnode'],
+    'Flyway':              ['timetable-scheduler', 'appraisal-management'],
+    'Prisma':              ['hpms'],
+    'Docker':              ['arachnode', 'hpms', 'appraisal-management', 'timetable-scheduler', 'urlshortener'],
+    'Linux':               ['offline-ai-shell', 'arachnode'],
+    'Git':                 ['arachnode', 'trailhead-tracker'],
+    'GitHub Actions':      ['arachnode'],
+    'Nginx':               ['hpms', 'urlshortener'],
+    'EC2 / SSH':           ['arachnode'],
+    'Render':              ['trailhead-tracker'],
+    'Seccomp':             ['offline-ai-shell'],
+    'Linux Namespaces':    ['offline-ai-shell'],
+    'Capability Dropping': ['offline-ai-shell'],
+    'rlimits':             ['offline-ai-shell'],
+    'llama.cpp':           ['offline-ai-shell'],
+    'pytest':              ['arachnode'],
+    'Testcontainers':      ['arachnode'],
+    'H2 Integration':      ['timetable-scheduler', 'appraisal-management'],
+    'RapidFuzz':           ['trailhead-tracker', 'arachnode'],
+    'OpenPyXL':            ['trailhead-tracker', 'timetable-scheduler', 'appraisal-management'],
 };
 
 // ── CUSTOM OTHER SKILLS PLACEHOLDERS PER PROJECT ─────────────────────────────
-// You can edit or add custom skills for each project ID here.
 const otherSkillsMap: Record<string, string[]> = {
     'arachnode':           ['Scrapy', 'Playwright', 'APScheduler', 'Ollama', 'OSINT', 'fuzzy matching / contact enrichment using RapidFuzz'],
     'hpms':                ['QR Codes', 'html5-qrcode', 'node-cron', 'SMTP'],
     'appraisal-management':['State Machine', 'Audit Trail', 'Immutability', 'Apache POI / OpenPyXL'],
     'timetable-scheduler': ['Constraint Propagation', 'Apache POI', 'Apache POI / OpenPyXL', 'H2 Ephemeral'],
     'trailhead-tracker':   ['OpenPyXL', 'RapidFuzz', 'Aura Client'],
-    'offline-ai-shell':    ['TinyLlama-1.1B', 'CMake', 'rlimits'],
+    'offline-ai-shell':    ['TinyLlama-1.1B', 'CMake'],
     'moodharmonics':       ['MusicGen', 'YAMNet', 'GTZAN Classifier'],
     'air-notepad':         ['OpenCV', 'MediaPipe', 'NumPy', 'Hand Landmarks'],
     'urlshortener':        ['Base62 Encoding', 'Cache-Aside', 'Connection Pooling'],
 };
 
+interface SkillItemDef {
+    name: string;
+    tier: number;
+}
+
 interface SkillCategory {
     category: string;
-    skills: string[];
+    glyph: string;
+    skills: SkillItemDef[];
 }
 
 const SKILL_CATEGORIES: SkillCategory[] = [
     {
         category: 'BACKEND',
-        skills: ['Java', 'Python', 'Node.js', 'C', 'Spring Boot', 'FastAPI', 'Flask', 'Express.js', 'REST APIs', 'JWT & RBAC'],
+        glyph: '{ }',
+        skills: [
+            { name: 'Java', tier: 1 },
+            { name: 'Spring Boot', tier: 1 },
+            { name: 'REST APIs', tier: 1 },
+            { name: 'Python', tier: 1 },
+            { name: 'Express.js', tier: 1 },
+            { name: 'JWT / RBAC', tier: 1 },
+            { name: 'FastAPI', tier: 2 },
+            { name: 'Flask', tier: 2 },
+        ],
     },
     {
-        category: 'DATA',
-        skills: ['PostgreSQL', 'Redis Streams', 'MongoDB', 'Flyway', 'Prisma'],
+        category: 'DATA & PERSISTENCE',
+        glyph: '>_',
+        skills: [
+            { name: 'PostgreSQL', tier: 1 },
+            { name: 'MongoDB', tier: 1 },
+            { name: 'Redis Streams', tier: 1 },
+            { name: 'Flyway', tier: 2 },
+            { name: 'Prisma', tier: 2 },
+        ],
     },
     {
-        category: 'INFRA & SYSTEMS',
-        skills: ['Docker', 'Nginx', 'GitHub Actions', 'Linux', 'Seccomp', 'Linux Namespaces', 'llama.cpp', 'EC2 / SSH'],
+        category: 'INFRA & DEVOPS',
+        glyph: '[-]',
+        skills: [
+            { name: 'Docker', tier: 1 },
+            { name: 'Linux', tier: 1 },
+            { name: 'Git', tier: 1 },
+            { name: 'GitHub Actions', tier: 1 },
+            { name: 'Nginx', tier: 2 },
+            { name: 'EC2 / SSH', tier: 2 },
+            { name: 'Render', tier: 2 },
+        ],
     },
     {
-        category: 'TESTING',
-        skills: ['pytest', 'testcontainers', 'H2 Integration'],
+        category: 'SYSTEMS & SECURITY',
+        glyph: '>_',
+        skills: [
+            { name: 'Seccomp', tier: 1 },
+            { name: 'Linux Namespaces', tier: 1 },
+            { name: 'Capability Dropping', tier: 1 },
+            { name: 'rlimits', tier: 2 },
+            { name: 'llama.cpp', tier: 2 },
+        ],
+    },
+    {
+        category: 'TESTING & INTEGRATION',
+        glyph: '[]',
+        skills: [
+            { name: 'pytest', tier: 2 },
+            { name: 'Testcontainers', tier: 2 },
+            { name: 'H2 Integration', tier: 2 },
+        ],
     },
 ];
 
@@ -162,7 +212,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                     flexDirection: 'column',
                 }}
             >
-                {/* ── 2x2 GRID FOR CORE CATEGORIES ─────────────────────────── */}
+                {/* ── CATEGORIES GRID ─────────────────────────── */}
                 <div
                     style={{
                         display: 'grid',
@@ -172,7 +222,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                         boxSizing: 'border-box',
                     }}
                 >
-                    {SKILL_CATEGORIES.map(({ category, skills }) => (
+                    {SKILL_CATEGORIES.slice(0, 4).map(({ category, glyph, skills }) => (
                         <div
                             key={category}
                             style={{
@@ -195,13 +245,17 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                     borderBottom: '0.5px solid var(--border-subtle)',
                                     paddingBottom: 4,
                                     marginBottom: 4,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 4,
                                 }}
                             >
-                                {category}
+                                <span style={{ color: 'var(--accent-green)', fontWeight: 700 }}>{glyph}</span>
+                                <span>{category}</span>
                             </div>
 
                             {/* Skill Rows */}
-                            {skills.map(skill => {
+                            {skills.map(({ name: skill, tier }) => {
                                 const projectList = skillProjectMap[skill] ?? [];
                                 const isProjectFocused = activeProject !== null;
                                 const isActive = isProjectFocused && activeProject.id && projectList.includes(activeProject.id);
@@ -211,7 +265,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                 let dotOpacity = 0;
 
                                 if (!isProjectFocused) {
-                                    textColor = 'var(--text-muted)';
+                                    textColor = tier === 1 ? 'var(--text-secondary)' : 'var(--text-muted)';
                                     dotOpacity = 0;
                                 } else if (isActive) {
                                     rowBg = 'var(--accent-green-bg)';
@@ -234,6 +288,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                             borderLeft: isActive ? '2px solid var(--accent-green)' : '2px solid transparent',
                                             transition: 'all 0.2s ease',
                                             boxSizing: 'border-box',
+                                            opacity: tier === 1 ? 1 : 0.85,
                                         }}
                                     >
                                         {/* Dot Indicator */}
@@ -255,7 +310,7 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                                             style={{
                                                 fontFamily: 'monospace',
                                                 fontSize: 10,
-                                                fontWeight: isActive ? 600 : 400,
+                                                fontWeight: tier === 1 ? 600 : 400,
                                                 color: textColor,
                                                 transition: 'color 0.2s ease',
                                                 whiteSpace: 'nowrap',
@@ -271,6 +326,83 @@ export const SkillsPanel: React.FC<SkillsPanelProps> = ({ activeProject }) => {
                         </div>
                     ))}
                 </div>
+
+                {/* ── TESTING & INTEGRATION ROW ───────────────────────── */}
+                {SKILL_CATEGORIES[4] && (
+                    <div
+                        style={{
+                            margin: '0 10px 10px',
+                            padding: '8px',
+                            background: 'var(--bg-primary)',
+                            border: '0.5px solid var(--border-default)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 4,
+                            boxSizing: 'border-box',
+                        }}
+                    >
+                        <div
+                            style={{
+                                fontFamily: 'monospace',
+                                fontSize: 8,
+                                letterSpacing: '0.12em',
+                                color: 'var(--text-muted)',
+                                borderBottom: '0.5px solid var(--border-subtle)',
+                                paddingBottom: 4,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 4,
+                            }}
+                        >
+                            <span style={{ color: 'var(--accent-green)', fontWeight: 700 }}>{SKILL_CATEGORIES[4].glyph}</span>
+                            <span>{SKILL_CATEGORIES[4].category}</span>
+                        </div>
+
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingTop: 4 }}>
+                            {SKILL_CATEGORIES[4].skills.map(({ name: skill }) => {
+                                const projectList = skillProjectMap[skill] ?? [];
+                                const isProjectFocused = activeProject !== null;
+                                const isActive = isProjectFocused && activeProject.id && projectList.includes(activeProject.id);
+
+                                return (
+                                    <div
+                                        key={skill}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            padding: '2px 6px',
+                                            borderRadius: 2,
+                                            background: isActive ? 'var(--accent-green-bg)' : 'transparent',
+                                            border: '0.5px solid ' + (isActive ? 'var(--accent-green-border)' : 'var(--border-default)'),
+                                            boxSizing: 'border-box',
+                                            opacity: 0.9,
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                width: 4,
+                                                height: 4,
+                                                borderRadius: '50%',
+                                                background: 'var(--accent-green)',
+                                                marginRight: 4,
+                                                opacity: isActive ? 1 : 0,
+                                            }}
+                                        />
+                                        <span
+                                            style={{
+                                                fontFamily: 'monospace',
+                                                fontSize: 9,
+                                                color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                            }}
+                                        >
+                                            {skill}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
 
                 {/* ── OTHER SKILLS SECTION ───────────────────────────────── */}
                 <div

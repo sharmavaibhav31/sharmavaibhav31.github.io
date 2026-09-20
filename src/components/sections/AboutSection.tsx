@@ -36,15 +36,23 @@ export const AboutSection: React.FC = () => {
                         >
                             // ORIGIN
                         </div>
-                        <p 
-                            className="font-sans text-[13px] sm:text-[14px] leading-[1.85]"
+                        <div 
+                            className="font-sans text-[13px] sm:text-[14px] leading-[1.8] flex flex-col gap-[10px]"
                             style={{ color: 'var(--text-secondary)' }}
                         >
-                            I didn't start as a backend engineer. First year pulled me toward cybersecurity — hands-on with Kali, ethical hacking, a few courses. Interesting, but I was consuming more than I was building. Then mobile development. Did an internship, shipped code to a real app. But I was only productive when someone told me exactly what to do.{' '}
-                            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>
-                                I couldn't design a system from scratch. That bothered me enough to change direction.
-                            </span>
-                        </p>
+                            <p className="m-0 font-[600]" style={{ color: 'var(--text-primary)' }}>
+                                I didn't start as a backend engineer.
+                            </p>
+                            <p className="m-0">
+                                My first year pulled me toward cybersecurity — Kali, ethical hacking, and security fundamentals. Interesting, but I wanted to build more than I was studying.
+                            </p>
+                            <p className="m-0">
+                                I moved into mobile development, shipped code to a production app, and realized I was more interested in the systems behind the product than the product itself: APIs, data, reliability, and the decisions that make software work at scale.
+                            </p>
+                            <p className="m-0">
+                                That curiosity eventually pulled me toward backend engineering.
+                            </p>
+                        </div>
                     </div>
 
                     {/* CURRENT BLOCK */}
@@ -55,12 +63,23 @@ export const AboutSection: React.FC = () => {
                         >
                             // CURRENT
                         </div>
-                        <p 
-                            className="font-sans text-[11px] sm:text-[12px] leading-[1.8]"
+                        <div 
+                            className="font-sans text-[12px] sm:text-[13px] leading-[1.8] flex flex-col gap-[10px]"
                             style={{ color: 'var(--text-secondary)' }}
                         >
-                            Backend engineering clicked because it required real thinking: tradeoffs, constraints, failure modes, state. Founding Backend Intern at LazyStudents.in — building Lazy Command, an AI orchestration layer routing natural language to 100+ platform tools. Open-sourced Arachnode. The security interest never left — my C shell with Seccomp sandboxing was me answering a question about running AI locally without exposing the system.
-                        </p>
+                            <p className="m-0">
+                                Backend engineering clicked because it forced me to think about tradeoffs, constraints, failure modes, state, and system boundaries.
+                            </p>
+                            <p className="m-0">
+                                Currently a Backend Engineer Intern at LazyStudents.in, building Lazy Command — an AI orchestration layer that translates natural-language requests into actions across 100+ platform tools.
+                            </p>
+                            <p className="m-0">
+                                Outside work, I maintain Arachnode, an open-source job discovery and outreach system with contributors across multiple open-source programs.
+                            </p>
+                            <p className="m-0">
+                                My interest in security never disappeared; it now shows up in the systems I build, from vulnerability research to projects like a C-based local AI shell using Seccomp sandboxing and Linux isolation.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -68,25 +87,59 @@ export const AboutSection: React.FC = () => {
                 <div 
                     className="p-[20px_16px] bg-[var(--bg-surface)] flex flex-col sm:flex-row lg:flex-col gap-[20px]"
                 >
-                    {/* BLOCK 1 — OPEN SOURCE */}
+                    {/* BLOCK 1 — EXPERIENCE */}
                     <div className="flex flex-col sm:flex-1 lg:flex-none">
                         <div 
-                            className="font-mono text-[9px] tracking-[0.14em] mb-[8px]"
+                            className="font-mono text-[9px] tracking-[0.14em] mb-[10px]"
                             style={{ color: 'var(--text-muted)' }}
                         >
-                            OPEN SOURCE
+                            EXPERIENCE
                         </div>
-                        <div 
-                            className="text-[22px] font-medium mb-[2px]"
-                            style={{ color: 'var(--text-primary)' }}
-                        >
-                            26 ★
-                        </div>
-                        <div 
-                            className="font-mono text-[10px]"
-                            style={{ color: 'var(--text-muted)' }}
-                        >
-                            arachnode · 47 forks
+                        <div className="flex flex-col gap-[10px]">
+                            <div>
+                                <div 
+                                    className="text-[18px] font-medium leading-[1.1] mb-[2px]"
+                                    style={{ color: 'var(--text-primary)' }}
+                                >
+                                    7+ Months
+                                </div>
+                                <div 
+                                    className="font-mono text-[9.5px] leading-[1.3]"
+                                    style={{ color: 'var(--text-muted)' }}
+                                >
+                                    Total Industry Experience (Internships)
+                                </div>
+                            </div>
+
+                            <div>
+                                <div 
+                                    className="text-[18px] font-medium leading-[1.1] mb-[2px]"
+                                    style={{ color: 'var(--text-primary)' }}
+                                >
+                                    5+ Months
+                                </div>
+                                <div 
+                                    className="font-mono text-[9.5px] leading-[1.3]"
+                                    style={{ color: 'var(--text-muted)' }}
+                                >
+                                    Open Source Leadership
+                                </div>
+                            </div>
+
+                            <div>
+                                <div 
+                                    className="text-[18px] font-medium leading-[1.1] mb-[2px]"
+                                    style={{ color: 'var(--text-primary)' }}
+                                >
+                                    9+ Projects
+                                </div>
+                                <div 
+                                    className="font-mono text-[9.5px] leading-[1.3]"
+                                    style={{ color: 'var(--text-muted)' }}
+                                >
+                                    Built & Shipped
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -141,7 +194,7 @@ export const AboutSection: React.FC = () => {
 
             {/* DIRECTIVE BAR — full width below grid */}
             <div 
-                className="w-full p-[14px_16px] sm:p-[14px_28px] border-t-[0.5px] flex flex-col sm:flex-row items-start gap-[8px] sm:gap-[12px]"
+                className="w-full p-[16px_16px] sm:p-[18px_28px] border-t-[0.5px] flex flex-col sm:flex-row items-start gap-[10px] sm:gap-[14px]"
                 style={{ borderColor: 'var(--border-subtle)' }}
             >
                 <span 
@@ -154,12 +207,20 @@ export const AboutSection: React.FC = () => {
                 >
                     [DIRECTIVE]
                 </span>
-                <p 
-                    className="font-sans text-[11px] leading-[1.6]"
-                    style={{ color: 'var(--text-muted)' }}
+                <div 
+                    className="font-sans text-[11.5px] sm:text-[12px] leading-[1.75] flex flex-col gap-[6px]"
+                    style={{ color: 'var(--text-secondary)' }}
                 >
-                    Want to work on backend infrastructure where reliability is the product — distributed systems, data pipelines, secure architectures. In 3–4 years: Senior Backend Engineer at a high-growth product company, or the person who helped a startup go from 10 to 10 million requests a day. MS in Security is on the table.
-                </p>
+                    <p className="m-0 font-[600]" style={{ color: 'var(--text-primary)' }}>
+                        Building toward backend infrastructure where reliability, scalability, and security are first-class concerns.
+                    </p>
+                    <p className="m-0">
+                        <span className="font-mono text-[10.5px] font-[600]" style={{ color: 'var(--accent-green)' }}>Near-term:</span> become a backend engineer capable of owning services end-to-end — from API design and data modeling to deployment, observability, and incident response.
+                    </p>
+                    <p className="m-0">
+                        <span className="font-mono text-[10.5px] font-[600]" style={{ color: 'var(--accent-orange)' }}>Long-term:</span> work on distributed systems, data-intensive platforms, and secure architectures operating at meaningful scale, while continuing to deepen my understanding of cybersecurity and system security.
+                    </p>
+                </div>
             </div>
         </section>
     );
