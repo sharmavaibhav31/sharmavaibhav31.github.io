@@ -1,7 +1,7 @@
 // TextScrollWordReveal.tsx
 // Scroll-driven word highlight reveal for Deployment History section.
 
-import React, { Fragment, useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import {
     motion,
     useReducedMotion,
