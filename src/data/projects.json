@@ -165,7 +165,7 @@
         "category": "ML Orchestration",
         "github": "https://github.com/sharmavaibhav31/MoodHarmonics",
         "isPrivate": false,
-        "liveUrl": null,
+        "liveUrl": "https://mood-harmonics.vercel.app/",
         "display_order": 6,
         "demo": "https://mood-harmonics.vercel.app/",
         "stack": ["Python", "Flask", "MusicGen", "YAMNet", "GPT (fine-tuned)", "PyTorch", "TensorFlow", "MongoDB", "React"],

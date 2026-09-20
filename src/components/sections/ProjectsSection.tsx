@@ -28,10 +28,6 @@ function getRailBadgeLabel(category: string): string {
     return map[category] ?? category.toUpperCase();
 }
 
-// ── Stage dimensions ──────────────────────────────────────────────────────────
-const DESKTOP_W = 780, DESKTOP_H = 520;
-const TABLET_W  = 560, TABLET_H  = 440;
-
 // ── CoverLeftLeaf (Step 0 - Left Cover Panel) ────────────────────────────────
 const CoverLeftLeaf: React.FC<{
     scrollYProgress: MotionValue<number>;
@@ -442,13 +438,36 @@ export const ProjectsSection: React.FC = () => {
     const [activePageIndex, setActivePageIndex] = useState(0);
     const [showHint, setShowHint] = useState(true);
 
+    const [stageW, setStageW] = useState(1060);
+    const [stageH, setStageH] = useState(660);
+
     const outerRef = useRef<HTMLDivElement>(null);
 
-    // ── Breakpoint detection ─────────────────────────────────────────────────
+    // ── Breakpoint & dynamic stage dimension detection ──────────────────────
     useEffect(() => {
         const check = () => {
-            setIsMobile(window.innerWidth < 640);
-            setIsTablet(window.innerWidth >= 640 && window.innerWidth < 1024);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const mobile = w < 640;
+            const tablet = w >= 640 && w < 1024;
+            setIsMobile(mobile);
+            setIsTablet(tablet);
+
+            if (mobile) return;
+
+            // Compute available space in the middle column
+            // Navbar = 48px, SectionHeader = 36px
+            const sidePanelWidth = tablet ? 52 : (56 + 290); // FilterRail (56px) + SkillsPanel (290px)
+            const availW = w - sidePanelWidth - 32; // stage padding left/right
+            const availH = h - 48 - 36 - 24;        // sticky top (48) + header (36) + stage padding top/bottom (24)
+
+            // Stage width: max 1420px on wide screens, min 640px
+            const targetW = Math.min(1420, Math.max(640, availW));
+            // Stage height: max 860px on high-res screens, min 500px
+            const targetH = Math.min(860, Math.max(500, availH));
+
+            setStageW(targetW);
+            setStageH(targetH);
         };
         check();
         window.addEventListener('resize', check);
@@ -479,10 +498,6 @@ export const ProjectsSection: React.FC = () => {
 
     const N = filteredProjects.length;
     const totalSteps = N + 1; // Step 0 = Cover, Steps 1..N = Projects 0..N-1
-
-    // ── Stage dimensions ─────────────────────────────────────────────────────
-    const stageW = isTablet ? TABLET_W : DESKTOP_W;
-    const stageH = isTablet ? TABLET_H : DESKTOP_H;
 
     // ── Scroll tracking ──────────────────────────────────────────────────────
     const { scrollYProgress } = useScroll({
@@ -587,7 +602,7 @@ export const ProjectsSection: React.FC = () => {
                         style={{
                             flex: 1,
                             display: 'grid',
-                            gridTemplateColumns: isTablet ? '52px 1fr' : '64px 1fr 360px',
+                            gridTemplateColumns: isTablet ? '52px 1fr' : '56px 1fr 290px',
                             overflow: 'hidden',
                             height: 'calc(100% - 36px)',
                         }}
@@ -603,6 +618,7 @@ export const ProjectsSection: React.FC = () => {
                                 justifyContent: 'center',
                                 height: '100%',
                                 position: 'relative',
+                                padding: '8px 12px',
                             }}
                         >
                             <div

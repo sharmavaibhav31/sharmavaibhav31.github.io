@@ -76,11 +76,11 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
             {/* ── HEADER BAR ─────────────────────────────────────── */}
             <div
                 style={{
-                    height: 36,
+                    height: 40,
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    padding: '0 16px',
+                    padding: '0 20px',
                     borderBottom: '0.5px solid rgba(255,255,255,0.06)',
                     flexShrink: 0,
                 }}
@@ -88,9 +88,9 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                 <span
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: 8,
+                        fontSize: 9,
                         letterSpacing: '0.2em',
-                        color: 'rgba(255,80,80,0.6)',
+                        color: 'rgba(255,80,80,0.7)',
                     }}
                 >
                     ARCHITECTURE — CASE {caseNumber}
@@ -98,7 +98,7 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                 <span
                     style={{
                         fontFamily: 'monospace',
-                        fontSize: 8,
+                        fontSize: 8.5,
                         letterSpacing: '0.14em',
                         color: '#4ade80',
                     }}
@@ -111,10 +111,10 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
             <div
                 style={{
                     flex: 1,
-                    padding: '16px 20px',
+                    padding: '20px 24px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 12,
+                    gap: 16,
                     overflowY: 'auto',
                 }}
             >
@@ -124,9 +124,9 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <div
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: 8,
-                                letterSpacing: '0.12em',
-                                color: 'rgba(255,255,255,0.25)',
+                                fontSize: 9,
+                                letterSpacing: '0.14em',
+                                color: 'rgba(255,255,255,0.35)',
                                 marginBottom: 6,
                             }}
                         >
@@ -135,12 +135,12 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <p
                             style={{
                                 fontFamily: 'sans-serif',
-                                fontSize: 11,
-                                color: '#c8c8c8',
-                                lineHeight: 1.65,
+                                fontSize: 12.5,
+                                color: '#d4d4d4',
+                                lineHeight: 1.68,
                                 margin: 0,
                                 display: '-webkit-box',
-                                WebkitLineClamp: 4,
+                                WebkitLineClamp: 5,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
                             }}
@@ -156,34 +156,34 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <div
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: 8,
-                                letterSpacing: '0.12em',
-                                color: 'rgba(255,255,255,0.25)',
-                                marginBottom: 6,
+                                fontSize: 9,
+                                letterSpacing: '0.14em',
+                                color: 'rgba(255,255,255,0.35)',
+                                marginBottom: 8,
                             }}
                         >
                             KEY DECISIONS
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {bullets.map((b, idx) => (
-                                <div key={idx} style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
+                                <div key={idx} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
                                     <div
                                         style={{
-                                            width: 3,
-                                            height: 3,
-                                            minWidth: 3,
+                                            width: 4,
+                                            height: 4,
+                                            minWidth: 4,
                                             background: '#4ade80',
                                             borderRadius: '50%',
-                                            marginTop: 5,
+                                            marginTop: 6,
                                             flexShrink: 0,
                                         }}
                                     />
                                     <span
                                         style={{
                                             fontFamily: 'sans-serif',
-                                            fontSize: 10,
-                                            color: 'rgba(255,255,255,0.5)',
-                                            lineHeight: 1.5,
+                                            fontSize: 11.5,
+                                            color: 'rgba(255,255,255,0.65)',
+                                            lineHeight: 1.6,
                                         }}
                                     >
                                         {stripHtml(b)}
@@ -199,18 +199,18 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                     <div
                         style={{
                             background: 'rgba(74,158,255,0.04)',
-                            border: '0.5px solid rgba(74,158,255,0.12)',
-                            borderLeft: '2px solid rgba(74,158,255,0.4)',
-                            padding: '10px 12px',
+                            border: '0.5px solid rgba(74,158,255,0.15)',
+                            borderLeft: '3px solid rgba(74,158,255,0.5)',
+                            padding: '12px 14px',
                         }}
                     >
                         <div
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: 7,
+                                fontSize: 8.5,
                                 letterSpacing: '0.14em',
-                                color: 'rgba(74,158,255,0.6)',
-                                marginBottom: 5,
+                                color: 'rgba(74,158,255,0.7)',
+                                marginBottom: 6,
                             }}
                         >
                             MY ROLE
@@ -218,12 +218,12 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <p
                             style={{
                                 fontFamily: 'sans-serif',
-                                fontSize: 11,
-                                color: '#c8c8c8',
-                                lineHeight: 1.65,
+                                fontSize: 12.5,
+                                color: '#d4d4d4',
+                                lineHeight: 1.68,
                                 margin: 0,
                                 display: '-webkit-box',
-                                WebkitLineClamp: 4,
+                                WebkitLineClamp: 5,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
                             }}
@@ -235,15 +235,15 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
 
                 {/* METRICS ROW */}
                 {metricItems.length > 0 && (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
                         {metricItems.map(m => (
-                            <div key={m.label} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                            <div key={m.label} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                                 <span
                                     style={{
                                         fontFamily: 'sans-serif',
-                                        fontSize: 18,
+                                        fontSize: 22,
                                         fontWeight: 700,
-                                        color: '#f5f5f5',
+                                        color: '#f8fafc',
                                         lineHeight: 1,
                                     }}
                                 >
@@ -252,9 +252,9 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                                 <span
                                     style={{
                                         fontFamily: 'monospace',
-                                        fontSize: 8,
-                                        color: 'rgba(255,255,255,0.25)',
-                                        letterSpacing: '0.1em',
+                                        fontSize: 8.5,
+                                        color: 'rgba(255,255,255,0.3)',
+                                        letterSpacing: '0.12em',
                                     }}
                                 >
                                     {m.label}
@@ -269,16 +269,16 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                     <div
                         style={{
                             background: 'rgba(74,222,128,0.04)',
-                            border: '0.5px solid rgba(74,222,128,0.12)',
-                            padding: '8px 10px',
+                            border: '0.5px solid rgba(74,222,128,0.15)',
+                            padding: '10px 12px',
                         }}
                     >
                         <div
                             style={{
                                 fontFamily: 'monospace',
-                                fontSize: 7,
+                                fontSize: 8.5,
                                 letterSpacing: '0.14em',
-                                color: 'rgba(74,222,128,0.5)',
+                                color: 'rgba(74,222,128,0.6)',
                                 marginBottom: 4,
                             }}
                         >
@@ -287,9 +287,9 @@ export const CaseFileBack: React.FC<CaseFileBackProps> = ({ project, caseNumber 
                         <p
                             style={{
                                 fontFamily: 'sans-serif',
-                                fontSize: 10,
-                                color: 'rgba(255,255,255,0.45)',
-                                lineHeight: 1.5,
+                                fontSize: 11.5,
+                                color: 'rgba(255,255,255,0.6)',
+                                lineHeight: 1.55,
                                 margin: 0,
                                 display: '-webkit-box',
                                 WebkitLineClamp: 3,
